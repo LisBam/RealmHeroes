@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cst7ag3vtq6ff"]
+
+[ext_resource type="FontFile" uid="uid://2hfym1tubh07" path="res://res/Uranus_Pixel_11Px.ttf" id="1_tbx1g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_syg43"]
+
+[resource]
+Button/fonts/font = ExtResource("1_tbx1g")
+Button/styles/focus = SubResource("StyleBoxEmpty_syg43")
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_tbx1g")
+RichTextLabel/font_sizes/bold_font_size = 24
+RichTextLabel/font_sizes/normal_font_size = 24
+RichTextLabel/fonts/bold_font = ExtResource("1_tbx1g")
+RichTextLabel/fonts/normal_font = ExtResource("1_tbx1g")

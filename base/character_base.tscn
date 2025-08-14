@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2qg5nb5qpeh0"]
+
+[ext_resource type="Script" uid="uid://07gxq7vy4cjf" path="res://base/character_base.gd" id="1_pkdkf"]
+[ext_resource type="Texture2D" uid="uid://bmmqm3b5mu0kq" path="res://res/card_base/character_card_base.png" id="2_klxpb"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_klxpb"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_3f7t7"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_d0cgm"]
+
+[node name="character_base" type="Node"]
+script = ExtResource("1_pkdkf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_klxpb")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_klxpb")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3f7t7")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_d0cgm")

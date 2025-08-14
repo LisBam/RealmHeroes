@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://but561sosiids"]
+
+[ext_resource type="Script" uid="uid://dvp6ttnadidxb" path="res://scripts/character/pvz2_dubaojiangshi.gd" id="1_kjkpc"]
+[ext_resource type="Texture2D" uid="uid://vyw5p0hyjy8s" path="res://res/character/读报僵尸.png" id="2_3bksj"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_0jdo2"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_uh8uo"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_b2vi2"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_kjkpc")
+character_name = "读报僵尸"
+max_hp = 9500
+max_energy = 120
+element = "earth"
+speed = 120
+physical_power = 120
+magical_power = 120
+physical_defense = 90
+magical_defense = 90
+skilla_name = "啃食"
+skillb_name = "尸群"
+skillc_name = "新闻速览"
+skilld_name = "纸烬报走"
+skilld_energy = 0
+skilla_element = "earth"
+skillb_element = "earth"
+skillc_element = "earth"
+skilld_element = "fire"
+skilla_damage_type = "phy"
+skilld_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3bksj")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0jdo2")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_uh8uo")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_b2vi2")

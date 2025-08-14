@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://c816q3fdyh6p6"]
+
+[ext_resource type="Script" uid="uid://1d7d52fbl5ti" path="res://scripts/character/pvz2_xiangrikui.gd" id="1_8tb44"]
+[ext_resource type="Texture2D" uid="uid://xr3jg4islcmb" path="res://res/character/向日葵.png" id="2_yvflu"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_5366a"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_n8mgm"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_af254"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_8tb44")
+character_name = "向日葵"
+max_hp = 8000
+max_energy = 120
+element = "wood"
+skilla_name = "阳光！阳光！"
+skillb_name = "光合作用"
+skillc_name = "爆炸瓜子"
+skilld_name = "阳光回收"
+skilla_energy = 30
+skillb_energy = 0
+skilla_element = "wood"
+skillb_element = "wood"
+skillc_element = "wood"
+skilld_element = "wood"
+skillc_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_yvflu")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5366a")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_n8mgm")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_af254")

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cm2yphy8v3j1f"]
+
+[ext_resource type="Script" uid="uid://c51o2xxxw83ws" path="res://scripts/character/sr_nakexia.gd" id="1_aj62u"]
+[ext_resource type="Texture2D" uid="uid://c4lfm8r7uh27l" path="res://res/character/那刻夏.png" id="2_3rvn4"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_3rvn4"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_ne68p"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_11oop"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_aj62u")
+character_name = "那刻夏"
+element = "wood"
+speed = 101
+skilla_name = "那刻夏一"
+skillb_name = "二技能"
+skillc_name = "三"
+skilld_name = "技能"
+skilla_element = "wood"
+skillb_element = "wood"
+skilla_damage_type = "mix"
+skillb_damage_type = "mag"
+skillc_damage_type = "phy"
+skilld_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3rvn4")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_3rvn4")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ne68p")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_11oop")

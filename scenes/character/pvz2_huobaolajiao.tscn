@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://bupf1m4mt4yhk"]
+
+[ext_resource type="Script" uid="uid://c81v7ti46bv4i" path="res://scripts/character/pvz2_huobaolajiao.gd" id="1_x8ggw"]
+[ext_resource type="Texture2D" uid="uid://b63600lnsyucx" path="res://res/character/火爆辣椒.png" id="2_aoewl"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_5s0fr"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_p83yr"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_xmmwd"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_x8ggw")
+character_name = "火爆辣椒"
+max_hp = 9000
+element = "fire"
+speed = 110
+magical_power = 120
+physical_defense = 90
+magical_defense = 90
+skilla_name = "燃烧！燃烧！"
+skillb_name = "光合作用"
+skillc_name = "十字烈焰"
+skilld_name = "燃烧殆尽"
+skilla_energy = 10
+skillb_energy = 0
+skilld_energy = 40
+skilla_element = "fire"
+skillb_element = "wood"
+skillc_element = "fire"
+skilld_element = "fire"
+skilla_damage_type = "mag"
+skillc_damage_type = "mag"
+skilld_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_aoewl")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5s0fr")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_p83yr")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_xmmwd")

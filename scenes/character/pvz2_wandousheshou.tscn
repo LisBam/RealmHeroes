@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://sgj5eqqkohmn"]
+
+[ext_resource type="Script" uid="uid://cbdto2oecps0s" path="res://scripts/character/pvz2_wandousheshou.gd" id="1_0uvgd"]
+[ext_resource type="Texture2D" uid="uid://6xwy1xu0wc3u" path="res://res/character/豌豆射手.png" id="2_dqjwp"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_408kv"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_te5cv"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_uuhkg"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_0uvgd")
+character_name = "豌豆射手"
+element = "wood"
+skilla_name = "豌豆射击"
+skillb_name = "光合作用"
+skillc_name = "快速上膛"
+skilld_name = "超级子弹"
+skillb_energy = 0
+skillc_energy = 10
+skilld_energy = 60
+skilla_element = "wood"
+skillb_element = "wood"
+skillc_element = "wood"
+skilld_element = "wood"
+skilla_damage_type = "phy"
+skilld_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dqjwp")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_408kv")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_te5cv")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_uuhkg")

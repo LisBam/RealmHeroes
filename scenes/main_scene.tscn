@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=3 uid="uid://b54hfqxogsgfm"]
+
+[ext_resource type="Script" uid="uid://dv4i3n1wxpysy" path="res://scripts/main_scene.gd" id="1_7ykc4"]
+[ext_resource type="Texture2D" uid="uid://c626xos8ito5f" path="res://res/background/white.png" id="2_pu3yx"]
+[ext_resource type="Theme" uid="uid://cst7ag3vtq6ff" path="res://res/theme/fighting_theme.tres" id="3_gubc5"]
+
+[node name="main_scene" type="Node"]
+script = ExtResource("1_7ykc4")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("2_pu3yx")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_gubc5")
+
+[node name="button" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="team" type="Button" parent="UI/Control/button"]
+visible = false
+layout_mode = 0
+offset_top = 620.0
+offset_right = 250.0
+offset_bottom = 720.0
+
+[node name="word" type="Label" parent="UI/Control/button/team"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "更改配队"
+
+[node name="fighting" type="Button" parent="UI/Control/button"]
+layout_mode = 0
+offset_left = 1030.0
+offset_top = 620.0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="word" type="Label" parent="UI/Control/button/fighting"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "随机模式"
+
+[connection signal="pressed" from="UI/Control/button/fighting" to="." method="_to_fighting"]

@@ -1,0 +1,396 @@
+[gd_scene load_steps=9 format=3 uid="uid://j1a0qbv7it4k"]
+
+[ext_resource type="Script" uid="uid://upbga4q8gbnl" path="res://scripts/fighting.gd" id="1_gmgy1"]
+[ext_resource type="Texture2D" uid="uid://dck1vd86uqsoj" path="res://res/background/接近纯黑的背景.png" id="2_a4sqi"]
+[ext_resource type="Theme" uid="uid://cst7ag3vtq6ff" path="res://res/theme/fighting_theme.tres" id="2_gmgy1"]
+[ext_resource type="Texture2D" uid="uid://fo5jnej3yvx2" path="res://res/UI/Health_bar2.png" id="4_cvymb"]
+[ext_resource type="Texture2D" uid="uid://bsrrb4lkl7ast" path="res://res/UI/Health_red.png" id="5_qgwn1"]
+[ext_resource type="Texture2D" uid="uid://banh0aldk7ip3" path="res://res/UI/energy_blue.png" id="6_qgwn1"]
+[ext_resource type="Texture2D" uid="uid://bmmqm3b5mu0kq" path="res://res/card_base/character_card_base.png" id="7_6fqxs"]
+[ext_resource type="AudioStream" uid="uid://ypf52sjb81i0" path="res://res/audio/日本按钮5(Japanese Button 5)_爱给网_aigei_com.mp3" id="8_a4sqi"]
+
+[node name="fighting" type="Node"]
+script = ExtResource("1_gmgy1")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(637, 360)
+scale = Vector2(0.852619, 0.852619)
+texture = ExtResource("2_a4sqi")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_gmgy1")
+
+[node name="button" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="skill" type="Control" parent="UI/Control/button"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="skilla" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_top = 620.0
+offset_right = 250.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skilla"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之一"
+
+[node name="skillb" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 620.0
+offset_right = 500.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skillb"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之二"
+
+[node name="skillc" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 620.0
+offset_right = 750.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skillc"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之三"
+
+[node name="skilld" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 620.0
+offset_right = 1000.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skilld"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之四"
+
+[node name="extend" type="Control" parent="UI/Control/button"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="bag" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 660.0
+offset_right = 1140.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/bag"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "背包"
+
+[node name="run" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1140.0
+offset_top = 660.0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/run"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "逃跑"
+
+[node name="character" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 600.0
+offset_right = 1140.0
+offset_bottom = 660.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/character"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色"
+
+[node name="fight" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1140.0
+offset_top = 600.0
+offset_right = 1280.0
+offset_bottom = 660.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/fight"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "战斗"
+
+[node name="change_character" type="Control" parent="UI/Control/button"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="character1" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_top = 620.0
+offset_right = 250.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色一"
+
+[node name="character2" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 620.0
+offset_right = 500.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色二"
+
+[node name="character3" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 620.0
+offset_right = 750.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色三"
+
+[node name="character4" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 620.0
+offset_right = 1000.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色四"
+
+[node name="player1_stat" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 3.0
+offset_bottom = 3.0
+
+[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player1_stat"]
+layout_mode = 0
+offset_right = 2560.0
+offset_bottom = 160.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("5_qgwn1")
+
+[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player1_stat"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 2560.0
+offset_bottom = 193.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("6_qgwn1")
+
+[node name="player2_stat" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 3.0
+offset_bottom = 3.0
+
+[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player2_stat"]
+layout_mode = 0
+offset_left = 768.0
+offset_right = 3328.0
+offset_bottom = 160.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+fill_mode = 1
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("5_qgwn1")
+
+[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player2_stat"]
+layout_mode = 0
+offset_left = 768.0
+offset_top = 33.0
+offset_right = 3328.0
+offset_bottom = 193.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+fill_mode = 1
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("6_qgwn1")
+
+[node name="player_sprite" type="Sprite2D" parent="UI/Control"]
+visible = false
+position = Vector2(225, 325)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_6fqxs")
+
+[node name="enemy_sprite" type="Sprite2D" parent="UI/Control"]
+visible = false
+position = Vector2(1055, 325)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_6fqxs")
+
+[node name="button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_a4sqi")
+
+[connection signal="pressed" from="UI/Control/button/skill/skilla" to="." method="_skilla"]
+[connection signal="pressed" from="UI/Control/button/skill/skillb" to="." method="_skillb"]
+[connection signal="pressed" from="UI/Control/button/skill/skillc" to="." method="_skillc"]
+[connection signal="pressed" from="UI/Control/button/skill/skilld" to="." method="_skilld"]
+[connection signal="pressed" from="UI/Control/button/extend/run" to="." method="_run"]
+[connection signal="pressed" from="UI/Control/button/extend/character" to="." method="_to_change_character"]
+[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="_to_fight"]
+[connection signal="pressed" from="UI/Control/button/change_character/character1" to="." method="_change_character_1"]
+[connection signal="pressed" from="UI/Control/button/change_character/character2" to="." method="_change_character_2"]
+[connection signal="pressed" from="UI/Control/button/change_character/character3" to="." method="_change_character_3"]
+[connection signal="pressed" from="UI/Control/button/change_character/character4" to="." method="_change_character_4"]

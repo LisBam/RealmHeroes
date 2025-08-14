@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbex3xk757aby"]
+
+[ext_resource type="Script" uid="uid://dhx0v4sbthmgj" path="res://scripts/character/pvz2_jianguo.gd" id="1_1e4i5"]
+[ext_resource type="Texture2D" uid="uid://cgw6tiyfkghgg" path="res://res/character/坚果.png" id="2_1e4i5"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_oqkb3"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_hyqk3"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_msv3s"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_1e4i5")
+character_name = "坚果"
+max_hp = 12000
+max_energy = 80
+element = "wood"
+speed = 90
+physical_defense = 120
+magical_defense = 120
+skilla_name = "坚硬外壳"
+skillb_name = "光合作用"
+skillc_name = "果壳碎裂"
+skilld_name = "坚果卫星"
+skilla_energy = 20
+skillb_energy = 0
+skillc_energy = 5
+skillb_element = "wood"
+skillc_element = "wood"
+skillc_damage_type = "phy"
+skilld_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1e4i5")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_oqkb3")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_hyqk3")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_msv3s")
