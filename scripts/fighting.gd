@@ -466,7 +466,8 @@ func _change_character_4(audio:bool = true) -> void:
 
 func ai_to_change_character():
 	print("ai切换角色")
-	await get_tree().create_timer(ai_think_time).timeout
+	if get_tree():
+		await get_tree().create_timer(ai_think_time).timeout
 	var best_change_character
 	var mul_is_1 = []
 	var mul_is_1_25 = []
@@ -535,15 +536,18 @@ func ai_change_character_1() -> void:
 		if not enemy_character_curr.dying:
 			active_exit_animation(enemy_character_curr)
 		enemy_character_curr = enemy_character_1
+		enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
 	addlog("敌方切换角色至 "+enemy_character_curr.character_name)
 	active_enter_animation(enemy_character_curr)
 	refresh_stat_ui()
 	someone_is_die -= 1
+	
 func ai_change_character_2() -> void:
 	if enemy_character_curr != enemy_character_2:
 		if not enemy_character_curr.dying:
 			active_exit_animation(enemy_character_curr)
 		enemy_character_curr = enemy_character_2
+		enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
 	addlog("敌方切换角色至 "+enemy_character_curr.character_name)
 	active_enter_animation(enemy_character_curr)
 	refresh_stat_ui()
@@ -553,6 +557,7 @@ func ai_change_character_3() -> void:
 		if not enemy_character_curr.dying:
 			active_exit_animation(enemy_character_curr)
 		enemy_character_curr = enemy_character_3
+		enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
 	addlog("敌方切换角色至 "+enemy_character_curr.character_name)
 	active_enter_animation(enemy_character_curr)
 	refresh_stat_ui()
@@ -562,6 +567,7 @@ func ai_change_character_4() -> void:
 		if not enemy_character_curr.dying:
 			active_exit_animation(enemy_character_curr)
 		enemy_character_curr = enemy_character_4
+		enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
 	addlog("敌方切换角色至 "+enemy_character_curr.character_name)
 	active_enter_animation(enemy_character_curr)
 	refresh_stat_ui()

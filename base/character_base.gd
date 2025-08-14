@@ -443,6 +443,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	if get_tree():
 		await get_tree().physics_frame
 		ai.refresh_enable_skills()
+	ai.refresh_enable_skills()
 
 func add_damage_type(skill_index: int, damage_type: String):
 	if damage_type not in ai.skills[skill_index].damage_type:
