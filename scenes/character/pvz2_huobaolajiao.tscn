@@ -9,6 +9,8 @@
 [node name="character" type="Node"]
 script = ExtResource("1_x8ggw")
 character_name = "火爆辣椒"
+damage_phy_ratio = 1.0
+damage_mag_ratio = 99.0
 max_hp = 9000
 element = "fire"
 speed = 110

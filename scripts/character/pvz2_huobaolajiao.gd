@@ -31,7 +31,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	add_power.round_duration = -1
 	add_power.init_round_duration = -1
 	player.get_node("buff").add_buff(add_power)
-	be_and_to_damage(damage(400,"mag",enemy,skillc_element),enemy,player,"phy",skillc_element)
+	be_and_to_damage(damage(400,"mag",enemy,skillc_element),enemy,player,"mag",skillc_element)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 	
