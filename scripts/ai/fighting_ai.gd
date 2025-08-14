@@ -400,21 +400,21 @@ func change_character_value():
 		print("思考得出：AI被克制")
 		#根据自己攻击被减少的倍率提高切换价值
 		if player.get_element_multiplier(player.element,enemy.element) == 0.75:
-			value += 250
+			value += 240
 		if player.get_element_multiplier(player.element,enemy.element) == 0.5:
-			value += 450
+			value += 440
 		#根据队友中是否存在克制提高价值
 		for has_character in player_team:
 			if not has_character.is_die:
 				if has_character.get_element_multiplier(has_character.element,enemy.element) == 1:
-					value += 250
+					value += 240
 					#根据角色血量的降低减少价值
 					value *= has_character.curr_hp / has_character.max_hp
 				if has_character.get_element_multiplier(has_character.element,enemy.element) == 1.25:
-					value += 450
+					value += 440
 					value *= has_character.curr_hp / has_character.max_hp
 				if has_character.get_element_multiplier(has_character.element,enemy.element) == 1.5:
-					value += 800
+					value += 790
 					value *= has_character.curr_hp / has_character.max_hp
 	print("切换角色的价值为：",value)
 	return value

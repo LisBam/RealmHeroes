@@ -153,6 +153,7 @@ mouse_filter = 2
 script = ExtResource("4_u4fbu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilla/tips"]
+visible = false
 layout_mode = 0
 offset_top = -525.0
 offset_right = 637.0
@@ -1235,8 +1236,8 @@ stream = ExtResource("19_6aghv")
 [connection signal="pressed" from="UI/Control/button/extend/run" to="." method="_run"]
 [connection signal="pressed" from="UI/Control/button/extend/run" to="." method="choose_player_team_character_none"]
 [connection signal="pressed" from="UI/Control/button/extend/character" to="." method="_to_change_character"]
-[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="_to_fight"]
 [connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="choose_player_team_character_none"]
+[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="_to_fight"]
 [connection signal="pressed" from="UI/Control/button/change_character/character1" to="." method="_change_character_1"]
 [connection signal="pressed" from="UI/Control/button/change_character/character2" to="." method="_change_character_2"]
 [connection signal="pressed" from="UI/Control/button/change_character/character3" to="." method="_change_character_3"]
