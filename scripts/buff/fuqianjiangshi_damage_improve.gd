@@ -1,12 +1,12 @@
 extends Buff
 
-class_name qianfujiangshi_damage_improve
+class_name fuqianjiangshi_damage_improve
 
 var add_count:int = 30
 
 func _init() -> void:
 	super._init()
-	buff_id = "qianfujiangshi_damage_improve"
+	buff_id = "fuqianjiangshi_damage_improve"
 # Buff施加时触发
 func _on_apply():
 	target.damage_improve += add_count
