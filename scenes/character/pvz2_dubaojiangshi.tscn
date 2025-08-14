@@ -9,6 +9,8 @@
 [node name="character" type="Node"]
 script = ExtResource("1_kjkpc")
 character_name = "读报僵尸"
+damage_phy_ratio = 20.0
+damage_mag_ratio = 80.0
 max_hp = 9500
 max_energy = 120
 element = "earth"

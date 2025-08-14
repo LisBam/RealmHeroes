@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba3litmbe27v4"]
+
+[ext_resource type="Script" uid="uid://x576bnc4kcsn" path="res://scripts/character/pvz2_quanmingxingjiangshi.gd" id="1_665c4"]
+[ext_resource type="Texture2D" uid="uid://cy60prc25tn8f" path="res://res/character/全明星僵尸.png" id="2_i221q"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_jmlfm"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_xabwd"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_jmssb"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_665c4")
+character_name = "全明星僵尸"
+max_hp = 12000
+max_energy = 80
+physical_power = 90
+magical_power = 50
+physical_defense = 120
+magical_defense = 120
+skilla_name = "致命冲撞"
+skillb_name = "尸群"
+skillc_name = "全副武装"
+skilld_name = "阵线突破"
+skillc_energy = 15
+skilld_energy = 10
+skillb_element = "earth"
+skilla_damage_type = "phy"
+skilld_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_i221q")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jmlfm")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xabwd")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_jmssb")
