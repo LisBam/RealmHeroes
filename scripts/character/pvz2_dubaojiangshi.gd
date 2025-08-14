@@ -86,11 +86,16 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	#能量成本重置为全部能量
 	ai.skills[4].energy_cost = curr_energy
 	var lost_energy = curr_energy
-	var damage_times = lost_energy/10
-	ai.skills[4].damage_count = 50 * damage_times
-	if get_node("buff").has_buff("dubaojiangshi_extra_mag_damage"):
-		ai.skills[4].damage_count = 50 + skillc_extra_damage * damage_times
-	
+	ai.skills[4].damage_times = lost_energy/10
+	ai.skills[4].damage_count = 50
+
 	#该角色耗蓝量大，能量少时限制技能
 	ai.skills[1].strategy_value_mul = 0.5 + float(curr_energy)/max_energy
 	ai.skills[2].strategy_value_mul = 0.5 + float(curr_energy)/max_energy
+
+	#若拥有额外伤害buff，则所有伤害都加上额外伤害
+	if get_node("buff").has_buff("dubaojiangshi_extra_mag_damage"):
+		for skill in ai.skills:
+			if skill.damage_count > 0:
+				skill.damage_count += skillc_extra_damage * skill.damage_times
+		

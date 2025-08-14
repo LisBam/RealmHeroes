@@ -31,6 +31,7 @@ var skills = [
 		damage_type = [],
 		damage_element = [],
 		damage_count = 0,
+		damage_times = 1,#伤害段数
 		damage_aoe_count = 0,
 		damage_aoe_justone_count = 0, #aoe对场上主目标的伤害
 		recover_hp = 0,
@@ -58,6 +59,7 @@ var skills = [
 		damage_type = [],
 		damage_element = [],
 		damage_count = 0,
+		damage_times = 1,
 		damage_aoe_count = 0,
 		damage_aoe_justone_count = 0, #aoe对场上主目标的伤害
 		recover_hp = 0,
@@ -85,6 +87,7 @@ var skills = [
 		damage_type = [],
 		damage_element = [],
 		damage_count = 0,
+		damage_times = 1,
 		damage_aoe_count = 0,
 		damage_aoe_justone_count = 0,
 		recover_hp = 0,
@@ -112,6 +115,7 @@ var skills = [
 		damage_type = [],
 		damage_element = [],
 		damage_count = 0,
+		damage_times = 1,
 		damage_aoe_count = 0,
 		damage_aoe_justone_count = 0,
 		recover_hp = 0,
@@ -139,6 +143,7 @@ var skills = [
 		damage_type = [],
 		damage_element = [],
 		damage_count = 0,
+		damage_times = 1,
 		damage_aoe_count = 0,
 		damage_aoe_justone_count = 0,
 		recover_hp = 0,
@@ -205,8 +210,8 @@ func calculate_value(skill):
 	if not (enemy and player and enemy_team and player_team):
 		return -999
 	var total_value = 0.0
-	#伤害价值
-	var damage_value = get_final_damage(skill)
+	#伤害价值,乘以伤害段数
+	var damage_value = get_final_damage(skill) * skill.damage_times
 	#若伤害足以致命，则伤害价值变为目标生命值并乘以击杀价值
 	if get_final_damage(skill) >= enemy.curr_hp:
 		damage_value = enemy.curr_hp * KILL_VALUE
@@ -223,8 +228,8 @@ func calculate_value(skill):
 	
 	#将最终伤害乘以伤害价值
 	total_value += damage_value * DAMAGE_VALUE
-	#aoe收益(比单体价值略高)
-	total_value += get_final_damage(skill,skill.damage_aoe_count) * 1.1 * DAMAGE_VALUE
+	#aoe收益(比单体价值略高),乘以伤害段数
+	total_value += get_final_damage(skill,skill.damage_aoe_count) * skill.damage_times * 1.1 * DAMAGE_VALUE
 	#治疗收益
 	var lost_hp = max_hp - curr_hp
 	var recover_hp_value = min(skill.recover_hp,lost_hp)

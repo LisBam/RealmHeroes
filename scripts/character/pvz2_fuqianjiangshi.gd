@@ -79,6 +79,9 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[3].skip_phase_count = 1
 	if not get_node("buff").has_buff("qianfujiangshi_damage_improve"):
 		ai.skills[3].buff_value = 30 + ai.skills[1].value*1.5 #对普攻的增伤收益 + 增伤收益为令其他技能增加的伤害值
+		#若有暗流状态，则增加价值
+		if enemy.get_node("buff").has_buff("qianfujiangshi_skilld_mark"):
+			ai.skills[3].buff_value +=(ai.skills[4].value*1.5)*2/5
 		ai.skills[3].buff_duration = 4-1-1 #跳过一回合+释放技能一回合不算
 		ai.skills[3].damage_reduction = 80
 		ai.skills[3].damage_reduction_round_duration = 2 #若速度慢则ai计算时会自动-1
@@ -88,12 +91,16 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[3].damage_reduction = 0
 		ai.skills[3].damage_reduction_round_duration = 0
 
-	
-	#血量足够被击杀时释放名刀
-	if enemy.ai.get_enable_max_damage(10) > curr_hp:
-		if not_die_to_one_hp <= 0 and not get_node("buff").has_buff("putongjiangshi_not_die"):
-			ai.skills[3].buff_value = 1000
-			ai.skills[3].buff_duration = 2
-		else:
-			ai.skills[3].buff_value = 0
-			ai.skills[3].buff_duration = 0
+	add_damage_element(4,skilld_element)
+	ai.skills[4].damage_count = 400
+	ai.skills[4].damage_times = 5
+	ai.skills[4].strategy_value_count = -200 #不是一次性伤害，价值打折
+	if enemy.get_node("buff").has_buff("qianfujiangshi_skilld_mark"):
+		ai.skills[4].damage_count = 0
+		ai.skills[4].damage_times = 1
+		ai.skills[4].strategy_value_count = 0
+		
+	#能量充足时优先释放四技能再强化自身
+	ai.skills[4].strategy_value_mul = 4*(float(curr_energy)/max_energy)
+	if enemy.get_node("buff").has_buff("qianfujiangshi_skilld_mark"):
+		ai.skills[4].strategy_value_mul = 1
