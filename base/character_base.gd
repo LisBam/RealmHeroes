@@ -31,6 +31,9 @@ var be_damage_to_benefit_mul:float = 1
 #跳过下一回合
 var skip_next_phase:bool = false
 
+#冰冻,首层有60%的概率跳过回合，之后每层增加10%概率（最多5层，已在函数限制）。若大于1层，则无论是否解冻层数都-1；若解冻，则层数归零。
+var ice_stacks:int = 0
+
 #分类，例如非人一类 植物一类
 var tags:Array[String] = []
 
@@ -49,7 +52,7 @@ var element_info = {
 	},
 	"water": {
 		"name": "水",
-		"color": Color.BLUE  # 蓝色
+		"color": Color.ROYAL_BLUE  # 蓝色
 	},
 	"fire": {
 		"name": "火",
@@ -231,6 +234,11 @@ func attack(enemy,player,enemy_team,player_team):
 	
 #受到伤害
 func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:bool = false,energy = int(round(damage/100.0))):
+	#解除冰冻
+	if damage_element == "fire" and ice_stacks>0:
+		ice_stacks = 0
+		print("受到火焰伤害解除冰冻")
+		addlog("冻住 "+character_name+" 的冰被高温融化了")
 	#原本的生命值，用于计算溢出伤害
 	var origin_hp = curr_hp
 	#计算轮次提高伤害
@@ -285,9 +293,13 @@ func damage(count:int,type:String,target,element:String,print:bool = true) -> in
 	var second_damage = int(first_damage * element_multiplier)
 	#计算三阶伤害，即计算增伤与免伤后的伤害
 	var third_damage = second_damage - (target.damage_reduction/100)*second_damage + (damage_improve/100)*second_damage
+	#计算四阶伤害，元素反应伤害
+	var forth_damage = third_damage
+	if target.ice_stacks >0 and element == "fire":
+		forth_damage = int(third_damage*(1+0.01*(((60+((target.ice_stacks-1)*10))*5.0/3.0))))
 	if print:
 		print("伤害由",first_damage,"修正至",third_damage,"！")
-	return third_damage
+	return forth_damage
 
 func be_and_to_damage(damage,target,source,damage_type:String,damage_element:String,is_extra:bool = false,target_energy = int(round(damage/100.0)),player_energy = 0):
 	target.be_damage(damage,source,damage_type,damage_element,is_extra,target_energy)

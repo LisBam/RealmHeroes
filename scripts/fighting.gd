@@ -662,6 +662,8 @@ func to_next_phase():
 					addlog(enemy_character_curr.character_name+" 回合被跳过")
 					is_to_next_phase = false #不调为false下面新回合的信号不会生效
 					Signals.to_next_phase.emit()
+				elif be_ice(enemy_character_curr):
+					print("敌方回合被冰冻")
 				else:
 					curr_phase = "enemy"
 					disable_all_extend_and_skill_buttons()
@@ -674,6 +676,8 @@ func to_next_phase():
 					addlog(player_character_curr.character_name+" 回合被跳过")
 					is_to_next_phase = false #不调为false下面新回合的信号不会生效
 					Signals.to_next_phase.emit()
+				elif be_ice(player_character_curr):
+					print("我方回合被冰冻")
 				else:
 					curr_phase = "player"
 					_to_fight(false)
@@ -690,6 +694,8 @@ func to_next_phase():
 				addlog(player_character_curr.character_name+" 回合被跳过")
 				is_to_next_phase = false #不调为false下面新回合的信号不会生效
 				Signals.to_next_phase.emit()
+			elif be_ice(player_character_curr):
+					print("我方回合被冰冻")
 			else:
 				print("正常进入我方回合")
 				curr_phase = "player"
@@ -1130,17 +1136,23 @@ func speed_to_judge_phase():
 		
 	#判断是否跳过回合
 	if player_character_curr.skip_next_phase and curr_phase == "player":
-		print("我方回合被技能跳过")
+		print("speed_to_judge_phase：我方回合被技能跳过")
 		player_character_curr.skip_next_phase = false
 		addlog(player_character_curr.character_name+" 回合被跳过")
 		is_to_next_phase = false #不调为false下面新回合的信号不会生效
 		Signals.to_next_phase.emit()
 	if enemy_character_curr.skip_next_phase and curr_phase == "enemy":
-		print("敌方回合被技能跳过")
+		print("speed_to_judge_phase：敌方回合被技能跳过")
 		enemy_character_curr.skip_next_phase = false
 		addlog(enemy_character_curr.character_name+" 回合被跳过")
 		is_to_next_phase = false #不调为false下面新回合的信号不会生效
 		Signals.to_next_phase.emit()
+	if curr_phase == "player":
+		if be_ice(player_character_curr):
+			print("speed_to_judge_phase：我方回合被冰冻")
+	if curr_phase == "enemy":
+		if be_ice(enemy_character_curr):
+			print("speed_to_judge_phase：敌方回合被冰冻")
 
 func refresh_ai():
 	player_character_curr.refresh_ai(enemy_character_curr,player_character_curr,enemy_team,player_team)
@@ -1203,3 +1215,31 @@ func refresh_is_curr():
 			character.is_curr = false
 		else:
 			character.is_curr = true
+
+func be_ice(who):
+	if who.ice_stacks <= 0:
+		return false
+	#火属性不会被冻结
+	if who.element == "fire":
+		who.ice_stacks = 0
+		print(who.character_name+" 将冰融化了！")
+		addlog(who.character_name+" 将冰融化了！")
+		return false
+	#至多5层
+	if who.ice_stacks > 5:
+		who.ice_stacks = 5
+	var ice_probability = 60+(who.ice_stacks-1)*10
+	var random = randi_range(1,100)
+	if random <= ice_probability:
+		print(who,"冰冻跳过回合")
+		addlog(who.character_name+" 被冻结，无法行动。")
+		is_to_next_phase = false #不调为false下面新回合的信号不会生效
+		Signals.to_next_phase.emit()
+		#即使冻结概率为100%也要减少层数
+		if who.ice_stacks >1:
+			who.ice_stacks -=1
+		return true
+	else:
+		who.ice_stacks = 0
+		addlog(who.character_name+" 未被冻结！")
+		return false

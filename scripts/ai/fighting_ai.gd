@@ -46,7 +46,8 @@ var skills = [
 		strategy_value_mul = 1.0, #战略价值倍率，手动为ai提供策略
 		strategy_value_count = 0,
 		change_energy = 0, #本次伤害让对方获取的能量改变的值，例如有的不获取能量则为-damage_count/100
-		skip_phase_count = 0, #跳过回合数
+		skip_phase_count = 0.0, #跳过回合数
+		skip_enemy_phase_count = 0.0, #令对手跳过回合数
 		damage_reduction = 0, #免伤值
 		damage_reduction_round_duration = 0, #免伤时长
 		
@@ -74,7 +75,8 @@ var skills = [
 		strategy_value_mul = 1.0, #战略价值倍率，手动为ai提供策略
 		strategy_value_count = 0,
 		change_energy = 0, #本次伤害让对方获取的能量改变的值，例如有的不获取能量则为-damage_count/100
-		skip_phase_count = 0, #跳过回合数
+		skip_phase_count = 0.0, #跳过回合数
+		skip_enemy_phase_count = 0.0, #令对手跳过回合数
 		damage_reduction = 0, #免伤值
 		damage_reduction_round_duration = 0, #免伤时长
 		
@@ -102,7 +104,8 @@ var skills = [
 		strategy_value_mul = 1.0,
 		strategy_value_count = 0,
 		change_energy = 0,
-		skip_phase_count = 0,
+		skip_phase_count = 0.0,
+		skip_enemy_phase_count = 0.0,
 		damage_reduction = 0,
 		damage_reduction_round_duration = 0,
 		
@@ -130,7 +133,8 @@ var skills = [
 		strategy_value_mul = 1.0,
 		strategy_value_count = 0,
 		change_energy = 0,
-		skip_phase_count = 0,
+		skip_phase_count = 0.0,
+		skip_enemy_phase_count = 0.0,
 		damage_reduction = 0,
 		damage_reduction_round_duration = 0,
 		
@@ -158,7 +162,8 @@ var skills = [
 		strategy_value_mul = 1.0,
 		strategy_value_count = 0,
 		change_energy = 0,
-		skip_phase_count = 0,
+		skip_phase_count = 0.0,
+		skip_enemy_phase_count = 0.0,
 		damage_reduction = 0,
 		damage_reduction_round_duration = 0,
 		
@@ -260,8 +265,12 @@ func calculate_value(skill):
 	total_value += skill.strategy_value_count
 	
 	#减少跳过回合的收益
-	if player:
+	if player:#只是保证不为空值
 		total_value -= skill.skip_phase_count * get_a_phase_value(player)
+	
+	#增加令对手跳过回合的收益
+	if enemy:#只是保证不为空值
+		total_value += skill.skip_enemy_phase_count * get_a_phase_value(enemy)
 	
 	#增加免伤收益：对方最大可能伤害可被免伤的伤害值*可能被攻击的次数（减去跳过回合）
 	#减少的伤害值
@@ -422,8 +431,16 @@ func change_character_value():
 #计算一个回合所有可用技能的平均收益，用于得出跳过回合的收益
 func get_a_phase_value(who):
 	refresh_enable_skills(10)
-	var all_value = 0
+	var first_value = -999
+	var second_value = -999
 	for skill in who.ai.enable_skills:
-		all_value += skill.value
-	#不最大为1会导致启动时分母为0
-	return (all_value/max(who.ai.enable_skills.size(),1))
+		if skill.value > first_value:
+			second_value = first_value
+			first_value = skill.value
+		elif skill.value > second_value:
+			second_value = skill.value
+	#若价值差值过大则只计算首个
+	if first_value/max(second_value,1) >= 2:
+		second_value = first_value
+		
+	return ((first_value+second_value)/2)
