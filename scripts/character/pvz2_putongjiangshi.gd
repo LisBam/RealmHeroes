@@ -40,6 +40,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	player.get_node("buff").add_buff(add_speed)
 	tool_skill_animation()
 	if is_ai:
+		await get_tree().create_timer(0.1).timeout
 		get_parent().ai_continue_action = true
 		Signals.to_next_phase.emit()
 	

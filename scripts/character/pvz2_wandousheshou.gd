@@ -29,6 +29,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	be_and_to_damage(damage(400,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
 	attack_skill_animation()
 	if is_ai:
+		await get_tree().create_timer(0.1).timeout
 		get_parent().ai_continue_action = true
 		Signals.to_next_phase.emit()
 	

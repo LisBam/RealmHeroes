@@ -471,6 +471,8 @@ func ai_to_change_character():
 	var mul_is_1 = []
 	var mul_is_1_25 = []
 	var mul_is_1_5 = []
+	var mul_is_0_75 = []
+	var mul_is_0_5 = []
 	for has_character in enemy_team:
 		if not has_character.is_die:
 			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 1:
@@ -479,6 +481,10 @@ func ai_to_change_character():
 				mul_is_1_25.append(has_character)
 			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 1.5:
 				mul_is_1_5.append(has_character)
+			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 0.75:
+				mul_is_0_75.append(has_character)
+			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 0.5:
+				mul_is_0_5.append(has_character)
 		if mul_is_1_5.size() > 0:
 			var best_character = mul_is_1_5[0]
 			for the_character in mul_is_1_5:
@@ -494,6 +500,18 @@ func ai_to_change_character():
 		elif mul_is_1.size() > 0:
 			var best_character = mul_is_1[0]
 			for the_character in mul_is_1:
+				if the_character.curr_hp > best_character.curr_hp:
+					best_character = the_character
+			best_change_character = best_character
+		elif mul_is_0_75.size() > 0:
+			var best_character = mul_is_0_75[0]
+			for the_character in mul_is_0_75:
+				if the_character.curr_hp > best_character.curr_hp:
+					best_character = the_character
+			best_change_character = best_character
+		elif mul_is_0_5.size() > 0:
+			var best_character = mul_is_0_5[0]
+			for the_character in mul_is_0_5:
 				if the_character.curr_hp > best_character.curr_hp:
 					best_character = the_character
 			best_change_character = best_character
