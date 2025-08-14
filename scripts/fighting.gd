@@ -467,26 +467,38 @@ func _change_character_4(audio:bool = true) -> void:
 func ai_to_change_character():
 	print("ai切换角色")
 	await get_tree().create_timer(ai_think_time).timeout
-	var best_change_value = -INF
-	var best_change_character = null
-	var change_value
-	for character in enemy_team:
-		change_value = 0
-		if character == enemy_character_curr or character.is_die:
-			continue
-		if character.get_element_multiplier(character.element,player_character_curr.element) == 0.5:
-			change_value -= 10 * character.curr_hp / character.max_hp
-		if character.get_element_multiplier(character.element,player_character_curr.element) == 0.75:
-			change_value -= 5 * character.curr_hp / character.max_hp
-		if character.get_element_multiplier(character.element,player_character_curr.element) == 1:
-			change_value -= 0
-		if character.get_element_multiplier(character.element,player_character_curr.element) == 1.25:
-			change_value += 5 * character.curr_hp / character.max_hp
-		if character.get_element_multiplier(character.element,player_character_curr.element) == 1.5:
-			change_value += 10 * character.curr_hp / character.max_hp
-		if change_value > best_change_value:
-			best_change_value = change_value
-			best_change_character = character
+	var best_change_character
+	var mul_is_1 = []
+	var mul_is_1_25 = []
+	var mul_is_1_5 = []
+	for has_character in enemy_team:
+		if not has_character.is_die:
+			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 1:
+				mul_is_1.append(has_character)
+			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 1.25:
+				mul_is_1_25.append(has_character)
+			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 1.5:
+				mul_is_1_5.append(has_character)
+		if mul_is_1_5.size() > 0:
+			var best_character = mul_is_1_5[0]
+			for the_character in mul_is_1_5:
+				if the_character.curr_hp > best_character.curr_hp:
+					best_character = the_character
+			best_change_character = best_character
+		elif mul_is_1_25.size() > 0:
+			var best_character = mul_is_1_25[0]
+			for the_character in mul_is_1_25:
+				if the_character.curr_hp > best_character.curr_hp:
+					best_character = the_character
+			best_change_character = best_character
+		elif mul_is_1.size() > 0:
+			var best_character = mul_is_1[0]
+			for the_character in mul_is_1:
+				if the_character.curr_hp > best_character.curr_hp:
+					best_character = the_character
+			best_change_character = best_character
+				
+
 	if best_change_character == enemy_character_1:
 		ai_change_character_1()
 	if best_change_character == enemy_character_2:
