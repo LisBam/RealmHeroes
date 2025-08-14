@@ -45,15 +45,15 @@ func skilld(enemy,player,enemy_team,player_team):
 func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
-	add_damage_element(0,skilla_element)
-	ai.skills[0].damage_count = 1000
+	add_damage_element(1,skilla_element)
+	ai.skills[1].damage_count = 1000
 	
-	ai.skills[1].recover_hp = 100
-	ai.skills[1].recover_energy = 10
+	ai.skills[2].recover_hp = 100
+	ai.skills[2].recover_energy = 10
 	
-	add_damage_element(2,skillc_element)
-	ai.skills[2].damage_count = 400
-	ai.skills[2].can_continue = true
+	add_damage_element(3,skillc_element)
+	ai.skills[3].damage_count = 400
+	ai.skills[3].can_continue = true
 	
-	add_damage_element(3,skilld_element)
-	ai.skills[3].damage_count = 4000
+	add_damage_element(4,skilld_element)
+	ai.skills[4].damage_count = 4000

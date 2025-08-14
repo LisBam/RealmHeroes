@@ -45,22 +45,22 @@ func skilld(enemy,player,enemy_team,player_team):
 func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
-	ai.skills[0].recover_shield = 800
+	ai.skills[1].recover_shield = 800
 	#盾还能打伤害，提高收益
-	ai.skills[0].strategy_value_count = ai.skills[0].recover_shield*1.3
+	ai.skills[1].strategy_value_count = ai.skills[1].recover_shield*1.3
 	
-	ai.skills[1].recover_hp = 100
-	ai.skills[1].recover_energy = 10
+	ai.skills[2].recover_hp = 100
+	ai.skills[2].recover_energy = 10
 	
-	add_damage_element(2,skillc_element)
-	ai.skills[2].damage_count = 200 + shield*1.5
-	ai.skills[2].value -= shield
+	add_damage_element(3,skillc_element)
+	ai.skills[3].damage_count = 200 + shield*1.5
+	ai.skills[3].value -= shield
 	
-	add_damage_element(3,"fire")
-	add_damage_element(3,"mental")
-	add_damage_element(3,"water")
-	ai.skills[3].damage_count = 250*3
+	add_damage_element(4,"fire")
+	add_damage_element(4,"mental")
+	add_damage_element(4,"water")
+	ai.skills[4].damage_count = 250*3
 	
 	#当能量小于20时，优先使用二技能回复能量以解锁一技能
 	if curr_energy < 20:
-		ai.skills[1].strategy_value_count = ai.skills[0].recover_shield*0.8
+		ai.skills[2].strategy_value_count = ai.skills[1].recover_shield*0.8

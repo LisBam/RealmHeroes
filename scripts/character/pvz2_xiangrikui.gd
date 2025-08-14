@@ -59,34 +59,34 @@ func skilld(enemy,player,enemy_team,player_team):
 func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
-	ai.skills[0].recover_hp = 800
-	ai.skills[0].recover_energy = 10
-	
-	ai.skills[1].recover_hp = 100
+	ai.skills[1].recover_hp = 800
 	ai.skills[1].recover_energy = 10
 	
-	add_damage_element(2,skillc_element)
-	#ai.skills[2].damage_count = 200
-	ai.skills[2].damage_aoe_count = 100 * enemy_team.size()-1
-	ai.skills[2].damage_aoe_justone_count = 400
+	ai.skills[2].recover_hp = 100
+	ai.skills[2].recover_energy = 10
+	
+	add_damage_element(3,skillc_element)
+	#ai.skills[3].damage_count = 200
+	ai.skills[3].damage_aoe_count = 100 * enemy_team.size()-1
+	ai.skills[3].damage_aoe_justone_count = 400
 	
 	#死亡价值0.2
-	ai.skills[3].to_die_value = 0.4
+	ai.skills[4].to_die_value = 0.4
 	#血量低时提高战略价值
 	if curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <= 2000:
-		ai.skills[3].strategy_value_count = 1500
+		ai.skills[4].strategy_value_count = 1500
 	if curr_hp <= enemy.ai.get_enable_max_damage() or curr_hp <= 1000:
-		ai.skills[3].strategy_value_count = 3000
+		ai.skills[4].strategy_value_count = 3000
 	if is_ai:
 		if enemy_team.size() <= 1:
-			ai.skills[3].strategy_value_count = 0
+			ai.skills[4].strategy_value_count = 0
 	#buff价值
-	ai.skills[3].buff_value = 50 * ai.ENERGY_VALUE
+	ai.skills[4].buff_value = 50 * ai.ENERGY_VALUE
 	
 	#血量低且能量低时优先屯够30能量释放四技能
 	if (curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <4000) and curr_energy < 40:
-		ai.skills[1].strategy_value_mul = 2
-		ai.skills[3].strategy_value_mul = 3
+		ai.skills[2].strategy_value_mul = 2
+		ai.skills[4].strategy_value_mul = 3
 	else:
-		ai.skills[1].strategy_value_mul = 1
-		ai.skills[3].strategy_value_mul = 1
+		ai.skills[2].strategy_value_mul = 1
+		ai.skills[4].strategy_value_mul = 1

@@ -1,6 +1,6 @@
 extends Node
 
-@export var team_character_1_scene:PackedScene = load(AllCharacter.pvz2_fuqianjiangshi)
+@export var team_character_1_scene:PackedScene = load(AllCharacter.pvz2_wandousheshou)
 @export var team_character_2_scene:PackedScene = load(AllCharacter.pvz2_xiangrikui)
 @export var team_character_3_scene:PackedScene = load(AllCharacter.pvz2_huobaolajiao)
 @export var team_character_4_scene:PackedScene = load(AllCharacter.pvz2_dubaojiangshi)
