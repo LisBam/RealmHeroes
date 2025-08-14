@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnekjplp04pn2"]
+
+[ext_resource type="Script" uid="uid://c12228nsn35dv" path="res://scripts/character/pvz2_putongjiangshi.gd" id="1_x5is8"]
+[ext_resource type="Texture2D" uid="uid://cvq6iferl7w76" path="res://res/character/普通僵尸.png" id="2_hu4tv"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_pcgm2"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_fol8o"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_okmyr"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_x5is8")
+character_name = "普通僵尸"
+element = "earth"
+skilla_name = "啃食"
+skillb_name = "尸群"
+skillc_name = "蹒跚突进"
+skilld_name = "残骸阻截"
+skillb_energy = 5
+skillc_energy = 10
+skilld_energy = 10
+skilla_element = "earth"
+skillb_element = "earth"
+skillc_element = "earth"
+skilld_element = "earth"
+skilla_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_hu4tv")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pcgm2")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_fol8o")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_okmyr")

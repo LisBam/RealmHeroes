@@ -1,0 +1,1254 @@
+[gd_scene load_steps=24 format=3 uid="uid://j1a0qbv7it4k"]
+
+[ext_resource type="Script" uid="uid://upbga4q8gbnl" path="res://scripts/fighting.gd" id="1_gmgy1"]
+[ext_resource type="Texture2D" uid="uid://dck1vd86uqsoj" path="res://res/background/接近纯黑的背景.png" id="2_a4sqi"]
+[ext_resource type="Theme" uid="uid://cst7ag3vtq6ff" path="res://res/theme/fighting_theme.tres" id="2_gmgy1"]
+[ext_resource type="Texture2D" uid="uid://fo5jnej3yvx2" path="res://res/UI/Health_bar2.png" id="4_cvymb"]
+[ext_resource type="Script" uid="uid://bqmfbytn4h5c1" path="res://scripts/tips/tip_fighting_skilla.gd" id="4_u4fbu"]
+[ext_resource type="Script" uid="uid://dx74actm1016q" path="res://scripts/tips/tip_fighting_skillb.gd" id="5_4q00t"]
+[ext_resource type="Texture2D" uid="uid://bsrrb4lkl7ast" path="res://res/UI/Health_red.png" id="5_qgwn1"]
+[ext_resource type="Script" uid="uid://isdffmei0i5q" path="res://scripts/tips/tip_fighting_skillc.gd" id="6_b4nck"]
+[ext_resource type="Texture2D" uid="uid://banh0aldk7ip3" path="res://res/UI/energy_blue.png" id="6_qgwn1"]
+[ext_resource type="Texture2D" uid="uid://bmmqm3b5mu0kq" path="res://res/card_base/character_card_base.png" id="7_6fqxs"]
+[ext_resource type="Texture2D" uid="uid://b1r6oodr3xnj2" path="res://res/UI/team_stat_green.png" id="7_cvymb"]
+[ext_resource type="Script" uid="uid://dpd64eeocogde" path="res://scenes/tips.gd" id="7_lxgy8"]
+[ext_resource type="Texture2D" uid="uid://ba0e8o2u2asv1" path="res://res/UI/team_stat_gray.png" id="8_a1prc"]
+[ext_resource type="AudioStream" uid="uid://ypf52sjb81i0" path="res://res/audio/日本按钮5(Japanese Button 5)_爱给网_aigei_com.mp3" id="8_a4sqi"]
+[ext_resource type="Script" uid="uid://bk8xtyklflxkt" path="res://scripts/fighting_log.gd" id="8_b4nck"]
+[ext_resource type="Texture2D" uid="uid://blcongnp2eb82" path="res://res/UI/team_stat_base.png" id="9_u4fbu"]
+[ext_resource type="AudioStream" uid="uid://bql2jlesxk6uo" path="res://res/audio/洛克王国pveBGM.mp3" id="17_lxgy8"]
+[ext_resource type="AudioStream" uid="uid://bkkncrnrodv23" path="res://res/audio/洛克王国胜利.mp3" id="18_8yfr4"]
+[ext_resource type="AudioStream" uid="uid://msr8w2tygb6c" path="res://res/audio/洛克王国失败.mp3" id="19_6aghv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1prc"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 0.921569)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5y24y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_cvymb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a1prc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_u4fbu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8yfr4"]
+bg_color = Color(0.120681, 0.120681, 0.120681, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6aghv"]
+bg_color = Color(0.416528, 0.416528, 0.416528, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="fighting" type="Node" node_paths=PackedStringArray("log")]
+script = ExtResource("1_gmgy1")
+log = NodePath("UI/Control/log/VBoxContainer/PanelContainer/MarginContainer/RichTextLabel")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(637, 360)
+scale = Vector2(0.852619, 0.852619)
+texture = ExtResource("2_a4sqi")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_gmgy1")
+
+[node name="button" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="skill" type="Control" parent="UI/Control/button"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="skilla" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_top = 620.0
+offset_right = 250.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skilla"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -32.0
+offset_right = 64.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之一"
+horizontal_alignment = 1
+
+[node name="other" type="Label" parent="UI/Control/button/skill/skilla"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = 7.5
+offset_right = 45.5
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "金 耗能5"
+horizontal_alignment = 1
+
+[node name="tips" type="Control" parent="UI/Control/button/skill/skilla"]
+z_index = 3
+layout_mode = 3
+anchors_preset = 0
+offset_top = -80.0
+offset_bottom = -80.0
+mouse_filter = 2
+script = ExtResource("4_u4fbu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilla/tips"]
+visible = false
+layout_mode = 0
+offset_top = -525.0
+offset_right = 637.0
+offset_bottom = 67.0
+mouse_filter = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skilla/tips/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skilla/tips/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skilla/tips/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "111111111111"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="skillb" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 620.0
+offset_right = 500.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skillb"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -32.5
+offset_right = 64.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之二"
+horizontal_alignment = 1
+
+[node name="other" type="Label" parent="UI/Control/button/skill/skillb"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = 7.5
+offset_right = 45.5
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "金 耗能10"
+horizontal_alignment = 1
+
+[node name="tips" type="Control" parent="UI/Control/button/skill/skillb"]
+z_index = 3
+layout_mode = 3
+anchors_preset = 0
+offset_left = -200.0
+offset_top = -80.0
+offset_right = -200.0
+offset_bottom = -80.0
+mouse_filter = 2
+script = ExtResource("5_4q00t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skillb/tips"]
+visible = false
+layout_mode = 0
+offset_top = -525.0
+offset_right = 637.0
+offset_bottom = 67.0
+mouse_filter = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skillb/tips/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skillb/tips/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skillb/tips/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "111111111111"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="skillc" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 620.0
+offset_right = 750.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skillc"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -32.5
+offset_right = 64.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之三"
+horizontal_alignment = 1
+
+[node name="other" type="Label" parent="UI/Control/button/skill/skillc"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = 7.5
+offset_right = 45.5
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "金 耗能20"
+horizontal_alignment = 1
+
+[node name="tips" type="Control" parent="UI/Control/button/skill/skillc"]
+z_index = 3
+layout_mode = 3
+anchors_preset = 0
+offset_left = -224.0
+offset_top = -80.0
+offset_right = -224.0
+offset_bottom = -80.0
+mouse_filter = 2
+script = ExtResource("6_b4nck")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skillc/tips"]
+visible = false
+layout_mode = 0
+offset_top = -525.0
+offset_right = 637.0
+offset_bottom = 67.0
+mouse_filter = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skillc/tips/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skillc/tips/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skillc/tips/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "111111111111"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="skilld" type="Button" parent="UI/Control/button/skill"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 620.0
+offset_right = 1000.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/skill/skilld"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -32.5
+offset_right = 64.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "技能之四"
+horizontal_alignment = 1
+
+[node name="other" type="Label" parent="UI/Control/button/skill/skilld"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = 7.5
+offset_right = 45.5
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "金 耗能40"
+horizontal_alignment = 1
+
+[node name="tips" type="Control" parent="UI/Control/button/skill/skilld"]
+z_index = 3
+layout_mode = 3
+anchors_preset = 0
+offset_left = -384.0
+offset_top = -80.0
+offset_right = -384.0
+offset_bottom = -80.0
+mouse_filter = 2
+script = ExtResource("7_lxgy8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilld/tips"]
+visible = false
+layout_mode = 0
+offset_top = -525.0
+offset_right = 637.0
+offset_bottom = 67.0
+mouse_filter = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skilld/tips/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skilld/tips/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skilld/tips/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "111111111111"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="extend" type="Control" parent="UI/Control/button"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="attack" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 660.0
+offset_right = 1140.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/attack"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "普攻"
+
+[node name="run" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1140.0
+offset_top = 660.0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/run"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "逃跑"
+
+[node name="character" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 600.0
+offset_right = 1140.0
+offset_bottom = 660.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/character"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色"
+
+[node name="fight" type="Button" parent="UI/Control/button/extend"]
+layout_mode = 0
+offset_left = 1140.0
+offset_top = 600.0
+offset_right = 1280.0
+offset_bottom = 660.0
+
+[node name="name" type="Label" parent="UI/Control/button/extend/fight"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "战斗"
+
+[node name="change_character" type="Control" parent="UI/Control/button"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="character1" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_top = 620.0
+offset_right = 250.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色一"
+
+[node name="character2" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 620.0
+offset_right = 500.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色二"
+
+[node name="character3" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 620.0
+offset_right = 750.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色三"
+
+[node name="character4" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 620.0
+offset_right = 1000.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色四"
+
+[node name="log" type="Control" parent="UI/Control/button"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="log" type="Button" parent="UI/Control/button/log"]
+layout_mode = 0
+offset_top = 572.0
+offset_right = 85.0
+offset_bottom = 632.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("8_b4nck")
+
+[node name="name" type="Label" parent="UI/Control/button/log/log"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.784314)
+text = "记录"
+
+[node name="choose_player_character" type="Control" parent="UI/Control/button"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="character1" type="Button" parent="UI/Control/button/choose_player_character"]
+layout_mode = 0
+offset_top = 620.0
+offset_right = 250.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色一"
+
+[node name="character2" type="Button" parent="UI/Control/button/choose_player_character"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 620.0
+offset_right = 500.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色二"
+
+[node name="character3" type="Button" parent="UI/Control/button/choose_player_character"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 620.0
+offset_right = 750.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色三"
+
+[node name="character4" type="Button" parent="UI/Control/button/choose_player_character"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 620.0
+offset_right = 1000.0
+offset_bottom = 720.0
+
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色四"
+
+[node name="player1_stat" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 3.0
+offset_bottom = 3.0
+
+[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player1_stat"]
+layout_mode = 0
+offset_right = 2560.0
+offset_bottom = 160.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("5_qgwn1")
+
+[node name="Label" type="Label" parent="UI/Control/player1_stat/HpBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.5
+offset_top = -50.0
+offset_right = 171.5
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "100/100"
+
+[node name="Shield_Label" type="Label" parent="UI/Control/player1_stat/HpBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -950.0
+offset_top = -50.0
+offset_right = -80.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709155, 0.709155, 0.709155, 1)
+theme_override_font_sizes/font_size = 100
+text = "100"
+horizontal_alignment = 2
+
+[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player1_stat"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 2560.0
+offset_bottom = 193.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("6_qgwn1")
+
+[node name="Label" type="Label" parent="UI/Control/player1_stat/EnergyBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.5
+offset_top = -50.0
+offset_right = 171.5
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "100/100"
+
+[node name="element" type="Label" parent="UI/Control/player1_stat"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 81.0
+offset_right = 56.0
+offset_bottom = 114.0
+text = "属 "
+
+[node name="name" type="Label" parent="UI/Control/player1_stat"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 81.0
+offset_right = 511.0
+offset_bottom = 114.0
+text = "名字"
+
+[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+position = Vector2(475, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+position = Vector2(443, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+position = Vector2(411, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+position = Vector2(379, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="player2_stat" type="Control" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 0
+offset_top = 3.0
+offset_bottom = 3.0
+
+[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player2_stat"]
+layout_mode = 0
+offset_left = 768.0
+offset_right = 3328.0
+offset_bottom = 160.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+fill_mode = 1
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("5_qgwn1")
+
+[node name="Label" type="Label" parent="UI/Control/player2_stat/HpBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.5
+offset_top = -50.0
+offset_right = 171.5
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "100/100"
+
+[node name="Shield_Label" type="Label" parent="UI/Control/player2_stat/HpBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -50.0
+offset_right = 950.0
+offset_bottom = 50.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_font_sizes/font_size = 100
+text = "100"
+
+[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player2_stat"]
+layout_mode = 0
+offset_left = 768.0
+offset_top = 33.0
+offset_right = 3328.0
+offset_bottom = 193.0
+scale = Vector2(0.2, 0.2)
+value = 20.0
+fill_mode = 1
+texture_under = ExtResource("4_cvymb")
+texture_progress = ExtResource("6_qgwn1")
+
+[node name="Label" type="Label" parent="UI/Control/player2_stat/EnergyBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.5
+offset_top = -50.0
+offset_right = 171.5
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "100/100"
+
+[node name="element" type="Label" parent="UI/Control/player2_stat"]
+layout_mode = 0
+offset_left = 1224.0
+offset_top = 81.0
+offset_right = 1264.0
+offset_bottom = 114.0
+text = " 属"
+
+[node name="name" type="Label" parent="UI/Control/player2_stat"]
+layout_mode = 0
+offset_left = 769.0
+offset_top = 81.0
+offset_right = 1208.0
+offset_bottom = 114.0
+text = "名字"
+horizontal_alignment = 2
+
+[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+position = Vector2(901, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+position = Vector2(869, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+position = Vector2(837, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+position = Vector2(805, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="player_sprite" type="Sprite2D" parent="UI/Control"]
+visible = false
+position = Vector2(249, 341)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_6fqxs")
+
+[node name="enemy_sprite" type="Sprite2D" parent="UI/Control"]
+visible = false
+position = Vector2(1031, 341)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_6fqxs")
+
+[node name="player_fail" type="Panel" parent="UI/Control"]
+visible = false
+z_index = 4
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -125.0
+offset_right = 200.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(200, 125)
+theme_override_styles/panel = SubResource("StyleBoxFlat_8yfr4")
+
+[node name="Panel" type="Panel" parent="UI/Control/player_fail"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -99.0
+offset_right = 175.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6aghv")
+
+[node name="Label" type="Label" parent="UI/Control/player_fail/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -16.5
+offset_right = 81.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "战斗失败..."
+
+[node name="button" type="Button" parent="UI/Control/player_fail"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -62.0
+offset_right = 50.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="name" type="Label" parent="UI/Control/player_fail/button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -16.5
+offset_right = 64.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "确定"
+horizontal_alignment = 1
+
+[node name="player_win" type="Panel" parent="UI/Control"]
+visible = false
+z_index = 4
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -125.0
+offset_right = 200.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(200, 125)
+theme_override_styles/panel = SubResource("StyleBoxFlat_8yfr4")
+
+[node name="Panel" type="Panel" parent="UI/Control/player_win"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -99.0
+offset_right = 175.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6aghv")
+
+[node name="Label" type="Label" parent="UI/Control/player_win/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -16.5
+offset_right = 80.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "战斗胜利！"
+
+[node name="button" type="Button" parent="UI/Control/player_win"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -62.0
+offset_right = 50.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="name" type="Label" parent="UI/Control/player_win/button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -16.5
+offset_right = 64.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "确定"
+horizontal_alignment = 1
+
+[node name="curr_phase" type="Label" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0.301961, 0.301961, 0.301961, 1)
+theme_override_font_sizes/font_size = 40
+text = "谁的回合"
+
+[node name="curr_round_count" type="Label" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 64.0
+offset_right = 80.0
+offset_bottom = 104.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0.301961, 0.301961, 0.301961, 1)
+theme_override_font_sizes/font_size = 30
+text = "第几轮"
+horizontal_alignment = 1
+
+[node name="log" type="Control" parent="UI/Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = -70.2
+offset_top = 484.0
+offset_right = -70.2
+offset_bottom = 484.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/log"]
+layout_mode = 0
+offset_left = 475.0
+offset_top = -357.0
+offset_right = 943.0
+offset_bottom = 133.0
+mouse_filter = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/log/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/log/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/log/VBoxContainer/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 460)
+layout_mode = 2
+theme_override_constants/line_separation = 10
+bbcode_enabled = true
+text = "———————战斗记录———————"
+scroll_following = true
+autowrap_mode = 1
+
+[node name="audio" type="Marker2D" parent="."]
+
+[node name="button" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("8_a4sqi")
+
+[node name="BGM" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("17_lxgy8")
+volume_db = -10.0
+autoplay = true
+
+[node name="Win" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("18_8yfr4")
+
+[node name="Fail" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("19_6aghv")
+
+[connection signal="mouse_entered" from="UI/Control/button/skill/skilla" to="UI/Control/button/skill/skilla/tips" method="_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Control/button/skill/skilla" to="UI/Control/button/skill/skilla/tips" method="_mouse_exited"]
+[connection signal="pressed" from="UI/Control/button/skill/skilla" to="." method="_skilla"]
+[connection signal="pressed" from="UI/Control/button/skill/skilla" to="UI/Control/button/skill/skilla/tips" method="_pressed"]
+[connection signal="mouse_entered" from="UI/Control/button/skill/skillb" to="UI/Control/button/skill/skillb/tips" method="_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Control/button/skill/skillb" to="UI/Control/button/skill/skillb/tips" method="_mouse_exited"]
+[connection signal="pressed" from="UI/Control/button/skill/skillb" to="." method="_skillb"]
+[connection signal="pressed" from="UI/Control/button/skill/skillb" to="UI/Control/button/skill/skillb/tips" method="_pressed"]
+[connection signal="mouse_entered" from="UI/Control/button/skill/skillc" to="UI/Control/button/skill/skillc/tips" method="_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Control/button/skill/skillc" to="UI/Control/button/skill/skillc/tips" method="_mouse_exited"]
+[connection signal="pressed" from="UI/Control/button/skill/skillc" to="." method="_skillc"]
+[connection signal="pressed" from="UI/Control/button/skill/skillc" to="UI/Control/button/skill/skillc/tips" method="_pressed"]
+[connection signal="mouse_entered" from="UI/Control/button/skill/skilld" to="UI/Control/button/skill/skilld/tips" method="_mouse_entered"]
+[connection signal="mouse_exited" from="UI/Control/button/skill/skilld" to="UI/Control/button/skill/skilld/tips" method="_mouse_exited"]
+[connection signal="pressed" from="UI/Control/button/skill/skilld" to="." method="_skilld"]
+[connection signal="pressed" from="UI/Control/button/skill/skilld" to="UI/Control/button/skill/skilld/tips" method="_pressed"]
+[connection signal="pressed" from="UI/Control/button/extend/attack" to="." method="_attack"]
+[connection signal="pressed" from="UI/Control/button/extend/attack" to="." method="choose_player_team_character_none"]
+[connection signal="pressed" from="UI/Control/button/extend/run" to="." method="_run"]
+[connection signal="pressed" from="UI/Control/button/extend/run" to="." method="choose_player_team_character_none"]
+[connection signal="pressed" from="UI/Control/button/extend/character" to="." method="_to_change_character"]
+[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="_to_fight"]
+[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="choose_player_team_character_none"]
+[connection signal="pressed" from="UI/Control/button/change_character/character1" to="." method="_change_character_1"]
+[connection signal="pressed" from="UI/Control/button/change_character/character2" to="." method="_change_character_2"]
+[connection signal="pressed" from="UI/Control/button/change_character/character3" to="." method="_change_character_3"]
+[connection signal="pressed" from="UI/Control/button/change_character/character4" to="." method="_change_character_4"]
+[connection signal="pressed" from="UI/Control/button/choose_player_character/character1" to="." method="choose_player_team_character_1"]
+[connection signal="pressed" from="UI/Control/button/choose_player_character/character2" to="." method="choose_player_team_character_2"]
+[connection signal="pressed" from="UI/Control/button/choose_player_character/character3" to="." method="choose_player_team_character_3"]
+[connection signal="pressed" from="UI/Control/button/choose_player_character/character4" to="." method="choose_player_team_character_4"]
+[connection signal="pressed" from="UI/Control/player_fail/button" to="." method="_run"]
+[connection signal="pressed" from="UI/Control/player_win/button" to="." method="_run"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bob8kjrmitt4q"]
+
+[ext_resource type="Script" uid="uid://bwrp8o15l81jy" path="res://scripts/character/pvz2_fuqianjiangshi.gd" id="1_8chj4"]
+[ext_resource type="Texture2D" uid="uid://ck4aq634rrsw0" path="res://res/character/浮潜僵尸.png" id="2_8chj4"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_cm0ih"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_afufc"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_i68a0"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_8chj4")
+character_name = "浮潜僵尸"
+max_hp = 8000
+element = "water"
+speed = 95
+skilla_name = "啃食"
+skillb_name = "尸群"
+skillc_name = "浮潜"
+skilld_name = "暗流"
+skillc_energy = 5
+skilld_energy = 20
+skilla_element = "water"
+skillb_element = "earth"
+skillc_element = "water"
+skilld_element = "water"
+skilla_damage_type = "phy"
+skilld_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8chj4")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cm0ih")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_afufc")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_i68a0")

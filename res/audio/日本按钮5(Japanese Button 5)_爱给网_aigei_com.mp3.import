@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ypf52sjb81i0"
+path="res://.godot/imported/日本按钮5(Japanese Button 5)_爱给网_aigei_com.mp3-ed2382f1a3f60890457db6ed23e04625.mp3str"
+
+[deps]
+
+source_file="res://res/audio/日本按钮5(Japanese Button 5)_爱给网_aigei_com.mp3"
+dest_files=["res://.godot/imported/日本按钮5(Japanese Button 5)_爱给网_aigei_com.mp3-ed2382f1a3f60890457db6ed23e04625.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

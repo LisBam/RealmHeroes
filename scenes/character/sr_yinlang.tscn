@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cda4q6g1wseib"]
+
+[ext_resource type="Script" uid="uid://eapbyj455cv2" path="res://scripts/character/sr_yinlang.gd" id="1_plgvh"]
+[ext_resource type="Texture2D" uid="uid://cmaiillxp6uma" path="res://res/character/银狼.png" id="2_pl7f8"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_pl7f8"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_gixeb"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_1co2r"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_plgvh")
+character_name = "银狼"
+skilla_name = "银狼一技能"
+skillb_name = "二技能"
+skillc_name = "狼技能三"
+skilld_name = "四"
+skillb_element = "water"
+skillc_element = "fire"
+skilld_element = "earth"
+skillb_damage_type = "phy"
+skillc_damage_type = "mag"
+skilld_damage_type = "real"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_pl7f8")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pl7f8")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gixeb")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_1co2r")
