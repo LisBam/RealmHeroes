@@ -4,7 +4,7 @@ func _ready() -> void:
 	super._ready()
 	skilla_description = "发射寒冰豌豆攻击对方，造成600威力的水属性法伤，并使目标速度减少3点，该效果最多叠加5层。"
 	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
-	skillc_description = "冰冷气息使敌人举步维艰，20%的概率冻结对方。每层“寒冰豌豆”的减速会使冰冻概率提高4%。"
+	skillc_description = "冰冷气息使敌人举步维艰，30%的概率冻结对方。每层“寒冰豌豆”的减速会使冰冻概率提高5%。"
 	skilld_description = "发射锋利的冰锥攻击敌人，造成1000威力的水属性法伤。若目标已被冰冻，则额外提高500点威力。"
 	skilla_short_desc = "法伤"
 	skillb_short_desc = "回能回血"
@@ -29,7 +29,7 @@ func skillb(enemy,player,enemy_team,player_team):
 	
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
-	var ice_probability = 20 + 4* enemy.get_node("buff").get_buff_stacks("hanbingsheshou_reduce_speed")
+	var ice_probability = 30 + 5* enemy.get_node("buff").get_buff_stacks("hanbingsheshou_reduce_speed")
 	var random = randi_range(1,100)
 	if random <= ice_probability:
 		addlog(enemy.character_name+"被冰冻了！")
@@ -78,7 +78,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		#叠层越高价值越高
 		ai.skills[1].debuff_value = 300*(6-lack_stacks)
 	#对三技能概率增加的价值
-	ai.skills[1].strategy_value_count = 300
+	ai.skills[1].strategy_value_count = 360
 	if stacks>=5:
 		ai.skills[1].debuff_value = 0
 		ai.skills[1].strategy_value_count = 0
@@ -87,7 +87,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[2].recover_hp = 100
 	ai.skills[2].recover_energy = 10
 	
-	var ice_probability = 0.01*(20 + 4* enemy.get_node("buff").get_buff_stacks("hanbingsheshou_reduce_speed"))
+	var ice_probability = 0.01*(30 + 5* enemy.get_node("buff").get_buff_stacks("hanbingsheshou_reduce_speed"))
 	if enemy.ice_stacks <=0:
 		ai.skills[3].skip_enemy_phase_count = ice_probability*1.5 #1.5为平均冻结回合，0.5为平衡系数
 	elif enemy.ice_stacks >=0:
