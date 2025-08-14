@@ -11,6 +11,7 @@ script = ExtResource("1_665c4")
 character_name = "全明星僵尸"
 max_hp = 12000
 max_energy = 80
+speed = 120
 physical_power = 90
 magical_power = 50
 physical_defense = 120
