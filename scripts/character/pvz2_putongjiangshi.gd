@@ -79,6 +79,8 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 			ai.skills[3].buff_value = 600
 		if speed+10 == enemy.speed:
 			ai.skills[3].buff_value = 300
+		if speed+10 < enemy.speed:
+			ai.skills[3].buff_value = 80
 		ai.skills[3].buff_duration = 3
 		ai.skills[3].can_continue = true
 		#能量充足时提高发动价值,反之减少

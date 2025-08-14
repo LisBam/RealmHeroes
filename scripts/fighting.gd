@@ -474,6 +474,8 @@ func ai_to_change_character():
 	var mul_is_0_75 = []
 	var mul_is_0_5 = []
 	for has_character in enemy_team:
+		if has_character == enemy_character_curr:
+			continue
 		if not has_character.is_die:
 			if has_character.get_element_multiplier(has_character.element,player_character_curr.element) == 1:
 				mul_is_1.append(has_character)
