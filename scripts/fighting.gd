@@ -663,7 +663,7 @@ func to_next_phase():
 					is_to_next_phase = false #不调为false下面新回合的信号不会生效
 					Signals.to_next_phase.emit()
 				elif be_ice(enemy_character_curr):
-					print("敌方回合被冰冻")
+					print("to_next_phase：敌方回合被冰冻")
 				else:
 					curr_phase = "enemy"
 					disable_all_extend_and_skill_buttons()
@@ -677,7 +677,7 @@ func to_next_phase():
 					is_to_next_phase = false #不调为false下面新回合的信号不会生效
 					Signals.to_next_phase.emit()
 				elif be_ice(player_character_curr):
-					print("我方回合被冰冻")
+					print("to_next_phase：我方回合被冰冻")
 				else:
 					curr_phase = "player"
 					_to_fight(false)
@@ -695,7 +695,7 @@ func to_next_phase():
 				is_to_next_phase = false #不调为false下面新回合的信号不会生效
 				Signals.to_next_phase.emit()
 			elif be_ice(player_character_curr):
-					print("我方回合被冰冻")
+					print("to_next_phase：我方回合被冰冻")
 			else:
 				print("正常进入我方回合")
 				curr_phase = "player"
@@ -1110,8 +1110,9 @@ func speed_to_judge_phase():
 	elif player_character_curr.speed < enemy_character_curr.speed:
 		curr_phase = "enemy"
 		if not enemy_character_curr.skip_next_phase:
-			disable_all_extend_and_skill_buttons()
-			ai_enemy_action()
+			if not enemy_character_curr.ice_stacks > 0:#如果冰冻，则让后续操作在冰冻结算中执行
+				disable_all_extend_and_skill_buttons()
+				ai_enemy_action()
 	elif player_character_curr.speed == enemy_character_curr.speed:
 		var random = randi_range(0,1)
 		if random == 0:
@@ -1121,8 +1122,9 @@ func speed_to_judge_phase():
 		else:
 			curr_phase = "enemy"
 			if not enemy_character_curr.skip_next_phase:
-				disable_all_extend_and_skill_buttons()
-				ai_enemy_action()
+				if not enemy_character_curr.ice_stacks > 0:#如果冰冻，则让后续操作在冰冻结算中执行
+					disable_all_extend_and_skill_buttons()
+					ai_enemy_action()
 	print(curr_phase,"为先手！")
 	if curr_phase == "player":
 		addlog("——————————————————\n本轮轮先手为 我方")
@@ -1150,9 +1152,12 @@ func speed_to_judge_phase():
 	if curr_phase == "player":
 		if be_ice(player_character_curr):
 			print("speed_to_judge_phase：我方回合被冰冻")
-	if curr_phase == "enemy":
+	if curr_phase == "enemy" and enemy_character_curr.ice_stacks>0:
 		if be_ice(enemy_character_curr):
 			print("speed_to_judge_phase：敌方回合被冰冻")
+		else:
+			disable_all_extend_and_skill_buttons()
+			ai_enemy_action()
 
 func refresh_ai():
 	player_character_curr.refresh_ai(enemy_character_curr,player_character_curr,enemy_team,player_team)
