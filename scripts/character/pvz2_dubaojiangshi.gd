@@ -60,36 +60,36 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
 	var skillc_extra_damage = 600
-	add_damage_element(0,skilla_element)
-	ai.skills[0].damage_count = 1000
+	add_damage_element(1,skilla_element)
+	ai.skills[1].damage_count = 1000
 	if get_node("buff").has_buff("putongjiangshi_phy_power"):
-		ai.skills[0].damage_count+=skillc_extra_damage
+		ai.skills[1].damage_count+=skillc_extra_damage
 	
-	ai.skills[1].buff_value = 0
+	ai.skills[2].buff_value = 0
 	for character in player_team:
 		if character and character.has_tag("亡灵生物"):
-			ai.skills[1].buff_value += 20 * 10 #每点物攻对一技能来说大概造成10点伤害
-	ai.skills[1].buff_duration = 4-1
+			ai.skills[2].buff_value += 20 * 10 #每点物攻对一技能来说大概造成10点伤害
+	ai.skills[2].buff_duration = 4-1
 	if get_node("buff").has_buff("putongjiangshi_phy_power"):
-		ai.skills[1].buff_value = 0
+		ai.skills[2].buff_value = 0
 
 	if not get_node("buff").has_buff("dubaojiangshi_extra_mag_damage"):
-		ai.skills[2].buff_value = skillc_extra_damage * magical_power/100 #乘以法强价值
-		ai.skills[2].buff_duration = 4-1
+		ai.skills[3].buff_value = skillc_extra_damage * magical_power/100 #乘以法强价值
+		ai.skills[3].buff_duration = 4-1
 	else:
-		ai.skills[2].buff_value = 0
-		ai.skills[2].buff_duration = 0
+		ai.skills[3].buff_value = 0
+		ai.skills[3].buff_duration = 0
 	
-	add_damage_element(3,skilld_element)
-	add_damage_element(3,"earth")
-	add_damage_type(3,"mag")
+	add_damage_element(4,skilld_element)
+	add_damage_element(4,"earth")
+	add_damage_type(4,"mag")
 	#能量成本重置为全部能量
-	ai.skills[3].energy_cost = curr_energy
+	ai.skills[4].energy_cost = curr_energy
 	var lost_energy = curr_energy
 	var damage_times = lost_energy/10
-	ai.skills[3].damage_count = 50 * damage_times
+	ai.skills[4].damage_count = 50 * damage_times
 	if get_node("buff").has_buff("dubaojiangshi_extra_mag_damage"):
-		ai.skills[3].damage_count = 50 + skillc_extra_damage * damage_times
+		ai.skills[4].damage_count = 50 + skillc_extra_damage * damage_times
 	
 	#该角色耗蓝量大，能量少时限制技能
 	ai.skills[1].strategy_value_mul = 0.5 + float(curr_energy)/max_energy

@@ -46,33 +46,33 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
 	add_damage_element(0,skilla_element)
-	ai.skills[0].damage_count = 1000
+	ai.skills[1].damage_count = 1000
 	
-	ai.skills[1].recover_hp = 100
-	ai.skills[1].recover_energy = 10
+	ai.skills[2].recover_hp = 100
+	ai.skills[2].recover_energy = 10
 	
 	
-	add_damage_element(2,skillc_element)
-	ai.skills[2].damage_count = 400
-	ai.skills[2].buff_value = 30 * 15
-	ai.skills[2].buff_duration = 5
+	add_damage_element(3,skillc_element)
+	ai.skills[3].damage_count = 400
+	ai.skills[3].buff_value = 30 * 15
+	ai.skills[3].buff_duration = 5
 	var stacks = get_node("buff").get_buff_stacks("huobaolajiao_add_power")
 	if stacks >= 3:
-		ai.skills[2].buff_value = 0
-		ai.skills[2].buff_duration = 1
+		ai.skills[3].buff_value = 0
+		ai.skills[3].buff_duration = 1
 	#血量高时优先加强，血量低时权重下降
 	#ai.skills[2].strategy_value_mul = 3-(max_hp/curr_hp)
 	
-	add_damage_element(3,skilld_element)
-	ai.skills[3].to_die_value = 0.05 + (max_hp-curr_hp)/60000
-	ai.skills[3].damage_count = 4000
+	add_damage_element(4,skilld_element)
+	ai.skills[4].to_die_value = 0.05 + (max_hp-curr_hp)/60000
+	ai.skills[4].damage_count = 4000
 	if curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <= 2000:
-		ai.skills[3].strategy_value_count = 2000
+		ai.skills[4].strategy_value_count = 2000
 	if curr_hp <= enemy.ai.get_enable_max_damage() or curr_hp <= 1000:
-		ai.skills[3].strategy_value_count = 4000
+		ai.skills[4].strategy_value_count = 4000
 
 	#血量低且能量低时优先屯够40能量释放四技能
 	if (curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <=4000) and curr_energy < 50:
-		ai.skills[0].strategy_value_mul = 1.2
-		ai.skills[1].strategy_value_mul = 3
-		ai.skills[3].strategy_value_mul = 1.5
+		ai.skills[1].strategy_value_mul = 1.2
+		ai.skills[2].strategy_value_mul = 3
+		ai.skills[4].strategy_value_mul = 1.5

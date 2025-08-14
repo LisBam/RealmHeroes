@@ -372,12 +372,12 @@ func ai_action(enemy,player,enemy_team,player_team):
 	if not skillc_short_desc:
 		attack(enemy,player,enemy_team,player_team)
 	else:
-		if str(skill_choice) == "attack":
-			attack(enemy,player,enemy_team,player_team)
-		elif str(skill_choice) == "change_character":
+		if str(skill_choice) == "change_character":
 			get_parent().ai_to_change_character()
 		else:
 			match skill_choice.id:
+				"attack":
+					attack(enemy,player,enemy_team,player_team)
 				"skilla":
 					skilla(enemy,player,enemy_team,player_team)
 				"skillb":
@@ -399,22 +399,30 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.player = player
 	ai.enemy_team = enemy_team
 	ai.player_team = player_team
-	ai.skills[0].skill_element = skilla_element
-	ai.skills[1].skill_element = skillb_element
-	ai.skills[2].skill_element = skillc_element
-	ai.skills[3].skill_element = skilld_element
-	ai.skills[0].energy_cost = skilla_energy
-	ai.skills[1].energy_cost = skillb_energy
-	ai.skills[2].energy_cost = skillc_energy
-	ai.skills[3].energy_cost = skilld_energy
-	add_damage_type(0,skilla_damage_type)
-	add_damage_type(1,skillb_damage_type)
-	add_damage_type(2,skillc_damage_type)
-	add_damage_type(3,skilld_damage_type)
+	ai.skills[1].skill_element = skilla_element
+	ai.skills[2].skill_element = skillb_element
+	ai.skills[3].skill_element = skillc_element
+	ai.skills[4].skill_element = skilld_element
+	ai.skills[1].energy_cost = skilla_energy
+	ai.skills[2].energy_cost = skillb_energy
+	ai.skills[3].energy_cost = skillc_energy
+	ai.skills[4].energy_cost = skilld_energy
+	add_damage_type(1,skilla_damage_type)
+	add_damage_type(2,skillb_damage_type)
+	add_damage_type(3,skillc_damage_type)
+	add_damage_type(4,skilld_damage_type)
 	#add_damage_element(0,skilla_element)
 	#add_damage_element(1,skillb_element)
 	#add_damage_element(2,skillc_element)
 	#add_damage_element(3,skilld_element)
+	#普攻初始化：
+	add_damage_type(0,"phy")
+	ai.skills[0].skill_element = element
+	add_damage_element(0,element)
+	ai.skills[0].energy_cost = 0
+	ai.skills[0].damage_count = 100
+	ai.skills[0].recover_energy = 5
+	
 	if get_tree():
 		await get_tree().physics_frame
 		ai.refresh_enable_skills()

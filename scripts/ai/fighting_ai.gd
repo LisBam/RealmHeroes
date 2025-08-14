@@ -25,6 +25,33 @@ var player_team
 
 var skills = [
 	{
+		id = "attack",
+		energy_cost = 0,
+		skill_element = null,
+		damage_type = [],
+		damage_element = [],
+		damage_count = 0,
+		damage_aoe_count = 0,
+		damage_aoe_justone_count = 0, #aoe对场上主目标的伤害
+		recover_hp = 0,
+		recover_shield = 0,
+		recover_energy = 0,
+		buff_value = 0,
+		buff_duration = 1,
+		debuff_value = 0,
+		debuff_duration = 1,
+		can_continue = false,	#发动后不结束回合
+		to_die_value = 1,	#自爆技能收益倍率
+		strategy_value_mul = 1.0, #战略价值倍率，手动为ai提供策略
+		strategy_value_count = 0,
+		change_energy = 0, #本次伤害让对方获取的能量改变的值，例如有的不获取能量则为-damage_count/100
+		skip_phase_count = 0, #跳过回合数
+		damage_reduction = 0, #免伤值
+		damage_reduction_round_duration = 0, #免伤时长
+		
+		value = 0,
+	},
+	{
 		id = "skilla",
 		energy_cost = 0,
 		skill_element = null,
@@ -283,7 +310,7 @@ func calculate_value(skill):
 # 从可用技能中选择价值最高的技能
 func choose_skill():
 	if enable_skills.size() == 0:
-		return "attack"
+		return 0
 		
 	var best_skill = enable_skills[0]
 	var max_value = best_skill.value
@@ -301,8 +328,8 @@ func choose_skill():
 			print(skill.id,"技能价值：",skill.value,"，能量不足！")
 	
 	#若最终得出的价值小于普攻，则输出普攻
-	if best_skill.value < 5*ENERGY_VALUE + 120:
-		return	"attack"
+	#if best_skill.value < 5*ENERGY_VALUE + 120:
+		#return	"attack"
 	#若得出结果小于切换角色，则切换角色
 	if best_skill.value < change_character_value():
 		print("AI被克制，切换角色！")

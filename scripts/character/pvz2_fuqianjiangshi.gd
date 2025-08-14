@@ -65,28 +65,28 @@ func skilld(enemy,player,enemy_team,player_team):
 func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
-	add_damage_element(0,skilla_element)
-	ai.skills[0].damage_count = 1000
+	add_damage_element(1,skilla_element)
+	ai.skills[1].damage_count = 1000
 	
-	ai.skills[1].buff_value = 0
+	ai.skills[2].buff_value = 0
 	for character in player_team:
 		if character and character.has_tag("亡灵生物"):
-			ai.skills[1].buff_value += 20 * 10 #每点物攻对一技能来说大概造成10点伤害
-	ai.skills[1].buff_duration = 3-1
+			ai.skills[2].buff_value += 20 * 10 #每点物攻对一技能来说大概造成10点伤害
+	ai.skills[2].buff_duration = 3-1
 	if get_node("buff").has_buff("putongjiangshi_phy_power"):
-		ai.skills[1].buff_value = 0
-
-	ai.skills[2].skip_phase_count = 1
-	if not get_node("buff").has_buff("qianfujiangshi_damage_improve"):
-		ai.skills[2].buff_value = 30 + ai.skills[1].value*1.5 #对普攻的增伤收益 + 增伤收益为令其他技能增加的伤害值
-		ai.skills[2].buff_duration = 4-1-1 #跳过一回合+释放技能一回合不算
-		ai.skills[2].damage_reduction = 80
-		ai.skills[2].damage_reduction_round_duration = 2 #若速度慢则ai计算时会自动-1
-	else:
 		ai.skills[2].buff_value = 0
-		ai.skills[2].buff_duration = 0
-		ai.skills[2].damage_reduction = 0
-		ai.skills[2].damage_reduction_round_duration = 0
+
+	ai.skills[3].skip_phase_count = 1
+	if not get_node("buff").has_buff("qianfujiangshi_damage_improve"):
+		ai.skills[3].buff_value = 30 + ai.skills[1].value*1.5 #对普攻的增伤收益 + 增伤收益为令其他技能增加的伤害值
+		ai.skills[3].buff_duration = 4-1-1 #跳过一回合+释放技能一回合不算
+		ai.skills[3].damage_reduction = 80
+		ai.skills[3].damage_reduction_round_duration = 2 #若速度慢则ai计算时会自动-1
+	else:
+		ai.skills[3].buff_value = 0
+		ai.skills[3].buff_duration = 0
+		ai.skills[3].damage_reduction = 0
+		ai.skills[3].damage_reduction_round_duration = 0
 
 	
 	#血量足够被击杀时释放名刀

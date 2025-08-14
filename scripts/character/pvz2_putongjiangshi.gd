@@ -60,37 +60,37 @@ func skilld(enemy,player,enemy_team,player_team):
 func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
-	add_damage_element(0,skilla_element)
-	ai.skills[0].damage_count = 1000
+	add_damage_element(1,skilla_element)
+	ai.skills[1].damage_count = 1000
 	
-	ai.skills[1].buff_value = 0
+	ai.skills[2].buff_value = 0
 	for character in player_team:
 		if character and character.has_tag("亡灵生物"):
-			ai.skills[1].buff_value += 20 * 10 #每点物攻对一技能来说大概造成10点伤害
-	ai.skills[1].buff_duration = 3-1
+			ai.skills[2].buff_value += 20 * 10 #每点物攻对一技能来说大概造成10点伤害
+	ai.skills[2].buff_duration = 3-1
 	if get_node("buff").has_buff("putongjiangshi_phy_power"):
-		ai.skills[1].buff_value = 0
+		ai.skills[2].buff_value = 0
 
 	#发动后若速度能够反超或持平则释放
 	if speed < enemy.speed and speed+10 >= enemy.speed:
 		#反超价值更高
 		if speed+10 > enemy.speed:
-			ai.skills[2].buff_value = 600
+			ai.skills[3].buff_value = 600
 		if speed+10 == enemy.speed:
-			ai.skills[2].buff_value = 300
-		ai.skills[2].buff_duration = 2
-		ai.skills[2].can_continue = true
+			ai.skills[3].buff_value = 300
+		ai.skills[3].buff_duration = 3
+		ai.skills[3].can_continue = true
 		#能量充足时提高发动价值,反之减少
-		ai.skills[2].strategy_value_mul = 0.5 + curr_energy/max_energy
+		ai.skills[3].strategy_value_mul = 0.5 + curr_energy/max_energy
 	#满能量不用白不用
 	if curr_energy == max_energy:
-		ai.skills[2].strategy_value_count = 2000
+		ai.skills[3].strategy_value_count = 2000
 	
 	#血量足够被击杀时释放名刀
 	if enemy.ai.get_enable_max_damage(10) > curr_hp:
 		if not_die_to_one_hp <= 0 and not get_node("buff").has_buff("putongjiangshi_not_die"):
-			ai.skills[3].buff_value = 1000
-			ai.skills[3].buff_duration = 2
+			ai.skills[4].buff_value = 1000
+			ai.skills[4].buff_duration = 2
 		else:
-			ai.skills[3].buff_value = 0
-			ai.skills[3].buff_duration = 0
+			ai.skills[4].buff_value = 0
+			ai.skills[4].buff_duration = 0
