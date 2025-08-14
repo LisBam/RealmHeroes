@@ -9,6 +9,8 @@
 [node name="character" type="Node"]
 script = ExtResource("1_8tb44")
 character_name = "向日葵"
+damage_phy_ratio = 1.0
+damage_mag_ratio = 99.0
 max_hp = 8000
 max_energy = 120
 element = "wood"

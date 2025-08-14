@@ -11,6 +11,11 @@ var skill_effects = {}
 #特殊能量
 @export var is_special_energy:bool = false
 
+#伤害类型占比
+@export var damage_phy_ratio:float = 100 ##物伤占比
+@export var damage_mag_ratio:float = 0 ##法伤占比
+@export var damage_real_ratio:float = 0 ##真伤占比
+
 #是否为ai控制
 var is_ai:bool = false
 
