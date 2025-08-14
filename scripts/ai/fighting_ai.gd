@@ -403,6 +403,9 @@ func get_final_damage(skill,damage_count = max(skill.damage_count,skill.damage_a
 func change_character_value():
 	if not (enemy and player and enemy_team and player_team):
 		return -999
+	if player_team:
+		if player_team.size() <= 1:
+			return -999
 	var value = 0.0
 	#在被克制时才思考切换角色
 	if player.get_element_multiplier(player.element,enemy.element) < 1:
