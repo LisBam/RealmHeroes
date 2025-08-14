@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://o0mqnf0ddei7"]
+
+[ext_resource type="Script" uid="uid://fwp83viqofdq" path="res://scripts/character/pvz2_hanbingsheshou.gd" id="1_5bvwj"]
+[ext_resource type="Texture2D" uid="uid://b8vhxmsxpuxqj" path="res://res/character/寒冰射手.png" id="2_yh2i5"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_5hmvj"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_seorx"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_xnnns"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_5bvwj")
+character_name = "寒冰射手"
+damage_phy_ratio = 1.0
+damage_mag_ratio = 99.0
+max_energy = 120
+element = "water"
+speed = 95
+physical_power = 80
+magical_power = 110
+skilla_name = "寒冰豌豆"
+skillb_name = "光合作用"
+skillc_name = "冰冷气息"
+skilld_name = "刺骨寒锥"
+skillb_energy = 0
+skillc_energy = 10
+skilld_energy = 10
+skilla_element = "water"
+skillb_element = "wood"
+skillc_element = "water"
+skilld_element = "water"
+skilla_damage_type = "mag"
+skilld_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_yh2i5")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5hmvj")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_seorx")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_xnnns")
