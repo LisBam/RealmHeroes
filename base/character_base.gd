@@ -411,10 +411,10 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	add_damage_type(2,skillb_damage_type)
 	add_damage_type(3,skillc_damage_type)
 	add_damage_type(4,skilld_damage_type)
-	#add_damage_element(0,skilla_element)
-	#add_damage_element(1,skillb_element)
-	#add_damage_element(2,skillc_element)
-	#add_damage_element(3,skilld_element)
+	add_damage_element(1,skilla_element)
+	add_damage_element(2,skillb_element)
+	add_damage_element(3,skillc_element)
+	add_damage_element(4,skilld_element)
 	#普攻初始化：
 	add_damage_type(0,"phy")
 	ai.skills[0].skill_element = element
@@ -434,6 +434,10 @@ func add_damage_type(skill_index: int, damage_type: String):
 func add_damage_element(skill_index: int, damage_element: String):
 	if damage_element not in ai.skills[skill_index].damage_element:
 		ai.skills[skill_index].damage_element.append(damage_element)
+
+func remove_damage_element(skill_index: int, damage_element: String):
+	if damage_element in ai.skills[skill_index].damage_element:
+		ai.skills[skill_index].damage_element.remove(damage_element)
 
 #endregion
 

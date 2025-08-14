@@ -5,7 +5,7 @@ func _ready() -> void:
 	skilla_description = "发射豌豆攻击对方，造成1000威力的木属性物伤。"
 	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
 	skillc_description = "发射豌豆攻击对方，造成400威力的木属性物伤。发动后不结束回合。"
-	skilld_description = "发射威力巨大的超级豌豆，造成4000威力的木属性物伤。"
+	skilld_description = "发射威力巨大的超级豌豆，造成3000威力的木属性物伤。"
 	skilla_short_desc = "物伤"
 	skillb_short_desc = "回能回血"
 	skillc_short_desc = "物伤 连续回合"
@@ -34,7 +34,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
-	be_and_to_damage(damage(4000,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
+	be_and_to_damage(damage(3000,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 
@@ -56,4 +56,4 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[3].can_continue = true
 	
 	add_damage_element(4,skilld_element)
-	ai.skills[4].damage_count = 4000
+	ai.skills[4].damage_count = 3000
