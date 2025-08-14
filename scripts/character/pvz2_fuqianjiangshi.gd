@@ -5,7 +5,7 @@ func _ready() -> void:
 	tags.append("亡灵生物")
 	skilla_description = "啃食敌人对其造成伤害，造成1000威力的水属性物伤。"
 	skillb_description = "它不是一个人！队伍里每有一只亡灵生物，都会提供持续3轮的20点物攻。该效果不可叠加。"
-	skillc_description = "潜入水中，发起突袭。获得80%的免伤持续2轮，获得150%的增伤持续4轮，并跳过下一个回合。这些效果不可叠加。"
+	skillc_description = "潜入水中，发起突袭。获得80%的免伤持续2轮，获得100%的增伤持续4轮，并跳过下一个回合。这些效果不可叠加。"
 	skilld_description = "暗流般无声无息地接近敌人。释放后的6轮内，每轮开始时，浮潜僵尸对目标造成400威力的水属性物伤。该效果不可叠加。"
 	skilla_short_desc = "物伤"
 	skillb_short_desc = "根据亡灵生物数提升物攻"
@@ -33,13 +33,13 @@ func skillb(enemy,player,enemy_team,player_team):
 	
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
-	var damage_reduction = qianfujiangshi_damage_reduction.new()
+	var damage_reduction = fuqianjiangshi_damage_reduction.new()
 	damage_reduction.add_count = 80
 	damage_reduction.round_duration = 2
 	damage_reduction.init_round_duration = 2
 	player.get_node("buff").add_buff(damage_reduction)
-	var damage_improve = qianfujiangshi_damage_improve.new()
-	damage_improve.add_count = 150
+	var damage_improve = fuqianjiangshi_damage_improve.new()
+	damage_improve.add_count = 100
 	damage_improve.round_duration = 4
 	damage_improve.init_round_duration = 4
 	player.get_node("buff").add_buff(damage_improve)
@@ -49,7 +49,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
-	var mark = qianfujiangshi_skilld_mark.new()
+	var mark = fuqianjiangshi_skilld_mark.new()
 	mark.damage = 400
 	mark.round_duration = 6
 	mark.init_round_duration = 6
@@ -77,11 +77,11 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[2].buff_value = 0
 
 	ai.skills[3].skip_phase_count = 1
-	if not get_node("buff").has_buff("qianfujiangshi_damage_improve"):
-		ai.skills[3].buff_value = 30 + ai.skills[1].value*1.5 #对普攻的增伤收益 + 增伤收益为令其他技能增加的伤害值
+	if not get_node("buff").has_buff("fuqianjiangshi_damage_improve"):
+		ai.skills[3].buff_value = 30 + ai.skills[1].value*1.0 #对普攻的增伤收益 + 增伤收益为令其他技能增加的伤害值
 		#若有暗流状态，则增加价值
-		if enemy.get_node("buff").has_buff("qianfujiangshi_skilld_mark"):
-			ai.skills[3].buff_value +=(ai.skills[4].value*1.5)*2/5
+		if enemy.get_node("buff").has_buff("fuqianjiangshi_skilld_mark"):
+			ai.skills[3].buff_value +=(ai.skills[4].value*1.0)*2/5
 		ai.skills[3].buff_duration = 4-1-1 #跳过一回合+释放技能一回合不算
 		ai.skills[3].damage_reduction = 80
 		ai.skills[3].damage_reduction_round_duration = 2 #若速度慢则ai计算时会自动-1
@@ -95,12 +95,12 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[4].damage_count = 400
 	ai.skills[4].damage_times = 5
 	ai.skills[4].strategy_value_count = -200 #不是一次性伤害，价值打折
-	if enemy.get_node("buff").has_buff("qianfujiangshi_skilld_mark"):
+	if enemy.get_node("buff").has_buff("fuqianjiangshi_skilld_mark"):
 		ai.skills[4].damage_count = 0
 		ai.skills[4].damage_times = 1
 		ai.skills[4].strategy_value_count = 0
 		
 	#能量充足时优先释放四技能再强化自身
 	ai.skills[4].strategy_value_mul = 4*(float(curr_energy)/max_energy)
-	if enemy.get_node("buff").has_buff("qianfujiangshi_skilld_mark"):
+	if enemy.get_node("buff").has_buff("fuqianjiangshi_skilld_mark"):
 		ai.skills[4].strategy_value_mul = 1
