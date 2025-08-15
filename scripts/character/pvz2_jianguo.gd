@@ -64,3 +64,11 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	#当能量小于20时，优先使用二技能回复能量以解锁一技能
 	if curr_energy < 20:
 		ai.skills[2].strategy_value_count = ai.skills[1].recover_shield*0.8
+
+func add_shield(count,source:character_base = self):
+	super.add_shield(count,source)
+	taunt_value = 1+(shield/3200.0)
+	
+func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:bool = false,energy = int(round(damage/100.0))):
+	super.be_damage(damage,source,damage_type,damage_element,is_extra,energy)
+	taunt_value = 1+(shield/3200.0)

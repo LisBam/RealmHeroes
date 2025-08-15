@@ -34,6 +34,9 @@ var be_damage_to_benefit_mul:float = 1
 #跳过下一回合
 var skip_next_phase:bool = false
 
+#嘲讽值，嘲讽值越高，ai越会优先打伤害
+var taunt_value:float = 1.0
+
 #冰冻,首层有60%的概率跳过回合，之后每层增加10%概率（最多5层，已在函数限制）。若大于1层，则无论是否解冻层数都-1；若解冻，则层数归零。
 var ice_stacks:int = 0
 
