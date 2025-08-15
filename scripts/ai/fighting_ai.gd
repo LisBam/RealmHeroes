@@ -230,6 +230,8 @@ func calculate_value(skill):
 		#若伤害足以致命，且目标没有锁血，则无视卖血
 		if get_final_damage(skill) >= enemy.curr_hp and not enemy.not_die_to_one_hp:
 			damage_value *= 1/enemy.be_damage_to_benefit_mul
+	#根据嘲讽值提高伤害价值
+	damage_value *= enemy.taunt_value
 	
 	#将最终伤害乘以伤害价值
 	total_value += damage_value * DAMAGE_VALUE
