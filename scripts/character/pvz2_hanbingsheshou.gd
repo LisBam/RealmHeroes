@@ -31,6 +31,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
 	var ice_probability = 30 + 5* enemy.get_node("buff").get_buff_stacks("hanbingsheshou_reduce_speed")
 	var random = randi_range(1,100)
+	print(random)
 	if random <= ice_probability:
 		addlog(enemy.character_name+"被冰冻了！")
 		enemy.ice_stacks += 1

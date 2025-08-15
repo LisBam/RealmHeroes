@@ -417,6 +417,9 @@ func change_character_value():
 			value += 440
 		#根据队友中是否存在克制提高价值
 		for has_character in player_team:
+			#若为站场角色，不计算
+			if has_character.is_curr:
+				continue
 			if not has_character.is_die:
 				if has_character.get_element_multiplier(has_character.element,enemy.element) == 1:
 					value += 240
