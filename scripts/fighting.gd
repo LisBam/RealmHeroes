@@ -232,6 +232,9 @@ func _physics_process(delta: float) -> void:
 	#刷新站场角色
 	refresh_is_curr()
 	
+	#刷新是否出现过
+	refresh_have_appear()
+	
 	#切换角色会导致其-1，因此需要限制
 	someone_is_die = max(someone_is_die,0)
 	
@@ -1254,3 +1257,9 @@ func be_ice(who):
 		who.ice_stacks = 0
 		addlog(who.character_name+" 未被冻结！")
 		return false
+
+func refresh_have_appear():
+	if not player_character_curr.have_appear:
+		player_character_curr.have_appear = true
+	if not enemy_character_curr.have_appear:
+		enemy_character_curr.have_appear = true

@@ -22,6 +22,9 @@ var is_ai:bool = false
 #是否为站场角色
 var is_curr:bool = false
 
+#是否上场过，用于ai判断是否上场过克制角色防止与玩家无限循环切换角色
+var have_appear:bool = false
+
 #受到致命伤害保留1点HP的剩余次数
 var not_die_to_one_hp:int = 0
 
