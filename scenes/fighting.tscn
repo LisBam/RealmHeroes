@@ -145,7 +145,6 @@ horizontal_alignment = 1
 
 [node name="tips" type="Control" parent="UI/Control/button/skill/skilla"]
 z_index = 3
-layout_mode = 3
 anchors_preset = 0
 offset_top = -80.0
 offset_bottom = -80.0
@@ -223,7 +222,6 @@ horizontal_alignment = 1
 
 [node name="tips" type="Control" parent="UI/Control/button/skill/skillb"]
 z_index = 3
-layout_mode = 3
 anchors_preset = 0
 offset_left = -200.0
 offset_top = -80.0
@@ -303,7 +301,6 @@ horizontal_alignment = 1
 
 [node name="tips" type="Control" parent="UI/Control/button/skill/skillc"]
 z_index = 3
-layout_mode = 3
 anchors_preset = 0
 offset_left = -224.0
 offset_top = -80.0
@@ -383,7 +380,6 @@ horizontal_alignment = 1
 
 [node name="tips" type="Control" parent="UI/Control/button/skill/skilld"]
 z_index = 3
-layout_mode = 3
 anchors_preset = 0
 offset_left = -384.0
 offset_top = -80.0
@@ -638,7 +634,6 @@ text = "记录"
 
 [node name="choose_player_character" type="Control" parent="UI/Control/button"]
 visible = false
-layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -1160,7 +1155,6 @@ horizontal_alignment = 1
 
 [node name="log" type="Control" parent="UI/Control"]
 z_index = 1
-layout_mode = 3
 anchors_preset = 0
 offset_left = -70.2
 offset_top = 484.0
@@ -1231,13 +1225,13 @@ stream = ExtResource("19_6aghv")
 [connection signal="mouse_exited" from="UI/Control/button/skill/skilld" to="UI/Control/button/skill/skilld/tips" method="_mouse_exited"]
 [connection signal="pressed" from="UI/Control/button/skill/skilld" to="." method="_skilld"]
 [connection signal="pressed" from="UI/Control/button/skill/skilld" to="UI/Control/button/skill/skilld/tips" method="_pressed"]
-[connection signal="pressed" from="UI/Control/button/extend/attack" to="." method="_attack"]
 [connection signal="pressed" from="UI/Control/button/extend/attack" to="." method="choose_player_team_character_none"]
+[connection signal="pressed" from="UI/Control/button/extend/attack" to="." method="_attack"]
 [connection signal="pressed" from="UI/Control/button/extend/run" to="." method="_run"]
 [connection signal="pressed" from="UI/Control/button/extend/run" to="." method="choose_player_team_character_none"]
 [connection signal="pressed" from="UI/Control/button/extend/character" to="." method="_to_change_character"]
-[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="_to_fight"]
 [connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="choose_player_team_character_none"]
+[connection signal="pressed" from="UI/Control/button/extend/fight" to="." method="_to_fight"]
 [connection signal="pressed" from="UI/Control/button/change_character/character1" to="." method="_change_character_1"]
 [connection signal="pressed" from="UI/Control/button/change_character/character2" to="." method="_change_character_2"]
 [connection signal="pressed" from="UI/Control/button/change_character/character3" to="." method="_change_character_3"]
