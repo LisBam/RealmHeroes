@@ -3,6 +3,7 @@ extends Node
 @export var ai_think_time = 0.5 ##ai思考时长
 @export var animation_wait_time = 1.2 ##动画开始播放后多少时间可以操作
 
+@warning_ignore("shadowed_global_identifier")
 @export var log:RichTextLabel
 
 var player_character_1_scene:PackedScene
@@ -190,6 +191,7 @@ func _ready() -> void:
 	#连接信号
 	Signals.to_next_phase.connect(to_next_phase)
 
+@warning_ignore("unused_parameter")
 func _physics_process(delta: float) -> void:
 	#刷新ui
 	refresh_phase_round_ui()
@@ -521,7 +523,10 @@ func ai_to_change_character():
 				if the_character.curr_hp > best_character.curr_hp:
 					best_character = the_character
 			best_change_character = best_character
-				
+	
+	var no_skip:bool;			
+	if someone_is_die>0:
+		no_skip = true;
 
 	if best_change_character == enemy_character_1:
 		ai_change_character_1()
@@ -532,7 +537,8 @@ func ai_to_change_character():
 	if best_change_character == enemy_character_4:
 		ai_change_character_4()
 	refresh_stat_ui()
-	Signals.to_next_phase.emit()
+	if not no_skip:
+		Signals.to_next_phase.emit()
 	
 func ai_change_character_1() -> void:
 	if enemy_character_curr != enemy_character_1:
@@ -619,17 +625,8 @@ func disable_all_extend_and_skill_buttons():
 	$UI/Control/button/skill/skillc.disabled = true
 	$UI/Control/button/skill/skilld.disabled = true
 
-#切换回合
-#定义新一轮标记
-var new_round:bool = false
-
-#防止多次执行下一回合函数
-var is_to_next_phase = false
 func to_next_phase():
-	if is_to_next_phase:
-		return
-	is_to_next_phase = true
-	#ai持续行动
+	#ai连续行动
 	if ai_continue_action:
 		judge_character_die()
 		while someone_is_die>0:
@@ -638,87 +635,256 @@ func to_next_phase():
 			await get_tree().physics_frame
 		print("ai连续行动")
 		ai_continue_action = false
-		is_to_next_phase = false
 		ai_enemy_action()
 		return
-	refresh_ai()
-	new_round = false
 	#总回合数+1
 	Global.curr_phase_count += 1
 	if Global.curr_phase_count % 2 != 0:
-		#轮次+1并标记新一轮用于根据速度决定先后手
+		#轮次+1并根据速度决定先后手
 		Global.curr_round_count += 1
-		new_round = true
-		#发送新一轮信号（改为判定完新一轮先手后发送）
-		#print("发送下一轮信号")
-		#Signals.round_start.emit()
-	judge_character_die()
-	while someone_is_die>0:
-		if not get_tree():
-			break
-		await get_tree().physics_frame
-	if new_round:
-		speed_to_judge_phase()
-		new_round = false
+		speed_to_judge_phase();
+		return;
+	if curr_phase == "player":
+		curr_phase = "enemy";
+		await into_new_phase();
+		print("正常进入player回合")
+	elif curr_phase == "enemy":
+		curr_phase = "player";
+		await into_new_phase();
+		print("正常进入enemy回合");
 	else:
-		if curr_phase == "player":
-			if not skip_enemy_next_phase:
-				print("正常进入敌方回合")
-				#是否回合被跳过
-				if enemy_character_curr.skip_next_phase:
-					print("敌方回合被技能跳过")
-					enemy_character_curr.skip_next_phase = false
-					addlog(enemy_character_curr.character_name+" 回合被跳过")
-					is_to_next_phase = false #不调为false下面新回合的信号不会生效
-					Signals.to_next_phase.emit()
-				elif be_ice(enemy_character_curr):
-					print("to_next_phase：敌方回合被冰冻")
-				else:
-					curr_phase = "enemy"
-					disable_all_extend_and_skill_buttons()
-					ai_enemy_action()
-			else:
-				print("敌方跳过一回合，进入我方回合")
-				if player_character_curr.skip_next_phase:
-					print("我方回合被技能跳过")
-					player_character_curr.skip_next_phase = false
-					addlog(player_character_curr.character_name+" 回合被跳过")
-					is_to_next_phase = false #不调为false下面新回合的信号不会生效
-					Signals.to_next_phase.emit()
-				elif be_ice(player_character_curr):
-					print("to_next_phase：我方回合被冰冻")
-				else:
-					curr_phase = "player"
-					_to_fight(false)
-				#region防止胜利后还可以操作
-				if enemy_character_curr.dying:
-					print("击杀敌方后已禁用技能")
-					disable_all_extend_and_skill_buttons()
-				#endregion
-				skip_enemy_next_phase = false
-		elif curr_phase == "enemy":
-			if player_character_curr.skip_next_phase:
-				print("我方回合被技能跳过")
-				player_character_curr.skip_next_phase = false
-				addlog(player_character_curr.character_name+" 回合被跳过")
-				is_to_next_phase = false #不调为false下面新回合的信号不会生效
-				Signals.to_next_phase.emit()
-			elif be_ice(player_character_curr):
-					print("to_next_phase：我方回合被冰冻")
-			else:
-				print("正常进入我方回合")
-				curr_phase = "player"
-				_to_fight(false)
-		else:
-			printerr("不知道是谁的回合！")
+		printerr("to_next_phase不知道是谁的回合");
 	
-	is_to_next_phase = false
+
+#判断先后手并进入新的一轮
+func speed_to_judge_phase():
+	if player_character_curr.speed > enemy_character_curr.speed:
+		curr_phase = "player"
+	elif player_character_curr.speed < enemy_character_curr.speed:
+		curr_phase = "enemy"
+	elif player_character_curr.speed == enemy_character_curr.speed:
+		var random = randi_range(0,1)
+		if random == 0:
+			curr_phase = "player"
+		else:
+			curr_phase = "enemy"
+	await into_new_phase();
+	print(curr_phase,"为先手！")
+	if curr_phase == "player":
+		addlog("——————————————————\n本轮轮先手为 我方")
+	if curr_phase == "enemy":
+		addlog("——————————————————\n本轮轮先手为 对方")
+	if (Global.curr_round_count) % 10 == 0:
+		addlog("十轮触发：火力全开，伤害提升！",true)
+		
+	#发送下一轮信号
+	Signals.round_start.emit()
+
+#进入新回合后触发，用于发送回合开始信号以及判断跳过回合,并确定最终回合是谁的
+func into_new_phase():
+	var phase_is_skiped:bool = false
+	if curr_phase == "player":
+		if player_character_curr.skip_next_phase:
+			phase_is_skiped = true;
+			addlog(player_character_curr.character_name+" 回合被跳过")
+			player_character_curr.skip_next_phase = false
+		elif be_ice(player_character_curr):
+			phase_is_skiped = true;
+	elif curr_phase == "enemy":
+		if enemy_character_curr.skip_next_phase:
+			phase_is_skiped = true;
+			addlog(enemy_character_curr.character_name+" 回合被跳过")
+			enemy_character_curr.skip_next_phase = false
+		elif be_ice(enemy_character_curr):
+			phase_is_skiped = true;
+	else:
+		printerr("into_new_phase时不知是谁的回合")
+	#执行最终回合归属函数
+	if phase_is_skiped:
+		to_next_phase();
+	elif curr_phase == "player":
+		into_player_phase();
+	elif curr_phase == "enemy":
+		into_enemy_phase();
+	else:
+		printerr("执行最终回合归属函数时不知是谁的回合")
+
+func into_player_phase():
+	Signals.phase_begin.emit()
+func into_enemy_phase():
+	Signals.phase_begin.emit()
+	#敌方ai行动
+	refresh_ai()
+	ai_enemy_action();
+
+##切换回合old
+##定义新一轮标记(old)
+#var new_round:bool = false
+##防止多次执行下一回合函数(old)
+#var is_to_next_phase = false
+#
+#func to_next_phase_old():
+	#if is_to_next_phase:
+		#return
+	#is_to_next_phase = true
+	##ai持续行动
+	#if ai_continue_action:
+		#judge_character_die()
+		#while someone_is_die>0:
+			#if not get_tree():
+				#break
+			#await get_tree().physics_frame
+		#print("ai连续行动")
+		#ai_continue_action = false
+		#is_to_next_phase = false
+		#ai_enemy_action()
+		#return
+	#refresh_ai()
+	#new_round = false
+	##总回合数+1
+	#Global.curr_phase_count += 1
+	#if Global.curr_phase_count % 2 != 0:
+		##轮次+1并标记新一轮用于根据速度决定先后手
+		#Global.curr_round_count += 1
+		#new_round = true
+		##发送新一轮信号（改为判定完新一轮先手后发送）
+		##print("发送下一轮信号")
+		##Signals.round_start.emit()
+	#judge_character_die()
+	#while someone_is_die>0:
+		#if not get_tree():
+			#break
+		#await get_tree().physics_frame
+	#if new_round:
+		#speed_to_judge_phase_old()
+		#new_round = false
+	#else:
+		#if curr_phase == "player":
+			#if not skip_enemy_next_phase:
+				#print("正常进入敌方回合")
+				##是否回合被跳过
+				#if enemy_character_curr.skip_next_phase:
+					#print("敌方回合被技能跳过")
+					#enemy_character_curr.skip_next_phase = false
+					#addlog(enemy_character_curr.character_name+" 回合被跳过")
+					#is_to_next_phase = false #不调为false下面新回合的信号不会生效
+					#Signals.to_next_phase.emit()
+				#elif be_ice(enemy_character_curr):
+					#print("to_next_phase：敌方回合被冰冻")
+				#else:
+					#curr_phase = "enemy"
+					#disable_all_extend_and_skill_buttons()
+					#ai_enemy_action()
+			#else:
+				#print("敌方跳过一回合，进入我方回合")
+				#if player_character_curr.skip_next_phase:
+					#print("我方回合被技能跳过")
+					#player_character_curr.skip_next_phase = false
+					#addlog(player_character_curr.character_name+" 回合被跳过")
+					#is_to_next_phase = false #不调为false下面新回合的信号不会生效
+					#Signals.to_next_phase.emit()
+				#elif be_ice(player_character_curr):
+					#print("to_next_phase：我方回合被冰冻")
+				#else:
+					#curr_phase = "player"
+					#_to_fight(false)
+				##region防止胜利后还可以操作
+				#if enemy_character_curr.dying:
+					#print("击杀敌方后已禁用技能")
+					#disable_all_extend_and_skill_buttons()
+				##endregion
+				#skip_enemy_next_phase = false
+		#elif curr_phase == "enemy":
+			#if player_character_curr.skip_next_phase:
+				#print("我方回合被技能跳过")
+				#player_character_curr.skip_next_phase = false
+				#addlog(player_character_curr.character_name+" 回合被跳过")
+				#is_to_next_phase = false #不调为false下面新回合的信号不会生效
+				#Signals.to_next_phase.emit()
+			#elif be_ice(player_character_curr):
+					#print("to_next_phase：我方回合被冰冻")
+			#else:
+				#print("正常进入我方回合")
+				#curr_phase = "player"
+				#_to_fight(false)
+		#else:
+			#printerr("不知道是谁的回合！")
+	#
+	#is_to_next_phase = false
+#
+	##根据速度决定当前回合
+#func speed_to_judge_phase_old():
+	#print("依据速度决定先后手！")
+	##判断先后手
+	#if player_character_curr.speed > enemy_character_curr.speed:
+		#curr_phase = "player"
+		#if not player_character_curr.skip_next_phase:
+			#_to_fight(false)
+	#elif player_character_curr.speed < enemy_character_curr.speed:
+		#curr_phase = "enemy"
+		#if not enemy_character_curr.skip_next_phase:
+			#if not enemy_character_curr.ice_stacks > 0:#如果冰冻，则让后续操作在冰冻结算中执行
+				#disable_all_extend_and_skill_buttons()
+				#ai_enemy_action()
+	#elif player_character_curr.speed == enemy_character_curr.speed:
+		#var random = randi_range(0,1)
+		#if random == 0:
+			#curr_phase = "player"
+			#if not player_character_curr.skip_next_phase:
+				#_to_fight(false)
+		#else:
+			#curr_phase = "enemy"
+			#if not enemy_character_curr.skip_next_phase:
+				#if not enemy_character_curr.ice_stacks > 0:#如果冰冻，则让后续操作在冰冻结算中执行
+					#disable_all_extend_and_skill_buttons()
+					#ai_enemy_action()
+	#print(curr_phase,"为先手！")
+	#if curr_phase == "player":
+		#addlog("——————————————————\n本轮轮先手为 我方")
+	#if curr_phase == "enemy":
+		#addlog("——————————————————\n本轮轮先手为 对方")
+	#if (Global.curr_round_count) % 10 == 0:
+		#addlog("十轮触发：火力全开，伤害提升！",true)
+		#
+	##发送下一轮信号
+	#Signals.round_start.emit()
+		#
+	##判断是否跳过回合
+	#if player_character_curr.skip_next_phase and curr_phase == "player":
+		#print("speed_to_judge_phase：我方回合被技能跳过")
+		#player_character_curr.skip_next_phase = false
+		#addlog(player_character_curr.character_name+" 回合被跳过")
+		#is_to_next_phase = false #不调为false下面新回合的信号不会生效
+		#Signals.to_next_phase.emit()
+	#if enemy_character_curr.skip_next_phase and curr_phase == "enemy":
+		#print("speed_to_judge_phase：敌方回合被技能跳过")
+		#enemy_character_curr.skip_next_phase = false
+		#addlog(enemy_character_curr.character_name+" 回合被跳过")
+		#is_to_next_phase = false #不调为false下面新回合的信号不会生效
+		#Signals.to_next_phase.emit()
+	#if curr_phase == "player":
+		#if be_ice(player_character_curr):
+			#print("speed_to_judge_phase：我方回合被冰冻")
+	#if curr_phase == "enemy" and enemy_character_curr.ice_stacks>0:
+		#if be_ice(enemy_character_curr):
+			#print("speed_to_judge_phase：敌方回合被冰冻")
+		#else:
+			#disable_all_extend_and_skill_buttons()
+			#ai_enemy_action()
+
 
 #敌方ai行动
 func ai_enemy_action():
 	_physics_process(0.001)
+	#若玩家死亡，则等待复活再执行
+	while someone_is_die:
+		if not get_tree():
+			break
+		await get_tree().physics_frame
+	#ai思考时间
 	if get_tree():
 		await get_tree().create_timer(ai_think_time).timeout
+	#等待动画
 	while Global.playing_animation_time > 0:
 		if not get_tree():
 			break
@@ -1108,66 +1274,6 @@ func ai_choose_team_character(can_self:bool = true,can_die:bool = false):
 			best_change_character = character
 		return best_change_character
 	
-	#根据速度决定当前回合
-func speed_to_judge_phase():
-	print("依据速度决定先后手！")
-	#判断先后手
-	if player_character_curr.speed > enemy_character_curr.speed:
-		curr_phase = "player"
-		if not player_character_curr.skip_next_phase:
-			_to_fight(false)
-	elif player_character_curr.speed < enemy_character_curr.speed:
-		curr_phase = "enemy"
-		if not enemy_character_curr.skip_next_phase:
-			if not enemy_character_curr.ice_stacks > 0:#如果冰冻，则让后续操作在冰冻结算中执行
-				disable_all_extend_and_skill_buttons()
-				ai_enemy_action()
-	elif player_character_curr.speed == enemy_character_curr.speed:
-		var random = randi_range(0,1)
-		if random == 0:
-			curr_phase = "player"
-			if not player_character_curr.skip_next_phase:
-				_to_fight(false)
-		else:
-			curr_phase = "enemy"
-			if not enemy_character_curr.skip_next_phase:
-				if not enemy_character_curr.ice_stacks > 0:#如果冰冻，则让后续操作在冰冻结算中执行
-					disable_all_extend_and_skill_buttons()
-					ai_enemy_action()
-	print(curr_phase,"为先手！")
-	if curr_phase == "player":
-		addlog("——————————————————\n本轮轮先手为 我方")
-	if curr_phase == "enemy":
-		addlog("——————————————————\n本轮轮先手为 对方")
-	if (Global.curr_round_count) % 10 == 0:
-		addlog("十轮触发：火力全开，伤害提升！",true)
-		
-	#发送下一轮信号
-	Signals.round_start.emit()
-		
-	#判断是否跳过回合
-	if player_character_curr.skip_next_phase and curr_phase == "player":
-		print("speed_to_judge_phase：我方回合被技能跳过")
-		player_character_curr.skip_next_phase = false
-		addlog(player_character_curr.character_name+" 回合被跳过")
-		is_to_next_phase = false #不调为false下面新回合的信号不会生效
-		Signals.to_next_phase.emit()
-	if enemy_character_curr.skip_next_phase and curr_phase == "enemy":
-		print("speed_to_judge_phase：敌方回合被技能跳过")
-		enemy_character_curr.skip_next_phase = false
-		addlog(enemy_character_curr.character_name+" 回合被跳过")
-		is_to_next_phase = false #不调为false下面新回合的信号不会生效
-		Signals.to_next_phase.emit()
-	if curr_phase == "player":
-		if be_ice(player_character_curr):
-			print("speed_to_judge_phase：我方回合被冰冻")
-	if curr_phase == "enemy" and enemy_character_curr.ice_stacks>0:
-		if be_ice(enemy_character_curr):
-			print("speed_to_judge_phase：敌方回合被冰冻")
-		else:
-			disable_all_extend_and_skill_buttons()
-			ai_enemy_action()
-
 func refresh_ai():
 	player_character_curr.refresh_ai(enemy_character_curr,player_character_curr,enemy_team,player_team)
 	enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
@@ -1213,6 +1319,7 @@ func player_fail():
 
 #用于胜利后将log移至左侧
 func move_log_position():
+	@warning_ignore("shadowed_global_identifier")
 	var log = $UI/Control/log
 	var tween = create_tween()
 	tween.tween_property(log,"position", Vector2(-406,484), 0.2)
@@ -1247,8 +1354,7 @@ func be_ice(who):
 	if random <= ice_probability:
 		print(who,"冰冻跳过回合")
 		addlog(who.character_name+" 被冻结，无法行动。")
-		is_to_next_phase = false #不调为false下面新回合的信号不会生效
-		Signals.to_next_phase.emit()
+		#is_to_next_phase = false #不调为false下面新回合的信号不会生效(old回合机制，已废除)
 		#即使冻结概率为100%也要减少层数
 		if who.ice_stacks >1:
 			who.ice_stacks -=1
@@ -1258,6 +1364,7 @@ func be_ice(who):
 		addlog(who.character_name+" 未被冻结！")
 		return false
 
+#已出现过该角色（给ai的信息）
 func refresh_have_appear():
 	if not player_character_curr.have_appear:
 		player_character_curr.have_appear = true
