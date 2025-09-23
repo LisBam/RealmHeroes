@@ -373,9 +373,10 @@ func die():
 	is_die = true
 	
 #入场触发（为触发入场动画时触发）
-func enter():
+func enter(enemy,player,enemy_team,player_team):
 	print(character_name+"入场函数触发")
 	get_node("buff").enter_buff()
+	enter_skill(enemy,player,enemy_team,player_team)
 
 func add_shield(count,source = self):
 	shield += count
@@ -476,3 +477,7 @@ func ai_to_continue(enemy,player,enemy_team,player_team):
 
 func has_tag(tag:String) -> bool:
 	return tag in tags
+
+#登场时触发的技能，手动在触发时机调用
+func enter_skill(enemy,player,enemy_team,player_team):
+	pass

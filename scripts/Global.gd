@@ -1,11 +1,11 @@
 extends Node
 
-@export var team_character_1_scene:PackedScene = load(AllCharacter.pvz2_fuqianjiangshi)
-@export var team_character_2_scene:PackedScene = load(AllCharacter.pvz2_quanmingxingjiangshi)
+@export var team_character_1_scene:PackedScene = load(AllCharacter.pvz2_xiaoguijiangshi)
+@export var team_character_2_scene:PackedScene = load(AllCharacter.pvz2_xiaoguijiangshi)
 @export var team_character_3_scene:PackedScene = load(AllCharacter.pvz2_quanmingxingjiangshi)
 @export var team_character_4_scene:PackedScene = load(AllCharacter.pvz2_quanmingxingjiangshi)
 
-@export var enemy_character_1_scene:PackedScene = load(AllCharacter.pvz2_hanbingsheshou)
+@export var enemy_character_1_scene:PackedScene = load(AllCharacter.pvz2_xiaoguijiangshi)
 @export var enemy_character_2_scene:PackedScene = load(AllCharacter.pvz2_hanbingsheshou)
 @export var enemy_character_3_scene:PackedScene = load(AllCharacter.pvz2_hanbingsheshou)
 @export var enemy_character_4_scene:PackedScene = load(AllCharacter.pvz2_hanbingsheshou)

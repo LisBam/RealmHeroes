@@ -10,10 +10,11 @@ const pvz2_jianguo = "res://scenes/character/pvz2_jianguo.tscn"
 const pvz2_huobaolajiao = "res://scenes/character/pvz2_huobaolajiao.tscn"
 const pvz2_hanbingsheshou = "res://scenes/character/pvz2_hanbingsheshou.tscn"
 #僵尸
-const pvz2_tutongjiangshi = "res://scenes/character/pvz2_putongjiangshi.tscn"
+const pvz2_putongjiangshi = "res://scenes/character/pvz2_putongjiangshi.tscn"
 const pvz2_dubaojiangshi = "res://scenes/character/pvz2_dubaojiangshi.tscn"
 const pvz2_fuqianjiangshi = "res://scenes/character/pvz2_fuqianjiangshi.tscn"
 const pvz2_quanmingxingjiangshi = "res://scenes/character/pvz2_quanmingxingjiangshi.tscn"
+const pvz2_xiaoguijiangshi = "res://scenes/character/pvz2_xiaoguijiangshi.tscn"
 #endregion
 
 #可随机到的角色场景路径
@@ -22,11 +23,12 @@ var can_random_character = [
 	pvz2_xiangrikui,
 	pvz2_jianguo,
 	pvz2_huobaolajiao,
-	pvz2_tutongjiangshi,
+	pvz2_putongjiangshi,
 	pvz2_dubaojiangshi,
 	pvz2_fuqianjiangshi,
 	pvz2_quanmingxingjiangshi,
-	pvz2_hanbingsheshou
+	pvz2_hanbingsheshou,
+	pvz2_xiaoguijiangshi,
 ]
 
 #获取随机一个角色的场景路径

@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://eqrfytg6sgge"]
+
+[ext_resource type="Script" uid="uid://clcwe1bg6hmeb" path="res://scripts/character/pvz2_xiaoguijiangshi.gd" id="1_jl5hg"]
+[ext_resource type="Texture2D" uid="uid://0ba5aec6gway" path="res://res/character/小鬼僵尸.png" id="2_ginfr"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_t0edm"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_yvkw0"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_8pun8"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_jl5hg")
+character_name = "小鬼僵尸"
+max_hp = 8000
+element = "earth"
+speed = 120
+physical_power = 110
+physical_defense = 80
+magical_defense = 80
+skilla_name = "啃食"
+skillb_name = "尸群"
+skillc_name = "天降小鬼"
+skilld_name = "灵巧遁形"
+skillc_energy = 10
+skilld_energy = 10
+skilla_element = "earth"
+skillb_element = "earth"
+skillc_element = "earth"
+skilld_element = "earth"
+skilla_damage_type = "phy"
+skillc_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ginfr")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_t0edm")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yvkw0")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_8pun8")
