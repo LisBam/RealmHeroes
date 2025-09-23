@@ -910,7 +910,10 @@ func active_exit_animation(character):
 	
 #主动入场动画并执行入场函数
 func active_enter_animation(character):
-	character.enter()
+	if character.is_ai:
+		character.enter(player_character_curr,enemy_character_curr,player_team,enemy_team);
+	else:
+		character.enter(enemy_character_curr,player_character_curr,enemy_team,player_team);
 	if Global.playing_animation_time < 1.5:
 		Global.playing_animation_time = 1.5
 	print(character.character_name,"入场动画",character.get_node("Sprite2D").position)
