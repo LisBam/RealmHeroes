@@ -683,6 +683,13 @@ func speed_to_judge_phase():
 
 #进入新回合后触发，用于发送回合开始信号以及判断跳过回合,并确定最终回合是谁的
 func into_new_phase():
+	#等待死亡结算
+	judge_character_die()
+	while someone_is_die>0:
+		if not get_tree():
+			break
+		await get_tree().physics_frame
+		
 	var phase_is_skiped:bool = false
 	if curr_phase == "player":
 		if player_character_curr.skip_next_phase:
@@ -691,7 +698,7 @@ func into_new_phase():
 			player_character_curr.skip_next_phase = false
 		elif player_character_curr.stun_stacks >= 1:
 			player_character_curr.stun_stacks -= 1;
-			addlog(player_character_curr.character_name+" 晕眩中");
+			addlog(player_character_curr.character_name+" 晕眩中，不可行动");
 			phase_is_skiped = true;
 		elif be_ice(player_character_curr):
 			phase_is_skiped = true;
@@ -702,7 +709,7 @@ func into_new_phase():
 			enemy_character_curr.skip_next_phase = false
 		elif enemy_character_curr.stun_stacks >= 1:
 			enemy_character_curr.stun_stacks -= 1;
-			addlog(enemy_character_curr.character_name+" 晕眩中");
+			addlog(enemy_character_curr.character_name+" 晕眩中，不可行动");
 			phase_is_skiped = true;
 		elif be_ice(enemy_character_curr):
 			phase_is_skiped = true;
@@ -711,11 +718,11 @@ func into_new_phase():
 	#执行最终回合归属函数
 	if phase_is_skiped:
 		if curr_phase == "player":
-			into_player_phase();
+			into_player_phase(true);
 			await get_tree().create_timer(0.3).timeout;
 			to_next_phase();
 		else:
-			into_enemy_phase();
+			into_enemy_phase(true);
 			await get_tree().create_timer(0.3).timeout;
 			to_next_phase();
 	elif curr_phase == "player":
@@ -725,13 +732,16 @@ func into_new_phase():
 	else:
 		printerr("执行最终回合归属函数时不知是谁的回合")
 
-func into_player_phase():
+func into_player_phase(is_unable:bool = false):
 	Signals.phase_begin.emit()
-func into_enemy_phase():
+	if not is_unable:
+		pass
+func into_enemy_phase(is_unable:bool = false):
 	Signals.phase_begin.emit()
-	#敌方ai行动
-	refresh_ai()
-	ai_enemy_action();
+	if not is_unable:
+		#敌方ai行动
+		refresh_ai()
+		ai_enemy_action();
 
 ##切换回合old
 ##定义新一轮标记(old)

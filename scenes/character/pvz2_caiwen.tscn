@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://jm1p2mu74v8j"]
+
+[ext_resource type="Script" uid="uid://brwd6dosjntbi" path="res://scripts/character/pvz2_caiwen.gd" id="1_qtkej"]
+[ext_resource type="Texture2D" uid="uid://blvimi8wfnop7" path="res://res/character/菜问.png" id="2_0e1sf"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_g3qli"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_jxiu5"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_bqbs2"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_qtkej")
+character_name = "菜问"
+max_energy = 80
+element = "wood"
+physical_power = 120
+magical_power = 80
+skilla_name = "拳击"
+skillb_name = "强健体魄"
+skillc_name = "上勾拳"
+skilld_name = "撼地拳"
+skillb_energy = 5
+skillc_energy = 10
+skilla_element = "wood"
+skillb_element = "wood"
+skillc_element = "wood"
+skilld_element = "wood"
+skilla_damage_type = "phy"
+skillc_damage_type = "phy"
+skilld_damage_type = "phy"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0e1sf")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_g3qli")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jxiu5")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_bqbs2")

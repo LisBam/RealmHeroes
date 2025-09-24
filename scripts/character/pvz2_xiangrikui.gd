@@ -2,6 +2,7 @@ extends character_base
 
 func _ready() -> void:
 	super._ready()
+	tags.append("植物")
 	skilla_description = "产生阳光，回复800点HP，并回复10点能量。"
 	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
 	skillc_description = "落下一颗葵花籽，对站场的敌方造成400威力的木属性法伤，对场下的所有敌方造成100威力的木属性法伤。"
