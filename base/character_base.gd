@@ -40,6 +40,9 @@ var taunt_value:float = 1.0
 #冰冻,首层有60%的概率跳过回合，之后每层增加10%概率（最多5层，已在函数限制）。若大于1层，则无论是否解冻层数都-1；若解冻，则层数归零。
 var ice_stacks:int = 0
 
+#晕眩，跳过回合
+var stun_stacks:int = 0
+
 #分类，例如非人一类 植物一类
 var tags:Array[String] = []
 
