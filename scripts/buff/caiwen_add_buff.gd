@@ -2,7 +2,7 @@ extends Buff
 
 class_name caiwen_add_buff
 
-var add_count:int = 25
+var add_count:int = 20
 
 func _init() -> void:
 	super._init()

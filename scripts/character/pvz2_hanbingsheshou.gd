@@ -3,7 +3,7 @@ extends character_base
 func _ready() -> void:
 	super._ready()
 	skilla_description = "发射寒冰豌豆攻击对方，造成600威力的水属性法伤，并使目标速度减少3点，该效果最多叠加5层。"
-	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
+	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "冰冷气息使敌人举步维艰，40%的概率冻结对方。每层“寒冰豌豆”的减速会使冰冻概率提高5%。"
 	skilld_description = "发射锋利的冰锥攻击敌人，造成1000威力的水属性法伤。若目标已被冰冻，则额外提高500点威力。"
 	skilla_short_desc = "法伤"
@@ -22,7 +22,7 @@ func skilla(enemy,player,enemy_team,player_team):
 
 func skillb(enemy,player,enemy_team,player_team):
 	super.skillb(enemy,player,enemy_team,player_team)
-	recover_energy(10)
+	recover_energy(20)
 	recover(100)
 	tool_skill_animation()
 	Signals.to_next_phase.emit()
