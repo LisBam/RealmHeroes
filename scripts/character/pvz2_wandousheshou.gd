@@ -2,8 +2,9 @@ extends character_base
 
 func _ready() -> void:
 	super._ready()
+	tags.append("植物")
 	skilla_description = "发射豌豆攻击对方，造成1000威力的木属性物伤。"
-	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
+	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "发射豌豆攻击对方，造成400威力的木属性物伤。发动后不结束回合。"
 	skilld_description = "发射威力巨大的超级豌豆，造成3000威力的木属性物伤。"
 	skilla_short_desc = "物伤"
@@ -19,7 +20,7 @@ func skilla(enemy,player,enemy_team,player_team):
 
 func skillb(enemy,player,enemy_team,player_team):
 	super.skillb(enemy,player,enemy_team,player_team)
-	recover_energy(10)
+	recover_energy(20)
 	recover(100)
 	tool_skill_animation()
 	Signals.to_next_phase.emit()

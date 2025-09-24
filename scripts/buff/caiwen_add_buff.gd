@@ -2,12 +2,12 @@ extends Buff
 
 class_name caiwen_add_buff
 
-var add_count:int = 40
+var add_count:int = 25
 
 func _init() -> void:
 	super._init()
 	buff_id = "caiwen_add_buff"
-	max_stacks = 4
+	max_stacks = 6
 	
 func _on_stack_increased(new_stacks: int):
 	target.physical_power += add_count
