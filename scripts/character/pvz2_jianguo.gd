@@ -6,7 +6,7 @@ func _ready() -> void:
 	skilla_description = "坚果拥有坚硬的外壳，立即获得800点护盾。"
 	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "果壳碎裂，消耗所有护盾，对目标造成200威力的木属性物伤，每消耗1点护盾该威力+1.5。"
-	skilld_description = "坚果周围围绕3个属性的坚果核，对敌方造成火金水属性的三段250威力的物伤。"
+	skilld_description = "坚果周围围绕3个属性的坚果核，对敌方造成火金水属性的三段350威力的物伤。"
 	skilla_short_desc = "加盾"
 	skillb_short_desc = "回能回血"
 	skillc_short_desc = "消耗盾转化为物伤"
@@ -36,9 +36,9 @@ func skillc(enemy,player,enemy_team,player_team):
 	
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
-	be_and_to_damage(damage(250,"phy",enemy,"fire"),enemy,player,"phy","fire")
-	be_and_to_damage(damage(250,"phy",enemy,"metal"),enemy,player,"phy","metal")
-	be_and_to_damage(damage(250,"phy",enemy,"water"),enemy,player,"phy","water")
+	be_and_to_damage(damage(350,"phy",enemy,"fire"),enemy,player,"phy","fire")
+	be_and_to_damage(damage(350,"phy",enemy,"metal"),enemy,player,"phy","metal")
+	be_and_to_damage(damage(350,"phy",enemy,"water"),enemy,player,"phy","water")
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 
@@ -59,7 +59,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	add_damage_element(4,"fire")
 	add_damage_element(4,"mental")
 	add_damage_element(4,"water")
-	ai.skills[4].damage_count = 250*3
+	ai.skills[4].damage_count = 350*3
 	
 	#当能量小于20时，优先使用二技能回复能量以解锁一技能
 	if curr_energy < 20:
