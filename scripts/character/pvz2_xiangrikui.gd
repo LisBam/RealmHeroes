@@ -4,7 +4,7 @@ func _ready() -> void:
 	super._ready()
 	tags.append("植物")
 	skilla_description = "产生阳光，回复800点HP，并回复10点能量。"
-	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
+	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "落下一颗葵花籽，对站场的敌方造成400威力的木属性法伤，对场下的所有敌方造成100威力的木属性法伤。"
 	skilld_description = "令下次上阵的其他友方角色于上阵时回复50点能量，然后向日葵失去所有HP。"
 	skilla_short_desc = "回血回能"
@@ -21,7 +21,7 @@ func skilla(enemy,player,enemy_team,player_team):
 
 func skillb(enemy,player,enemy_team,player_team):
 	super.skillb(enemy,player,enemy_team,player_team)
-	recover_energy(10)
+	recover_energy(20)
 	recover(100)
 	tool_skill_animation()
 	Signals.to_next_phase.emit()

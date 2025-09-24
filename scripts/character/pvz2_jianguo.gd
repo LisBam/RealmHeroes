@@ -4,7 +4,7 @@ func _ready() -> void:
 	super._ready()
 	tags.append("植物")
 	skilla_description = "坚果拥有坚硬的外壳，立即获得800点护盾。"
-	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
+	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "果壳碎裂，消耗所有护盾，对目标造成200威力的木属性物伤，每消耗1点护盾该威力+1.5。"
 	skilld_description = "坚果周围围绕3个属性的坚果核，对敌方造成火金水属性的三段250威力的物伤。"
 	skilla_short_desc = "加盾"
@@ -20,7 +20,7 @@ func skilla(enemy,player,enemy_team,player_team):
 
 func skillb(enemy,player,enemy_team,player_team):
 	super.skillb(enemy,player,enemy_team,player_team)
-	recover_energy(10)
+	recover_energy(20)
 	recover(100)
 	tool_skill_animation()
 	Signals.to_next_phase.emit()

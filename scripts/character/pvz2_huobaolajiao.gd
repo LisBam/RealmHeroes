@@ -2,9 +2,9 @@ extends character_base
 
 func _ready() -> void:
 	super._ready()
-	tags.append("非人生物")
+	tags.append("植物")
 	skilla_description = "迸发烈焰灼烧敌人，造成1000威力的火属性法伤。"
-	skillb_description = "进行光合作用，立即恢复10点能量，并回复100点HP。"
+	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "迸发十字烈焰，提高30点法强（至多叠加三层），造成400威力的火属性法伤。"
 	skilld_description = "燃爆自身与敌人同归于尽，自身HP降为0，对敌人造成3000威力的火属性法伤。"
 	skilla_short_desc = "法伤"
@@ -20,7 +20,7 @@ func skilla(enemy,player,enemy_team,player_team):
 
 func skillb(enemy,player,enemy_team,player_team):
 	super.skillb(enemy,player,enemy_team,player_team)
-	recover_energy(10)
+	recover_energy(20)
 	recover(100)
 	tool_skill_animation()
 	Signals.to_next_phase.emit()

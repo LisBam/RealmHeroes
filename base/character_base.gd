@@ -236,7 +236,7 @@ func attack(enemy,player,enemy_team,player_team):
 	addlog(character_name+"释放普攻")
 	print("释放普攻")
 	enemy.be_damage(damage(100,"phy",enemy,element),player,"phy",element)
-	to_damage(damage(100,"phy",enemy,element),enemy,"phy",element,false,5)
+	to_damage(damage(100,"phy",enemy,element),enemy,"phy",element,false,10)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 	print("普攻，于基类中触发下一回合信号")
