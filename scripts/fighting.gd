@@ -668,7 +668,6 @@ func speed_to_judge_phase():
 			curr_phase = "player"
 		else:
 			curr_phase = "enemy"
-	await into_new_phase();
 	print(curr_phase,"为先手！")
 	if curr_phase == "player":
 		addlog("——————————————————\n本轮轮先手为 我方")
@@ -679,6 +678,8 @@ func speed_to_judge_phase():
 		
 	#发送下一轮信号
 	Signals.round_start.emit()
+	
+	await into_new_phase();
 
 #进入新回合后触发，用于发送回合开始信号以及判断跳过回合,并确定最终回合是谁的
 func into_new_phase():
@@ -688,6 +689,10 @@ func into_new_phase():
 			phase_is_skiped = true;
 			addlog(player_character_curr.character_name+" 回合被跳过")
 			player_character_curr.skip_next_phase = false
+		elif player_character_curr.stun_stacks >= 1:
+			player_character_curr.stun_stacks -= 1;
+			addlog(player_character_curr.character_name+" 晕眩中");
+			phase_is_skiped = true;
 		elif be_ice(player_character_curr):
 			phase_is_skiped = true;
 	elif curr_phase == "enemy":
@@ -695,13 +700,24 @@ func into_new_phase():
 			phase_is_skiped = true;
 			addlog(enemy_character_curr.character_name+" 回合被跳过")
 			enemy_character_curr.skip_next_phase = false
+		elif enemy_character_curr.stun_stacks >= 1:
+			enemy_character_curr.stun_stacks -= 1;
+			addlog(enemy_character_curr.character_name+" 晕眩中");
+			phase_is_skiped = true;
 		elif be_ice(enemy_character_curr):
 			phase_is_skiped = true;
 	else:
 		printerr("into_new_phase时不知是谁的回合")
 	#执行最终回合归属函数
 	if phase_is_skiped:
-		to_next_phase();
+		if curr_phase == "player":
+			into_player_phase();
+			await get_tree().create_timer(0.3).timeout;
+			to_next_phase();
+		else:
+			into_enemy_phase();
+			await get_tree().create_timer(0.3).timeout;
+			to_next_phase();
 	elif curr_phase == "player":
 		into_player_phase();
 	elif curr_phase == "enemy":
