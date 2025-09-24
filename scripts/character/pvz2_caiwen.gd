@@ -6,7 +6,7 @@ func _ready() -> void:
 	skilla_description = "菜问重拳出击，狠狠攻击敌方，造成1000威力的木属性物伤。"
 	skillb_description = "菜问强健体魄，提高20点物攻以及20点物抗，该效果最多叠加6层。"
 	skillc_description = "菜问对奄奄一息的目标使出强力一击，造成500威力的木属性物伤，并有15%的概率使目标陷入晕眩。若目标当前血量低于其已损失血量，则威力与晕眩概率均翻倍。"
-	skilld_description = "菜问使出致命一击，造成1250威力的木属性物伤，对场下的所有敌方造成200威力的木属性物伤。"
+	skilld_description = "菜问使出致命一击，造成1250威力的木属性物伤，对场下的所有敌方造成150威力的木属性物伤。"
 	skilla_short_desc = "物伤"
 	skillb_short_desc = "提高物抗物攻"
 	skillc_short_desc = "物伤 晕眩"
@@ -47,7 +47,7 @@ func skilld(enemy,player,enemy_team,player_team):
 	be_and_to_damage(damage(1250,"phy",enemy,skillc_element),enemy,player,"phy",skilld_element)
 	for character in enemy_team:
 		if character and not character.is_die and character != enemy:
-			be_and_to_damage(damage(200,"phy",character,skillc_element),character,player,"phy",skilld_element)
+			be_and_to_damage(damage(150,"phy",character,skillc_element),character,player,"phy",skilld_element)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 
@@ -78,5 +78,5 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[3].damage_count = skillc_damage
 	
 	add_damage_element(4,skillc_element)
-	ai.skills[4].damage_aoe_count = 200 * enemy_team.size()-1
+	ai.skills[4].damage_aoe_count = 150 * enemy_team.size()-1
 	ai.skills[4].damage_aoe_justone_count = 1250
