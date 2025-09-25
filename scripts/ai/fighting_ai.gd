@@ -263,7 +263,8 @@ func calculate_value(skill):
 	var recover_hp_value = min(skill.recover_hp,lost_hp)
 	total_value += recover_hp_value * HEAL_VALUE
 	#护盾收益
-	total_value += skill.recover_shield * SHIELD_VALUE
+	#根据对方真伤占比减少护盾收益
+	total_value += skill.recover_shield * SHIELD_VALUE * (1-(enemy.damage_real_ratio/100))
 	#能量恢复收益
 	var energy_ratio = float(curr_energy) / max_energy #能量紧缺度
 	var new_ENERGY_VALUE = (ENERGY_VALUE*(1.5 - energy_ratio))

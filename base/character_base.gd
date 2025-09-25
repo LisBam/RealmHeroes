@@ -288,7 +288,8 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 	var origin_hp = curr_hp
 	#计算轮次提高伤害
 	damage = int(damage * round_damage_mul)
-	if shield > 0:
+	#护盾
+	if shield > 0 and damage_type!="real":
 		var shield_absorbed = min(damage,shield)#护盾吸收的伤害量
 		shield -= shield_absorbed
 		damage -= shield_absorbed
@@ -554,12 +555,12 @@ func phase_begin():
 			parasitism_power = 0;
 		else:
 			addlog(character_name+" 被汲取了生机");
-			if is_ai:
+			if is_ai and get_tree().current_scene:
 				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.player_character_curr,"phy","wood");
 				get_tree().current_scene.player_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
 				self.remove_energy(2,get_tree().current_scene.player_character_curr)
 				get_tree().current_scene.player_character_curr.recover_energy(2);
-			elif not is_ai:
+			elif not is_ai and get_tree().current_scene:
 				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.enemy_character_curr,"phy","wood");
 				get_tree().current_scene.enemy_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
 				self.remove_energy(2,get_tree().current_scene.enemy_character_curr)
