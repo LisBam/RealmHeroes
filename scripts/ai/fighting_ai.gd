@@ -52,6 +52,7 @@ var skills = [
 		damage_reduction_round_duration = 0, #免伤时长
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
+		parasitism_phase = 0,#寄生时长
 		
 		value = 0,
 	},
@@ -83,6 +84,7 @@ var skills = [
 		damage_reduction_round_duration = 0, #免伤时长
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
+		parasitism_phase = 0,#寄生时长
 		
 		value = 0,
 	},
@@ -114,6 +116,7 @@ var skills = [
 		damage_reduction_round_duration = 0,
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
+		parasitism_phase = 0,#寄生时长
 		
 		value = 0,
 	},
@@ -145,6 +148,7 @@ var skills = [
 		damage_reduction_round_duration = 0,
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
+		parasitism_phase = 0,#寄生时长
 		
 		value = 0,
 	},
@@ -176,6 +180,7 @@ var skills = [
 		damage_reduction_round_duration = 0,
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
+		parasitism_phase = 0,#寄生时长
 		
 		value = 0,
 	},
@@ -265,6 +270,8 @@ func calculate_value(skill):
 	total_value += skill.burning_phase * player.damage(player.magical_power,"mag",enemy,"fire",false) * 0.85#灼烧延迟伤害收益打折
 	#自己掉血成本
 	total_value -=  player.damage(skill.self_damage_count,"mag",player,"fire",false)
+	#寄生收益，简单地将回血并入伤害收益了
+	total_value += skill.parasitism_phase * player.damage(player.physical_power,"phy",enemy,"wood",false)* 0.85#延迟收益打折
 	
 	#buff收益
 	if not enemy.be_damage_to_benefit_mul > 1:
