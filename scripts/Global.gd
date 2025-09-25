@@ -1,14 +1,14 @@
 extends Node
 
-@export var team_character_1_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
+@export var team_character_1_scene:PackedScene = load(AllCharacter.roco_shengshuishouhu)
 @export var team_character_2_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
 @export var team_character_3_scene:PackedScene = load(AllCharacter.pvz2_dubaojiangshi)
 @export var team_character_4_scene:PackedScene = load(AllCharacter.pvz2_caiwen)
 
-@export var enemy_character_1_scene:PackedScene = load(AllCharacter.pvz2_jianguo)
-@export var enemy_character_2_scene:PackedScene = load(AllCharacter.pvz2_jianguo)
-@export var enemy_character_3_scene:PackedScene = load(AllCharacter.pvz2_jianguo)
-@export var enemy_character_4_scene:PackedScene = load(AllCharacter.pvz2_jianguo)
+@export var enemy_character_1_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
+@export var enemy_character_2_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
+@export var enemy_character_3_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
+@export var enemy_character_4_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
 
 #播放动画时长
 var playing_animation_time:float = 0.0

@@ -421,6 +421,7 @@ func enter(enemy,player,enemy_team,player_team):
 func add_shield(count,source = self):
 	shield += count
 	print(character_name+" 增加了"+str(count)+"点护盾")
+	addlog(character_name+" 增加了"+str(count)+"点护盾")
 
 func remove_shield(count,source = self):
 	shield -= count

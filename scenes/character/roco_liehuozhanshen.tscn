@@ -12,6 +12,7 @@ character_name = "烈火战神"
 damage_phy_ratio = 2.0
 damage_mag_ratio = 98.0
 max_hp = 9800
+max_energy = 90
 element = "fire"
 speed = 105
 physical_power = 110

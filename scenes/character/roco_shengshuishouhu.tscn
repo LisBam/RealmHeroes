@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://bge2m6raqw4yp"]
+
+[ext_resource type="Script" uid="uid://dy0quhef4mcec" path="res://scripts/character/roco_shengshuishouhu.gd" id="1_6fc6w"]
+[ext_resource type="Texture2D" uid="uid://cmaiillxp6uma" path="res://res/character/银狼.png" id="2_0a1kq"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_udqeo"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_uikee"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_2ehml"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_6fc6w")
+character_name = "圣水守护"
+damage_phy_ratio = 60.0
+damage_mag_ratio = 40.0
+max_hp = 11100
+max_energy = 110
+element = "water"
+speed = 120
+physical_power = 150
+magical_power = 105
+physical_defense = 123
+magical_defense = 108
+skilla_name = "缓冲"
+skillb_name = "水之护盾"
+skillc_name = "狂暴水元素"
+skilld_name = "祭祀之雨"
+skillc_energy = 10
+skilld_energy = 50
+skilla_element = "water"
+skillb_element = "water"
+skillc_element = "water"
+skilld_element = "water"
+skilla_damage_type = "phy"
+skillc_damage_type = "phy"
+skilld_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0a1kq")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_udqeo")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_uikee")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_2ehml")
