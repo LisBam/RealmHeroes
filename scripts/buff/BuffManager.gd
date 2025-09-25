@@ -52,6 +52,7 @@ func round_start():
 		var buff = buff_list[buff_id]
 		print("buff初始时长：",buff.init_round_duration)
 		print("buff剩余时长：",buff.round_duration)
+		buff.round_start()
 		buff.round_duration -= 1
 		if buff.round_duration == 0:
 			if buff.current_stacks > 1:  # 多层处理
@@ -60,8 +61,7 @@ func round_start():
 				buff.round_duration = buff.init_round_duration
 			else:
 				to_update.append(buff_id)
-		else:
-			buff.round_start()
+			
 	# 移除已结束的BUFF
 	for id in to_update:
 		remove_buff(id)

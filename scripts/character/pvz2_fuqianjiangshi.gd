@@ -10,7 +10,7 @@ func _ready() -> void:
 	skilla_short_desc = "物伤"
 	skillb_short_desc = "根据亡灵生物数提升物攻"
 	skillc_short_desc = "跳过回合 免伤 增伤"
-	skilld_short_desc = "抵挡致命伤害"
+	skilld_short_desc = "每轮伤害"
 
 func skilla(enemy,player,enemy_team,player_team):
 	super.skilla(enemy,player,enemy_team,player_team)
@@ -93,7 +93,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 
 	add_damage_element(4,skilld_element)
 	ai.skills[4].damage_count = 400
-	ai.skills[4].damage_times = 5
+	ai.skills[4].damage_times = 6
 	ai.skills[4].strategy_value_count = -200 #不是一次性伤害，价值打折
 	if enemy.get_node("buff").has_buff("fuqianjiangshi_skilld_mark"):
 		ai.skills[4].damage_count = 0

@@ -5,7 +5,7 @@ func _ready() -> void:
 	skilla_description = "迸发魔焰，提高40点法强（至多叠加四层），然后造成300威力的火属性法伤。"
 	skillb_description = "冲向敌人发起自爆式袭击。有30%的概率使敌方陷入灼烧状态持续3回合，造成800威力的火属性法伤，该伤害的10%会反弹给自己。"
 	skillc_description = "向敌人投掷热力爆弹，有60%的概率使敌方陷入灼烧状态持续3回合，然后造成500威力的火属性法伤。"
-	skilld_description = "划破空气攻击敌人，有20%的概率使敌方陷入晕眩持续1回合，然后造成500威力的火属性法伤。"
+	skilld_description = "划破空气攻击敌人，有25%的概率使敌方陷入晕眩持续1回合，然后造成500威力的火属性法伤。"
 	skilla_short_desc = "提高法强 法伤"
 	skillb_short_desc = "灼烧 法伤"
 	skillc_short_desc = "灼烧 法伤"
@@ -46,7 +46,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
-	var stun_probability = 20;
+	var stun_probability = 25;
 	var random = randi_range(1,100);
 	if random <= stun_probability:
 		addlog(enemy.character_name+"被晕眩了！")
@@ -78,4 +78,4 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	
 	add_damage_element(4,skilld_element)
 	ai.skills[4].damage_count = 500
-	ai.skills[4].skip_enemy_phase_count = 1*0.2
+	ai.skills[4].skip_enemy_phase_count = 1*0.25
