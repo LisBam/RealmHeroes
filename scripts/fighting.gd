@@ -1427,7 +1427,7 @@ func be_sleep(who):
 	var random = randi_range(1,100)
 	if random <= who.sleep_probability:
 		addlog(who.character_name+" 正在睡眠...")
-		who.sleep_probability = int(who.sleep_probability*0.5)
+		who.sleep_probability = who.sleep_probability-10
 		return true;
 	else:
 		addlog(who.character_name+" 醒来了")
