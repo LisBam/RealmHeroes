@@ -61,7 +61,10 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	add_damage_element(1,skilla_element)
 	ai.skills[1].damage_count = 1000
 	
-	ai.skills[2].buff_value = 20 * 10 + 20 * 10
+	#物抗收益
+	var physical_defense_value = 10*(enemy.damage_phy_ratio/100);
+	
+	ai.skills[2].buff_value = 20 * 10 + 20*physical_defense_value;
 	ai.skills[2].buff_duration = 7
 	var stacks = get_node("buff").get_buff_stacks("caiwen_add_buff")
 	if stacks >= 6:
