@@ -85,6 +85,8 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[3].can_continue = true
 		#能量充足时提高发动价值,反之减少
 		ai.skills[3].strategy_value_mul = 0.5 + float(curr_energy)/max_energy
+	else:
+		ai.skills[3].buff_value = 0
 	#满能量不用白不用
 	if curr_energy == max_energy:
 		ai.skills[3].strategy_value_count = 2000
