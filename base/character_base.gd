@@ -276,7 +276,7 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 	#触发点燃效果，将寄生转化为灼烧
 	if damage_element == "fire" and parasitism_phase>0:
 		addlog(character_name+" 的寄生被点燃了")
-		burn(parasitism_phase,source);
+		burn(parasitism_phase+1,source);
 		parasitism_phase = 0;
 	#触发灌溉效果，提升寄生数组
 	if damage_element == "water" and parasitism_phase>0:
@@ -406,6 +406,7 @@ func remove_energy(count,source = self):
 	curr_energy -= finaly_remove_count
 	addlog(character_name+" 失去"+str(finaly_remove_count)+"点能量")
 	curr_energy = min(curr_energy,max_energy)
+	curr_energy = max(curr_energy,0)
 	print(character_name+" 失去"+str(finaly_remove_count)+"点能量")
 
 
@@ -556,9 +557,13 @@ func phase_begin():
 			if is_ai:
 				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.player_character_curr,"phy","wood");
 				get_tree().current_scene.player_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
+				self.remove_energy(2,get_tree().current_scene.player_character_curr)
+				get_tree().current_scene.player_character_curr.recover_energy(2);
 			elif not is_ai:
 				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.enemy_character_curr,"phy","wood");
 				get_tree().current_scene.enemy_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
+				self.remove_energy(2,get_tree().current_scene.enemy_character_curr)
+				get_tree().current_scene.enemy_character_curr.recover_energy(2);
 			parasitism_phase -= 1;
 			if parasitism_phase <= 0 :
 				addlog(character_name+" 摆脱了寄生");

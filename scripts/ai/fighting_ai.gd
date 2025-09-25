@@ -277,8 +277,8 @@ func calculate_value(skill):
 	#自己掉血成本
 	total_value -=  player.damage(skill.self_damage_count,"mag",player,"fire",false)
 	#寄生收益，简单地将回血并入伤害收益了
-	total_value += skill.parasitism_phase * player.damage(player.physical_power*2,"phy",enemy,"wood",false) * 0.85#延迟收益打折
-	
+	total_value += skill.parasitism_phase * player.damage(player.physical_power*1.6,"phy",enemy,"wood",false) * 0.85#延迟收益打折
+	total_value += skill.parasitism_phase * 4 * 0.85#能量收益，延迟收益打折
 	#buff收益
 	if not enemy.be_damage_to_benefit_mul > 1:
 		#增益收益
