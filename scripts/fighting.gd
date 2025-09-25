@@ -110,6 +110,14 @@ func _ready() -> void:
 	# 初始化角色列表
 	player_team = [player_character_1, player_character_2, player_character_3, player_character_4]
 	enemy_team = [enemy_character_1, enemy_character_2, enemy_character_3, enemy_character_4]
+	for i in player_team:
+		if i == null:
+			player_team.erase(i);
+	for i in enemy_team:
+		if i == null:
+			enemy_team.erase(i);
+	player_team.erase(null);
+	enemy_team.erase(null);
 	
 	#初始化首发角色与敌人
 	player_character_curr = player_team[0]
@@ -524,7 +532,7 @@ func ai_to_change_character():
 					best_character = the_character
 			best_change_character = best_character
 	
-	var no_skip:bool;			
+	var no_skip:bool;
 	if someone_is_die>0:
 		no_skip = true;
 
@@ -1071,6 +1079,8 @@ func judge_character_die():
 			refresh_team_stat()
 			addlog("[color=dark_red]场下的 "+character.character_name+" 死亡！"+"[/color]")
 	for character in enemy_team:
+		if not character:
+			continue;
 		if character.curr_hp <= 0 and character != enemy_character_curr and not character.dying:
 			character.dying = true
 			enemy_team_alive -= 1
@@ -1358,11 +1368,15 @@ func move_log_position():
 #刷新是否为站场角色
 func refresh_is_curr():
 	for character in player_team:
+		if not character:
+			continue;
 		if character != player_character_curr:
 			character.is_curr = false
 		else:
 			character.is_curr = true
 	for character in enemy_team:
+		if not character:
+			continue;
 		if character != enemy_character_curr:
 			character.is_curr = false
 		else:

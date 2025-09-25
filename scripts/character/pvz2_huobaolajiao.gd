@@ -64,12 +64,18 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	#ai.skills[2].strategy_value_mul = 3-(max_hp/curr_hp)
 	
 	add_damage_element(4,skilld_element)
-	ai.skills[4].to_die_value = 0.05 + (max_hp-curr_hp)/60000
+	ai.skills[4].to_die_value = 0.05 + (max_hp-curr_hp)/60000.0
 	ai.skills[4].damage_count = 4000
 	if curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <= 2000:
 		ai.skills[4].strategy_value_count = 2000
 	if curr_hp <= enemy.ai.get_enable_max_damage() or curr_hp <= 1000:
 		ai.skills[4].strategy_value_count = 4000
+	#队伍没有剩余角色时不释放此技能
+	printerr(player_team.size())
+	printerr(player_team)
+	if player_team.size()<=1:
+		ai.skills[4].to_die_value = 0;
+		ai.skills[4].strategy_value_count = 0;
 
 	#血量低且能量低时优先屯够40能量释放四技能
 	if (curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <=4000) and curr_energy < 50:
