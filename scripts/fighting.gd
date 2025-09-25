@@ -666,6 +666,13 @@ func to_next_phase():
 
 #判断先后手并进入新的一轮
 func speed_to_judge_phase():
+	#等待死亡结算
+	judge_character_die()
+	while someone_is_die>0:
+		if not get_tree():
+			break
+		await get_tree().physics_frame
+		
 	if player_character_curr.speed > enemy_character_curr.speed:
 		curr_phase = "player"
 	elif player_character_curr.speed < enemy_character_curr.speed:
