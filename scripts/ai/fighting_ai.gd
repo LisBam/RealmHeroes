@@ -232,6 +232,12 @@ func calculate_value(skill):
 	var total_value = 0.0
 	#伤害价值,乘以伤害段数
 	var damage_value = get_final_damage(skill) * skill.damage_times
+	#若目标处于睡眠，则降低价值
+	if enemy.sleep_type == 1:
+		var the_skip_phase_value = 0
+		if enemy:#只是保证不为空值
+			the_skip_phase_value = skill.skip_phase_count * get_a_phase_value(enemy)
+		damage_value -= (enemy.sleep_probability/100.0)*the_skip_phase_value
 	#若伤害足以致命，则伤害价值变为目标生命值并乘以击杀价值
 	if get_final_damage(skill) >= enemy.curr_hp:
 		damage_value = enemy.curr_hp * KILL_VALUE
