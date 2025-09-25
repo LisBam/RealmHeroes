@@ -43,11 +43,16 @@ var ice_stacks:int = 0
 #晕眩，跳过回合
 var stun_stacks:int = 0
 
+#灼烧，记录buff来源的法强,回合开始掉血
+var burning_phase:int = 0
+var burning_source:character_base = null
+
 #分类，例如非人一类 植物一类
 var tags:Array[String] = []
 
 func _init() -> void:
-	pass
+	#连接信号
+	Signals.phase_begin.connect(phase_begin);
 
 #region 属性信息
 var element_info = {
@@ -484,3 +489,25 @@ func has_tag(tag:String) -> bool:
 #登场时触发的技能，手动在触发时机调用
 func enter_skill(enemy,player,enemy_team,player_team):
 	pass
+
+#回合开始触发
+func phase_begin():
+	if not is_curr:
+		return;
+	if get_tree():
+		if get_tree().current_scene.curr_phase == "player":
+			if is_ai:
+				return
+	if get_tree():
+		if get_tree().current_scene.curr_phase == "enemy":
+			if not is_ai:
+				return
+	if burning_phase >= 1:
+		if element == "water":
+			addlog(character_name+" 熄灭了灼烧");
+		else:
+			addlog(character_name+" 受到了灼烧伤害");
+			be_and_to_damage(damage(burning_source.magical_power,"mag",self,"fire"),self,burning_source,"mag","fire");
+			burning_phase -= 1;
+			if burning_phase <= 0:
+				addlog(character_name+" 从灼烧中恢复了");
