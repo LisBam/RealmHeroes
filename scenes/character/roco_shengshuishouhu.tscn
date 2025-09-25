@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bge2m6raqw4yp"]
 
 [ext_resource type="Script" uid="uid://dy0quhef4mcec" path="res://scripts/character/roco_shengshuishouhu.gd" id="1_6fc6w"]
-[ext_resource type="Texture2D" uid="uid://cmaiillxp6uma" path="res://res/character/银狼.png" id="2_0a1kq"]
+[ext_resource type="Texture2D" uid="uid://jtlt7cfpirs7" path="res://res/character/圣水守护.png" id="2_6fc6w"]
 [ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_udqeo"]
 [ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_uikee"]
 [ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_2ehml"]
@@ -34,7 +34,7 @@ skillc_damage_type = "phy"
 skilld_damage_type = "mag"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_0a1kq")
+texture = ExtResource("2_6fc6w")
 
 [node name="attack_audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_udqeo")

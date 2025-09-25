@@ -66,13 +66,25 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[1].buff_value = 0
 		ai.skills[1].buff_duration = 1
 	
-	add_damage_element(2,skillb_element)
 	ai.skills[2].recover_shield = 1000
 	ai.skills[2].recover_energy = 50
 	ai.skills[2].strategy_value_count = -210 #不是一次性，价值打折
-	if enemy.get_node("buff").has_buff("shengshuishouhu_skillb_mark"):
+	if player.get_node("buff").has_buff("shengshuishouhu_skillb_mark"):
 		ai.skills[2].recover_shield = 200
+		ai.skills[2].recover_energy = 0
 		ai.skills[2].strategy_value_count = 0
+		#buff期间所有技能能耗降低
+		ai.skills[0].recover_energy = 20
+		ai.skills[1].recover_energy = 5
+		ai.skills[2].energy_cost = 0
+		ai.skills[3].energy_cost = 0
+		ai.skills[4].energy_cost = 40
+	else:
+		ai.skills[0].recover_energy = 10
+		ai.skills[1].energy_cost = 5
+		ai.skills[2].energy_cost = 10
+		ai.skills[3].energy_cost = 10
+		ai.skills[4].energy_cost = 50
 	
 	add_damage_element(3,skillc_element)
 	ai.skills[3].damage_count = 1400
