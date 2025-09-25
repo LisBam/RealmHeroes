@@ -710,6 +710,9 @@ func into_new_phase():
 			phase_is_skiped = true;
 		elif be_ice(player_character_curr):
 			phase_is_skiped = true;
+		elif be_sleep(player_character_curr):
+			phase_is_skiped = true;
+			
 	elif curr_phase == "enemy":
 		if enemy_character_curr.skip_next_phase:
 			phase_is_skiped = true;
@@ -720,6 +723,8 @@ func into_new_phase():
 			addlog(enemy_character_curr.character_name+" 晕眩中，不可行动");
 			phase_is_skiped = true;
 		elif be_ice(enemy_character_curr):
+			phase_is_skiped = true;
+		elif be_sleep(enemy_character_curr):
 			phase_is_skiped = true;
 	else:
 		printerr("into_new_phase时不知是谁的回合")
@@ -1415,3 +1420,17 @@ func refresh_have_appear():
 		player_character_curr.have_appear = true
 	if not enemy_character_curr.have_appear:
 		enemy_character_curr.have_appear = true
+
+func be_sleep(who):
+	if who.sleep_type <= 0:
+		return false;
+	var random = randi_range(1,100)
+	if random <= who.sleep_probability:
+		addlog(who.character_name+" 正在睡眠...")
+		who.sleep_probability = int(who.sleep_probability*0.5)
+		return true;
+	else:
+		addlog(who.character_name+" 醒来了")
+		who.sleep_type = 0;
+		who.sleep_probability = 0;
+		return false;
