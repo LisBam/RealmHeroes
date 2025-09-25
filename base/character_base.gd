@@ -253,6 +253,13 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 		ice_stacks = 0
 		print("受到火焰伤害解除冰冻")
 		addlog("冻住 "+character_name+" 的冰被高温融化了")
+	#解除灼烧，并造成蒸发伤害
+	if damage_element == "water" and burning_phase>0:
+		var log_burning_phase = burning_phase;
+		burning_phase = 0
+		print("受到水伤害解除灼烧")
+		addlog(character_name+" 的灼烧被蒸发了")
+		be_and_to_damage(damage(burning_source.magical_power*log_burning_phase,"mag",self,"fire"),self,burning_source,"mag","fire")
 	#原本的生命值，用于计算溢出伤害
 	var origin_hp = curr_hp
 	#计算轮次提高伤害
@@ -309,6 +316,7 @@ func damage(count:int,type:String,target,element:String,print:bool = true) -> in
 	var third_damage = second_damage - (target.damage_reduction/100)*second_damage + (damage_improve/100)*second_damage
 	#计算四阶伤害，元素反应伤害
 	var forth_damage = third_damage
+	#融化伤害
 	if target.ice_stacks >0 and element == "fire":
 		forth_damage = int(third_damage*(1+0.01*(((60+((target.ice_stacks-1)*10))*5.0/3.0))))
 	if print:
