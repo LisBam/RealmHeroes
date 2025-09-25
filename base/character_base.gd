@@ -52,6 +52,10 @@ var parasitism_phase:int = 0;
 var parasitism_power:int = 0;
 var parasitism_watered_times:int = 0;
 
+#睡眠/沉眠
+var sleep_type:int = 0; #0为正常，1为睡眠，2为沉眠
+var sleep_probability:int = 0;
+
 #分类，例如非人一类 植物一类
 var tags:Array[String] = []
 
@@ -253,6 +257,10 @@ func attack(enemy,player,enemy_team,player_team):
 	
 #受到伤害
 func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:bool = false,energy = int(round(damage/100.0))):
+	#睡眠惊醒
+	if sleep_type == 1:
+		addlog(character_name+" 从睡眠中惊醒！")
+		sleep_type = 0;
 	#解除冰冻
 	if damage_element == "fire" and ice_stacks>0:
 		ice_stacks = 0
@@ -568,3 +576,18 @@ func burn(phase,source):
 	addlog(self.character_name+"被灼烧了！")
 	burning_phase = phase;
 	burning_source = source;
+
+#睡眠函数
+func sleep(is_deep:bool = false):
+	if not is_deep:
+		if sleep_type>=1:
+			return
+		addlog(self.character_name+"陷入睡眠")
+		sleep_type = 1;
+		sleep_probability = 80;
+	else:
+		if sleep_type>=2:
+			return
+		addlog(self.character_name+"陷入沉眠！")
+		sleep_type = 2;
+		sleep_probability = 100;
