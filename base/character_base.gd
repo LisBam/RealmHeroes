@@ -553,11 +553,11 @@ func phase_begin():
 		else:
 			addlog(character_name+" 被汲取了生机");
 			if is_ai:
-				be_and_to_damage(parasitism_power,self,get_tree().current_scene.player_character_curr,"phy","wood");
-				get_tree().current_scene.player_character_curr.recover(parasitism_power);
+				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.player_character_curr,"phy","wood");
+				get_tree().current_scene.player_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
 			elif not is_ai:
-				be_and_to_damage(parasitism_power,self,get_tree().current_scene.enemy_character_curr,"phy","wood");
-				get_tree().current_scene.enemy_character_curr.recover(parasitism_power);
+				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.enemy_character_curr,"phy","wood");
+				get_tree().current_scene.enemy_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
 			parasitism_phase -= 1;
 			if parasitism_phase <= 0 :
 				addlog(character_name+" 摆脱了寄生");
