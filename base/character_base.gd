@@ -43,9 +43,14 @@ var ice_stacks:int = 0
 #晕眩，跳过回合
 var stun_stacks:int = 0
 
-#灼烧，记录buff来源的法强,回合开始掉血
+#灼烧，记录buff来源,回合开始掉血
 var burning_phase:int = 0
 var burning_source:character_base = null
+
+#寄生，记录寄生buff来源的一半物攻
+var parasitism_phase:int = 0;
+var parasitism_power:int = 0;
+var parasitism_watered_times:int = 0;
 
 #分类，例如非人一类 植物一类
 var tags:Array[String] = []
@@ -253,13 +258,24 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 		ice_stacks = 0
 		print("受到火焰伤害解除冰冻")
 		addlog("冻住 "+character_name+" 的冰被高温融化了")
-	#解除灼烧，并造成蒸发伤害
+	#触发蒸发效果，解除灼烧，并造成蒸发伤害
 	if damage_element == "water" and burning_phase>0:
 		var log_burning_phase = burning_phase;
 		burning_phase = 0
 		print("受到水伤害解除灼烧")
 		addlog(character_name+" 的灼烧被蒸发了")
 		be_and_to_damage(damage(burning_source.magical_power*log_burning_phase,"mag",self,"fire"),self,burning_source,"mag","fire")
+	#触发点燃效果，将寄生转化为灼烧
+	if damage_element == "fire" and parasitism_phase>0:
+		addlog(character_name+" 的寄生被点燃了")
+		burn(parasitism_phase,source);
+		parasitism_phase = 0;
+	#触发灌溉效果，提升寄生数组
+	if damage_element == "water" and parasitism_phase>0:
+		if parasitism_watered_times < 2:
+			addlog(character_name+" 的寄生被灌溉了")
+			parasitism_power = int(parasitism_power*1.5);
+	
 	#原本的生命值，用于计算溢出伤害
 	var origin_hp = curr_hp
 	#计算轮次提高伤害
@@ -513,9 +529,42 @@ func phase_begin():
 	if burning_phase >= 1:
 		if element == "water":
 			addlog(character_name+" 熄灭了灼烧");
+			burning_phase = 0;
+			burning_source = null;
 		else:
 			addlog(character_name+" 受到了灼烧伤害");
 			be_and_to_damage(damage(burning_source.magical_power,"mag",self,"fire"),self,burning_source,"mag","fire");
 			burning_phase -= 1;
 			if burning_phase <= 0:
 				addlog(character_name+" 从灼烧中恢复了");
+	if parasitism_phase >= 1:
+		if element == "fire":
+			addlog(character_name+" 烧毁了寄生");
+			parasitism_phase = 0;
+			parasitism_power = 0;
+		else:
+			addlog(character_name+" 被汲取了生机");
+			if is_ai:
+				be_and_to_damage(parasitism_power,self,get_tree().current_scene.player_character_curr,"phy","wood");
+				get_tree().current_scene.player_character_curr.recover(parasitism_power);
+			elif not is_ai:
+				be_and_to_damage(parasitism_power,self,get_tree().current_scene.enemy_character_curr,"phy","wood");
+				get_tree().current_scene.enemy_character_curr.recover(parasitism_power);
+			parasitism_phase -= 1;
+			if parasitism_phase <= 0 :
+				addlog(character_name+" 摆脱了寄生");
+				parasitism_power = 0;
+				parasitism_watered_times = 0;
+
+#寄生函数
+func parasitism(phase,source):
+	addlog(self.character_name+"被寄生了！")
+	parasitism_phase = phase;
+	parasitism_power =int(source.physical_power*0.5);
+	parasitism_watered_times = 0;
+
+#灼烧函数
+func burn(phase,source):
+	addlog(self.character_name+"被灼烧了！")
+	burning_phase = phase;
+	burning_source = source;

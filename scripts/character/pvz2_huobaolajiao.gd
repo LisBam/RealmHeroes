@@ -71,8 +71,6 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	if curr_hp <= enemy.ai.get_enable_max_damage() or curr_hp <= 1000:
 		ai.skills[4].strategy_value_count = 4000
 	#队伍没有剩余角色时不释放此技能
-	printerr(player_team.size())
-	printerr(player_team)
 	if player_team.size()<=1:
 		ai.skills[4].to_die_value = 0;
 		ai.skills[4].strategy_value_count = 0;

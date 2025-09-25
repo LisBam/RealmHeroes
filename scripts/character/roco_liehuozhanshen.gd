@@ -28,9 +28,7 @@ func skillb(enemy,player,enemy_team,player_team):
 	var burn_probability = 30;
 	var random = randi_range(1,100);
 	if random <= burn_probability:
-		addlog(enemy.character_name+"被灼烧了！")
-		enemy.burning_phase = 3;
-		enemy.burning_source = self;
+		enemy.burn(3,self)
 	be_and_to_damage(damage(800,"mag",enemy,skillb_element)*0.9,enemy,player,"mag",skillb_element)
 	be_and_to_damage(damage(800,"mag",enemy,skillb_element)*0.1,player,player,"mag",skillb_element)
 	attack_skill_animation()
@@ -41,9 +39,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	var burn_probability = 60;
 	var random = randi_range(1,100);
 	if random <= burn_probability:
-		addlog(enemy.character_name+"被灼烧了！")
-		enemy.burning_phase = 3;
-		enemy.burning_source = self;
+		enemy.burn(3,self)
 	be_and_to_damage(damage(500,"mag",enemy,skillb_element),enemy,player,"mag",skillc_element)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
