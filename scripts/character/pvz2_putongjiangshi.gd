@@ -84,10 +84,12 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[3].buff_duration = 3
 		ai.skills[3].can_continue = true
 		#能量充足时提高发动价值,反之减少
-		ai.skills[3].strategy_value_mul = 0.5 + curr_energy/max_energy
+		ai.skills[3].strategy_value_mul = 0.5 + float(curr_energy)/max_energy
 	#满能量不用白不用
 	if curr_energy == max_energy:
 		ai.skills[3].strategy_value_count = 2000
+	else:
+		ai.skills[3].strategy_value_count = 0
 	
 	#血量足够被击杀时释放名刀
 	if enemy.ai.get_enable_max_damage(10) > curr_hp:

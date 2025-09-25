@@ -3,19 +3,21 @@ extends Node
 #定义所有路径
 
 #region PVZ2
-#植物
+#pvz植物
 const pvz2_wandousheshou = "res://scenes/character/pvz2_wandousheshou.tscn"
 const pvz2_xiangrikui = "res://scenes/character/pvz2_xiangrikui.tscn"
 const pvz2_jianguo = "res://scenes/character/pvz2_jianguo.tscn"
 const pvz2_huobaolajiao = "res://scenes/character/pvz2_huobaolajiao.tscn"
 const pvz2_hanbingsheshou = "res://scenes/character/pvz2_hanbingsheshou.tscn"
 const pvz2_caiwen = "res://scenes/character/pvz2_caiwen.tscn"
-#僵尸
+#pvz僵尸
 const pvz2_putongjiangshi = "res://scenes/character/pvz2_putongjiangshi.tscn"
 const pvz2_dubaojiangshi = "res://scenes/character/pvz2_dubaojiangshi.tscn"
 const pvz2_fuqianjiangshi = "res://scenes/character/pvz2_fuqianjiangshi.tscn"
 const pvz2_quanmingxingjiangshi = "res://scenes/character/pvz2_quanmingxingjiangshi.tscn"
 const pvz2_xiaoguijiangshi = "res://scenes/character/pvz2_xiaoguijiangshi.tscn"
+#洛克王国
+const roco_liehuozhanshen = "res://scenes/character/roco_liehuozhanshen.tscn"
 #endregion
 
 #可随机到的角色场景路径
@@ -31,6 +33,7 @@ var can_random_character = [
 	pvz2_hanbingsheshou,
 	pvz2_xiaoguijiangshi,
 	pvz2_caiwen,
+	roco_liehuozhanshen,
 ]
 
 #获取随机一个角色的场景路径

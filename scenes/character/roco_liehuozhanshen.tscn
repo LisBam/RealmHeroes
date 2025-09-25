@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://bso0f8kptvteu"]
+
+[ext_resource type="Script" uid="uid://c4m3xnn3e2v3c" path="res://scripts/character/roco_liehuozhanshen.gd" id="1_iq7nr"]
+[ext_resource type="Texture2D" uid="uid://dvrpygaq0tt8u" path="res://res/character/烈火战神.png" id="2_t6fag"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_ss0rf"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_ng8vl"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_vtolk"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_iq7nr")
+character_name = "烈火战神"
+damage_phy_ratio = 2.0
+damage_mag_ratio = 98.0
+max_hp = 9800
+element = "fire"
+speed = 105
+physical_power = 110
+magical_power = 155
+magical_defense = 115
+skilla_name = "魔焰瞬击"
+skillb_name = "烈焰冲锋"
+skillc_name = "热力爆弹"
+skilld_name = "空气切割"
+skilla_energy = 10
+skillb_energy = 15
+skillc_energy = 15
+skilld_energy = 15
+skilla_element = "fire"
+skillb_element = "fire"
+skillc_element = "fire"
+skilld_element = "fire"
+skilla_damage_type = "mag"
+skillb_damage_type = "mag"
+skillc_damage_type = "mag"
+skilld_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_t6fag")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ss0rf")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ng8vl")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_vtolk")

@@ -719,11 +719,13 @@ func into_new_phase():
 	if phase_is_skiped:
 		if curr_phase == "player":
 			into_player_phase(true);
-			await get_tree().create_timer(0.3).timeout;
+			if get_tree():
+				await get_tree().create_timer(0.3).timeout;
 			to_next_phase();
 		else:
 			into_enemy_phase(true);
-			await get_tree().create_timer(0.3).timeout;
+			if get_tree():
+				await get_tree().create_timer(0.3).timeout;
 			to_next_phase();
 	elif curr_phase == "player":
 		into_player_phase();

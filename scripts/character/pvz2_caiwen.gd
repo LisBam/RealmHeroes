@@ -5,7 +5,7 @@ func _ready() -> void:
 	tags.append("植物")
 	skilla_description = "菜问重拳出击，狠狠攻击敌方，造成1000威力的木属性物伤。"
 	skillb_description = "菜问强健体魄，提高20点物攻以及20点物抗，该效果最多叠加6层。"
-	skillc_description = "菜问对奄奄一息的目标使出强力一击，造成500威力的木属性物伤，并有15%的概率使目标陷入晕眩。若目标当前血量低于其已损失血量，则威力与晕眩概率均翻倍。"
+	skillc_description = "菜问对奄奄一息的目标使出强力一击，造成500威力的木属性物伤，并有15%的概率使目标陷入晕眩持续1回合。若目标当前血量低于其已损失血量，则威力与晕眩概率均翻倍。"
 	skilld_description = "菜问使出致命一击，造成1250威力的木属性物伤，对场下的所有敌方造成150威力的木属性物伤。"
 	skilla_short_desc = "物伤"
 	skillb_short_desc = "提高物抗物攻"
@@ -61,10 +61,10 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	add_damage_element(1,skilla_element)
 	ai.skills[1].damage_count = 1000
 	
-	ai.skills[2].buff_value = 20 * 8 + 20 * 10
-	ai.skills[2].buff_duration = 5
+	ai.skills[2].buff_value = 20 * 10 + 20 * 10
+	ai.skills[2].buff_duration = 7
 	var stacks = get_node("buff").get_buff_stacks("caiwen_add_buff")
-	if stacks >= 4:
+	if stacks >= 6:
 		ai.skills[2].buff_value = 0
 		ai.skills[2].buff_duration = 1
 	

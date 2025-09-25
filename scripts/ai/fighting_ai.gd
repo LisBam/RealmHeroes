@@ -50,6 +50,8 @@ var skills = [
 		skip_enemy_phase_count = 0.0, #令对手跳过回合数
 		damage_reduction = 0, #免伤值
 		damage_reduction_round_duration = 0, #免伤时长
+		burning_phase = 0,#灼烧时长
+		self_damage_count = 0,#自己受到伤害
 		
 		value = 0,
 	},
@@ -79,6 +81,8 @@ var skills = [
 		skip_enemy_phase_count = 0.0, #令对手跳过回合数
 		damage_reduction = 0, #免伤值
 		damage_reduction_round_duration = 0, #免伤时长
+		burning_phase = 0,#灼烧时长
+		self_damage_count = 0,#自己受到伤害
 		
 		value = 0,
 	},
@@ -108,6 +112,8 @@ var skills = [
 		skip_enemy_phase_count = 0.0,
 		damage_reduction = 0,
 		damage_reduction_round_duration = 0,
+		burning_phase = 0,#灼烧时长
+		self_damage_count = 0,#自己受到伤害
 		
 		value = 0,
 	},
@@ -137,6 +143,8 @@ var skills = [
 		skip_enemy_phase_count = 0.0,
 		damage_reduction = 0,
 		damage_reduction_round_duration = 0,
+		burning_phase = 0,#灼烧时长
+		self_damage_count = 0,#自己受到伤害
 		
 		value = 0,
 	},
@@ -166,6 +174,8 @@ var skills = [
 		skip_enemy_phase_count = 0.0,
 		damage_reduction = 0,
 		damage_reduction_round_duration = 0,
+		burning_phase = 0,#灼烧时长
+		self_damage_count = 0,#自己受到伤害
 		
 		value = 0,
 	},
@@ -251,6 +261,10 @@ func calculate_value(skill):
 	total_value += recover_energy_value * new_ENERGY_VALUE
 	#能量成本
 	total_value -= skill.energy_cost * new_ENERGY_VALUE
+	#灼烧收益
+	total_value += skill.burning_phase * player.damage(player.magical_power,"mag",enemy,"fire",false) * 0.85#灼烧延迟伤害收益打折
+	#自己掉血成本
+	total_value -=  player.damage(skill.self_damage_count,"mag",player,"fire",false)
 	
 	#buff收益
 	if not enemy.be_damage_to_benefit_mul > 1:
