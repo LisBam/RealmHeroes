@@ -73,3 +73,5 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	var the_sleep_probability = 0.6
 	if enemy.sleep_type <=0:
 		ai.skills[4].skip_enemy_phase_count = the_sleep_probability*2.6*0.5 #2.6为平均睡眠回合，0.5为平衡系数(不可造成伤害且自身只能放寄生与切换角色）)
+	else:
+		ai.skills[4].skip_enemy_phase_count = 0;
