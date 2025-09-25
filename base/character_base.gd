@@ -568,7 +568,7 @@ func phase_begin():
 func parasitism(phase,source):
 	addlog(self.character_name+"被寄生了！")
 	parasitism_phase = phase;
-	parasitism_power =int(source.physical_power*0.5);
+	parasitism_power =int(source.physical_power);
 	parasitism_watered_times = 0;
 
 #灼烧函数
