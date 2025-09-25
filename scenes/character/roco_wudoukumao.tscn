@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://djctt743rop3t"]
+
+[ext_resource type="Script" uid="uid://byvpuac7hrpl6" path="res://scripts/character/roco_wudoukumao.gd" id="1_ovjxm"]
+[ext_resource type="Texture2D" uid="uid://5jtl4fbn0exs" path="res://res/character/武斗酷猫.png" id="2_n2686"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_v4yls"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_s58nj"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_mkaaq"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_ovjxm")
+character_name = "武斗酷猫"
+damage_phy_ratio = 20.0
+damage_mag_ratio = 80.0
+max_hp = 11000
+element = "wood"
+speed = 104
+physical_power = 105
+magical_power = 145
+physical_defense = 105
+magical_defense = 130
+skilla_name = "慧根盾击"
+skillb_name = "暴力汲取"
+skillc_name = "寄生种子"
+skilld_name = "催眠粉"
+skillb_energy = 20
+skillc_energy = 10
+skilld_energy = 15
+skilla_element = "wood"
+skillb_element = "wood"
+skillc_element = "wood"
+skilld_element = "wood"
+skilla_damage_type = "mag"
+skillb_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_n2686")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_v4yls")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_s58nj")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_mkaaq")

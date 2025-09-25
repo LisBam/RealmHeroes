@@ -36,7 +36,7 @@ func skillb(enemy,player,enemy_team,player_team):
 	
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
-	var burn_probability = 60;
+	var burn_probability = 600;
 	var random = randi_range(1,100);
 	if random <= burn_probability:
 		enemy.burn(3,self)
