@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjo0dh5uvkgug"]
+
+[ext_resource type="Script" uid="uid://djbqvghmlotyt" path="res://scripts/character/roco_paersasi.gd" id="1_pwfwt"]
+[ext_resource type="Texture2D" uid="uid://dlcv73tb8rk7o" path="res://res/character/帕尔萨斯.png" id="2_0mr2v"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_mt2vb"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_pteo4"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_63nch"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_pwfwt")
+character_name = "帕尔萨斯"
+damage_phy_ratio = 1.0
+damage_mag_ratio = 29.0
+damage_real_ratio = 70.0
+element = "earth"
+skilla_name = "宁神"
+skillb_name = "巨魔之眼"
+skillc_name = "幽冥火"
+skilld_name = "生命虹吸"
+skilla_energy = 20
+skillb_energy = 25
+skillc_energy = 10
+skilla_element = "earth"
+skillb_element = "earth"
+skillc_element = "fire"
+skilld_element = "water"
+skilla_damage_type = "mag"
+skillc_damage_type = "real"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0mr2v")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mt2vb")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_pteo4")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_63nch")

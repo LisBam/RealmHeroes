@@ -20,6 +20,7 @@ const pvz2_xiaoguijiangshi = "res://scenes/character/pvz2_xiaoguijiangshi.tscn"
 const roco_liehuozhanshen = "res://scenes/character/roco_liehuozhanshen.tscn"
 const roco_wudoukumao = "res://scenes/character/roco_wudoukumao.tscn"
 const roco_shengshuishouhu = "res://scenes/character/roco_shengshuishouhu.tscn"
+const roco_paersasi = "res://scenes/character/roco_paersasi.tscn"
 
 #endregion
 
@@ -39,6 +40,7 @@ var can_random_character = [
 	roco_liehuozhanshen,
 	roco_wudoukumao,
 	roco_shengshuishouhu,
+	roco_paersasi,
 ]
 
 #获取随机一个角色的场景路径
