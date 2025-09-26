@@ -80,12 +80,23 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[2].let_lose_hp_count = 400+(magical_power*2)
 	#冰冻价值
 	if enemy.ice_stacks <=0:
-		ai.skills[3].skip_enemy_phase_count = 1*0.4*0.33
+		ai.skills[2].skip_enemy_phase_count = 1*0.4*0.33
 	elif enemy.ice_stacks >=0:
-		ai.skills[3].skip_enemy_phase_count = 1*0.4*0.33*(enemy.ice_stacks/10.0)
+		ai.skills[2].skip_enemy_phase_count = 1*0.4*0.33*(enemy.ice_stacks/10.0)
 	if enemy.element == "fire":
-		ai.skills[3].skip_enemy_phase_count = 0
+		ai.skills[2].skip_enemy_phase_count = 0
 	#晕眩价值
-	ai.skills[3].skip_enemy_phase_count += 1*0.4*0.33
+	ai.skills[2].skip_enemy_phase_count += 1*0.4*0.33
 	#灼烧价值
-	ai.skills[3].burning_phase = (3-enemy.burning_phase)*0.4*0.33;
+	ai.skills[2].burning_phase = (3-enemy.burning_phase)*0.4*0.33;
+	
+	ai.skills[3].skip_phase_count = 1
+	if not get_node("buff").has_buff("huangjiashijiu_skillc_mark"):
+		ai.skills[3].buff_duration = 1
+		ai.skills[3].damage_reduction = 100
+		ai.skills[3].damage_reduction_phase_duration = 1 
+	else:
+		ai.skills[3].buff_value = 0
+		ai.skills[3].buff_duration = 0
+		ai.skills[3].damage_reduction = 0
+		ai.skills[3].damage_reduction_round_duration = 0

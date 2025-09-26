@@ -49,13 +49,14 @@ var skills = [
 		skip_phase_count = 0.0, #跳过回合数
 		skip_enemy_phase_count = 0.0, #令对手跳过回合数
 		damage_reduction = 0, #免伤值
-		damage_reduction_round_duration = 0, #免伤时长
+		damage_reduction_round_duration = 0, #免伤轮次时长
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
 		add_speed_buff = 0,#增加速度
 		add_max_speed_buff = 0,#增加的最大速度
 		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
+		damage_reduction_phase_duration = 0, #免伤回合时长
 		
 		value = 0,
 	},
@@ -84,13 +85,14 @@ var skills = [
 		skip_phase_count = 0.0, #跳过回合数
 		skip_enemy_phase_count = 0.0, #令对手跳过回合数
 		damage_reduction = 0, #免伤值
-		damage_reduction_round_duration = 0, #免伤时长
+		damage_reduction_round_duration = 0, #免伤轮次时长
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
 		add_speed_buff = 0,#增加速度
 		add_max_speed_buff = 0,#增加的最大速度
 		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
+		damage_reduction_phase_duration = 0, #免伤回合时长
 		
 		value = 0,
 	},
@@ -126,6 +128,7 @@ var skills = [
 		add_speed_buff = 0,#增加速度
 		add_max_speed_buff = 0,#增加的最大速度
 		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
+		damage_reduction_phase_duration = 0, #免伤回合时长
 		
 		value = 0,
 	},
@@ -161,6 +164,7 @@ var skills = [
 		add_speed_buff = 0,#增加速度
 		add_max_speed_buff = 0,#增加的最大速度
 		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
+		damage_reduction_phase_duration = 0, #免伤回合时长
 		
 		value = 0,
 	},
@@ -196,6 +200,7 @@ var skills = [
 		add_speed_buff = 0,#增加速度
 		add_max_speed_buff = 0,#增加的最大速度
 		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
+		damage_reduction_phase_duration = 0, #免伤回合时长
 		
 		value = 0,
 	},
@@ -340,14 +345,18 @@ func calculate_value(skill):
 	#增加免伤收益：对方最大可能伤害可被免伤的伤害值*可能被攻击的次数（减去跳过回合）
 	#减少的伤害值
 	var reduction_count = enemy.ai.get_enable_max_damage()*(skill.damage_reduction/100.0)
-	var enable_phase = skill.damage_reduction_round_duration
-	if enemy.skip_next_phase:
-		enable_phase -= 1
-	if (player.speed < enemy.speed) :
-		enable_phase -= 1
-	#如果当前为偶数回合，那么是后手，持续回合-1
-	if (player.speed == enemy.speed) and Global.curr_phase_count%2 == 0:
-		enable_phase -= 1
+	var enable_phase = 0
+	if skill.damage_reduction_round_duration>0:
+		enable_phase = skill.damage_reduction_round_duration
+		if enemy.skip_next_phase:
+			enable_phase -= 1
+		if (player.speed < enemy.speed) :
+			enable_phase -= 1
+		#如果当前为偶数回合，那么是后手，持续回合-1
+		if (player.speed == enemy.speed) and Global.curr_phase_count%2 == 0:
+			enable_phase -= 1
+	else:
+		enable_phase = skill.damage_reduction_phase_duration;
 	total_value += reduction_count*enable_phase
 	
 	# 新增能量储备奖励（剩余能量越多奖励越高）
