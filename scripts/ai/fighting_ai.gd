@@ -3,8 +3,8 @@ class_name FightingAI
 
 # 收益系数（常量）
 const DAMAGE_VALUE = 1.0       # 1伤害的收益
-const HEAL_VALUE = 1.0         # 1回血的收益
-const SHIELD_VALUE = 1.1       # 1护盾的收益
+const HEAL_VALUE = 1.1         # 1回血的收益
+const SHIELD_VALUE = 1.05       # 1护盾的收益
 const ENERGY_VALUE = 5.0      # 1能量的收益
 const BUFF_VALUE = 0.8      # 增益收益
 const DEBUFF_VALUE = 0.7    # 减益收益
@@ -53,6 +53,7 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
+		add_speed = 0,#增加速度
 		
 		value = 0,
 	},
@@ -85,6 +86,7 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
+		add_speed = 0,#增加速度
 		
 		value = 0,
 	},
@@ -117,6 +119,7 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
+		add_speed = 0,#增加速度
 		
 		value = 0,
 	},
@@ -149,6 +152,7 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
+		add_speed = 0,#增加速度
 		
 		value = 0,
 	},
@@ -181,6 +185,7 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
+		add_speed = 0,#增加速度
 		
 		value = 0,
 	},
@@ -282,6 +287,16 @@ func calculate_value(skill):
 	total_value += skill.parasitism_phase * 4 * 0.85#能量收益，延迟收益打折
 	#buff收益
 	if not enemy.be_damage_to_benefit_mul > 1:
+		#加速价值
+		#发动后若速度能够反超或持平则释放
+		if player.speed < enemy.speed and player.speed+skill.add_speed >= enemy.speed:
+			#反超价值更高
+			if player.speed+skill.add_speed > enemy.speed:
+				skill.buff_value += 600
+			if player.speed+skill.add_speed == enemy.speed:
+				skill.buff_value += 300
+			if player.speed+skill.add_speed < enemy.speed:
+				skill.buff_value += 80
 		#增益收益
 		total_value += skill.buff_value * skill.buff_duration * BUFF_VALUE
 		#减益收益
