@@ -73,7 +73,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[2].buff_value = 0
 
 	#发动后若速度能够反超或持平则释放
-	if speed < enemy.speed and speed+10 >= enemy.speed:
+	if speed <= enemy.speed and speed+10 >= enemy.speed:
 		#反超价值更高
 		if speed+10 > enemy.speed:
 			ai.skills[3].buff_value = 600

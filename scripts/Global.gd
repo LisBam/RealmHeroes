@@ -5,7 +5,7 @@ extends Node
 @export var team_character_3_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
 @export var team_character_4_scene:PackedScene = load(AllCharacter.pvz2_caiwen)
 
-@export var enemy_character_1_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
+@export var enemy_character_1_scene:PackedScene = load(AllCharacter.roco_paersasi)
 @export var enemy_character_2_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
 @export var enemy_character_3_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
 @export var enemy_character_4_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
