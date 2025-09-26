@@ -82,7 +82,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		#若有暗流状态，则增加价值
 		if enemy.get_node("buff").has_buff("fuqianjiangshi_skilld_mark"):
 			ai.skills[3].buff_value +=(ai.skills[4].value*1.0)*2/5
-		ai.skills[3].buff_duration = 4-1-1 #跳过一回合+释放技能一回合不算
+		ai.skills[3].buff_duration = 4-1 #跳过一回合+释放技能一回合不算
 		ai.skills[3].damage_reduction = 80
 		ai.skills[3].damage_reduction_round_duration = 2 #若速度慢则ai计算时会自动-1
 	else:
