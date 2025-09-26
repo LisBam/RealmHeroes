@@ -335,7 +335,7 @@ func damage(count:int,type:String,target,element:String,print:bool = true) -> in
 	#计算二阶伤害,即参与属性克制后的伤害
 	var element_multiplier = get_element_multiplier(element, target.element)
 	var second_damage = int(first_damage * element_multiplier)
-	#计算三阶伤害，即计算增伤与免伤后的伤害
+	#计算三阶伤害，原计算增伤与免伤后的伤害，现空置
 	var third_damage = second_damage - (target.damage_reduction/100)*second_damage + (damage_improve/100)*second_damage
 	#计算四阶伤害，元素反应伤害
 	var forth_damage = third_damage
@@ -347,11 +347,13 @@ func damage(count:int,type:String,target,element:String,print:bool = true) -> in
 	return forth_damage
 
 func be_and_to_damage(damage,target,source,damage_type:String,damage_element:String,is_extra:bool = false,target_energy = int(round(damage/100.0)),player_energy = 0):
+	#计算增伤与免伤伤害
+	var first_damage = damage - (target.damage_reduction/100)*damage + (damage_improve/100)*damage
 	#计算轮次提高伤害
-	var round_improve_damage = int(damage * round_damage_mul);
+	var second_improve_damage = int(first_damage * round_damage_mul);
 	
-	target.be_damage(round_improve_damage,source,damage_type,damage_element,is_extra,target_energy)
-	to_damage(round_improve_damage,target,damage_type,damage_element,is_extra,player_energy)
+	target.be_damage(second_improve_damage,source,damage_type,damage_element,is_extra,target_energy)
+	to_damage(second_improve_damage,target,damage_type,damage_element,is_extra,player_energy)
 
 #获取属性克制倍率
 func get_element_multiplier(element,target_element) -> float:

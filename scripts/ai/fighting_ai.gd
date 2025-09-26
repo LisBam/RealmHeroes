@@ -357,7 +357,9 @@ func calculate_value(skill):
 			enable_phase -= 1
 	else:
 		enable_phase = skill.damage_reduction_phase_duration;
-	total_value += reduction_count*enable_phase
+	#若对方有低伤害或无伤害技能，价值打折
+	var low_damage_mul=enemy.ai.get_enable_min_damage()/1000
+	total_value += reduction_count*enable_phase*low_damage_mul
 	
 	# 新增能量储备奖励（剩余能量越多奖励越高）
 	var remaining_energy = (curr_energy + skill.recover_energy) - skill.energy_cost
@@ -436,6 +438,18 @@ func get_enable_max_damage(add_energy:int = 0):
 		if total_damage > max_damage:
 			max_damage = total_damage
 	return max_damage
+	
+# 读取可用技能中最低伤害的值
+func get_enable_min_damage(add_energy:int = 0):
+	refresh_enable_skills(add_energy)
+	if enable_skills.size() == 0:
+		return 0  # 没有可用技能时返回0
+	var min_damage = 999999
+	for skill in enable_skills:
+		var total_damage = max(get_final_damage(skill) * DAMAGE_VALUE,get_final_damage(skill,skill.damage_aoe_justone_count) * DAMAGE_VALUE)
+		if total_damage < min_damage:
+			min_damage = total_damage
+	return min_damage
 	
 # 读取所有技能中最高伤害的技能
 func get_max_damage_skill():

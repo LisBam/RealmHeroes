@@ -75,9 +75,9 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[4].to_die_value = 0.4
 	#血量低时提高战略价值
 	if curr_hp <= enemy.ai.get_enable_max_damage() * 2 or curr_hp <= 2000:
-		ai.skills[4].strategy_value_count = 1500
+		ai.skills[4].strategy_value_count = 1350
 	if curr_hp <= enemy.ai.get_enable_max_damage() or curr_hp <= 1000:
-		ai.skills[4].strategy_value_count = 3000
+		ai.skills[4].strategy_value_count = 2700
 	if is_ai:
 		if enemy_team.size() <= 1:
 			ai.skills[4].strategy_value_count = 0
