@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dctdrg5n0pvvy"]
+
+[ext_resource type="Script" uid="uid://qn6sty8ep6jt" path="res://scripts/character/roco_huangjiashijiu.gd" id="1_0mdxl"]
+[ext_resource type="Texture2D" uid="uid://c8cypiwvn1log" path="res://res/character/黄金狮鹫.png" id="2_o3mwq"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_twgds"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_bysh6"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_ytf1g"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_0mdxl")
+character_name = "皇家狮鹫"
+max_hp = 7500
+max_energy = 120
+element = "water"
+speed = 120
+physical_power = 75
+magical_power = 130
+physical_defense = 80
+magical_defense = 70
+skilla_name = "风之打击"
+skillb_name = "三角之力"
+skillc_name = "飞跃打击"
+skilld_name = "风之力"
+skilla_energy = 10
+skillb_energy = 15
+skillc_energy = 15
+skilld_energy = 10
+skilla_element = "water"
+skillb_element = "water"
+skillc_element = "water"
+skilld_element = "water"
+skilla_damage_type = "mag"
+skillb_damage_type = "real"
+skillc_damage_type = "mag"
+skilld_damage_type = "mag"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_o3mwq")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_twgds")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bysh6")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_ytf1g")

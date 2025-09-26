@@ -8,12 +8,15 @@ var target: Node = null ## 作用目标节点
 @export var max_stacks := 1  ## 最大叠加层数
 @export var stack_policy := StackPolicy.RESET_DURATION  ## 堆叠策略
 var current_stacks := 1      ## 当前层数
-@export var init_round_duration: float = 0 ##buff初始持续时间
+@export var init_round_duration: float = 0 ##buff初始轮次持续时间
+@export var init_phase_duration: float = 0 ##buff初始回合持续时间
+@export var is_all_phase:bool = false ##是否为所有角色的回合开始
 
 var log:RichTextLabel
 
 # 剩余持续时间
 var round_duration: float = 0
+var phase_duration: int = 0
 
 # 新增堆叠策略枚举
 enum StackPolicy {
@@ -49,5 +52,9 @@ func _on_remove():
 func enter_buff():
 	pass
 	
+#回合开始时触发
+func phase_begin():
+	pass
+
 func addlog(text,is_gray = false):
 	target.addlog(text,is_gray)

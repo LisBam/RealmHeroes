@@ -286,8 +286,6 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 	
 	#原本的生命值，用于计算溢出伤害
 	var origin_hp = curr_hp
-	#计算轮次提高伤害
-	damage = int(damage * round_damage_mul)
 	#护盾
 	if shield > 0 and damage_type!="real":
 		var shield_absorbed = min(damage,shield)#护盾吸收的伤害量
@@ -349,8 +347,11 @@ func damage(count:int,type:String,target,element:String,print:bool = true) -> in
 	return forth_damage
 
 func be_and_to_damage(damage,target,source,damage_type:String,damage_element:String,is_extra:bool = false,target_energy = int(round(damage/100.0)),player_energy = 0):
-	target.be_damage(damage,source,damage_type,damage_element,is_extra,target_energy)
-	to_damage(damage,target,damage_type,damage_element,is_extra,player_energy)
+	#计算轮次提高伤害
+	var round_improve_damage = int(damage * round_damage_mul);
+	
+	target.be_damage(round_improve_damage,source,damage_type,damage_element,is_extra,target_energy)
+	to_damage(round_improve_damage,target,damage_type,damage_element,is_extra,player_energy)
 
 #获取属性克制倍率
 func get_element_multiplier(element,target_element) -> float:
