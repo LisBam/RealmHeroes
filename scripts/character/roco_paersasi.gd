@@ -37,7 +37,7 @@ func skillb(enemy,player,enemy_team,player_team):
 			magical_power = enemy.magical_power;
 			enemy.magical_power = temp;
 			have_change = true;
-			addlog("双方的魔攻被交换了！",true);
+			addlog("双方的法强被交换了！",true);
 	if curr_hp < enemy.curr_hp and not have_change:
 		var probability = 40;
 		var random = randi_range(1,100);

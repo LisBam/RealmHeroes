@@ -13,6 +13,7 @@ func _on_apply():
 	
 func round_start():
 	if not source.is_die:
+		addlog(target.character_name+" 被暗流袭击",true)
 		source.be_and_to_damage(source.damage(damage,"phy",target,"water"),target,source,"phy","water")
 	
 # Buff移除时触发
