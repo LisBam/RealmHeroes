@@ -78,27 +78,27 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	
 	add_damage_element(1,skilla_element)
 	ai.skills[1].damage_count = 600
-	ai.skills[2].buff_duration = 6
+	ai.skills[1].add_speed_buff = 20*0.2
+	ai.skills[1].add_max_speed_buff = 20*6*0.2
+	ai.skills[1].buff_value = ((15+5)+(15+5)+13+13)*0.2 #物攻+法强+物抗+法抗乘以概率，物攻法强都会影响其他技能，增加价值
+	ai.skills[1].buff_duration = 6
 	
-	#物抗收益
-	var physical_defense_value = 10*(enemy.damage_phy_ratio/100);
-	
-	ai.skills[2].buff_value = 20 * 10 + 20*physical_defense_value;
-	ai.skills[2].buff_duration = 7
-	var stacks = get_node("buff").get_buff_stacks("caiwen_add_buff")
-	if stacks >= 6:
-		ai.skills[2].buff_value = 0
-		ai.skills[2].buff_duration = 1
-	
+	ai.skills[2].buff_value = 0
+	ai.skills[2].buff_duration = 0
+	ai.skills[2].recover_hp = 0
+	ai.skills[2].strategy_value_count = 0
+	if magical_power < enemy.magical_power:
+		ai.skills[2].buff_value = (enemy.magical_power - magical_power)*(15+5)*2*0.6#交换值*法强收益*两倍（一增一减）*概率
+		ai.skills[2].buff_duration = 6
+	if curr_hp < enemy.curr_hp:
+		var change_num = enemy.curr_hp - curr_hp;
+		ai.skills[2].recover_hp =change_num;
+		ai.skills[2].strategy_value_count = change_num;#对方失去的血量简化为等额战略价值
+		
 	add_damage_element(3,skillc_element)
-	var stun_probability = 15;
-	var skillc_damage = 500;
-	if enemy.curr_hp < (enemy.max_hp - enemy.curr_hp):
-		stun_probability = 30;
-		skillc_damage = 1000;
-	ai.skills[3].skip_enemy_phase_count = 1*(float(stun_probability)/100)
-	ai.skills[3].damage_count = skillc_damage
+	ai.skills[3].let_lose_hp_count = 800+magical_power+physical_power
 	
-	add_damage_element(4,skillc_element)
-	ai.skills[4].damage_aoe_count = 150 * enemy_team.size()-1
-	ai.skills[4].damage_aoe_justone_count = 1250
+	var probability = 40.0;
+	if physical_power>100:probability+=(physical_power-100);
+	if magical_power>100:probability+=(magical_power-100);
+	ai.skills[4].let_lose_hp_count = enemy.curr_hp*0.5*(probability/100)

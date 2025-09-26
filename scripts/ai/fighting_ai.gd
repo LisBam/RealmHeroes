@@ -53,7 +53,9 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
-		add_speed = 0,#增加速度
+		add_speed_buff = 0,#增加速度
+		add_max_speed_buff = 0,#增加的最大速度
+		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
 		
 		value = 0,
 	},
@@ -86,7 +88,9 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
-		add_speed = 0,#增加速度
+		add_speed_buff = 0,#增加速度
+		add_max_speed_buff = 0,#增加的最大速度
+		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
 		
 		value = 0,
 	},
@@ -119,7 +123,9 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
-		add_speed = 0,#增加速度
+		add_speed_buff = 0,#增加速度
+		add_max_speed_buff = 0,#增加的最大速度
+		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
 		
 		value = 0,
 	},
@@ -152,7 +158,9 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
-		add_speed = 0,#增加速度
+		add_speed_buff = 0,#增加速度
+		add_max_speed_buff = 0,#增加的最大速度
+		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
 		
 		value = 0,
 	},
@@ -185,7 +193,9 @@ var skills = [
 		burning_phase = 0,#灼烧时长
 		self_damage_count = 0,#自己受到伤害
 		parasitism_phase = 0,#寄生时长
-		add_speed = 0,#增加速度
+		add_speed_buff = 0,#增加速度
+		add_max_speed_buff = 0,#增加的最大速度
+		let_lose_hp_count = 0,#令对方失去血量的值，不计算伤害
 		
 		value = 0,
 	},
@@ -237,6 +247,7 @@ func calculate_value(skill):
 	var total_value = 0.0
 	#伤害价值,乘以伤害段数
 	var damage_value = get_final_damage(skill) * skill.damage_times
+	damage_value += skill.let_lose_hp_count;
 	#若目标处于睡眠，则降低价值
 	if enemy.sleep_type == 1:
 		var the_skip_phase_value = 0
@@ -286,17 +297,24 @@ func calculate_value(skill):
 	total_value += skill.parasitism_phase * player.damage(player.physical_power*1.6,"phy",enemy,"wood",false) * 0.85#延迟收益打折
 	total_value += skill.parasitism_phase * 4 * 0.85#能量收益，延迟收益打折
 	#buff收益
+	#加速价值
+	#发动后若速度能够反超或持平则释放
+	if player.speed <= enemy.speed and player.speed+skill.add_max_speed_buff >= enemy.speed and skill.add_speed_buff>0:
+		#一层反超价值更高
+		if player.speed+skill.add_speed_buff > enemy.speed:
+			skill.buff_value += 600
+		elif player.speed+skill.add_speed_buff == enemy.speed:
+			skill.buff_value += 300
+		elif player.speed+skill.add_speed_buff < enemy.speed:
+			skill.buff_value += 80
+		#多层反超减少价值
+		elif player.speed+skill.add_max_speed_buff > enemy.speed:
+			skill.buff_value += 400
+		elif player.speed+skill.add_max_speed_buff == enemy.speed:
+			skill.buff_value += 180
+		elif player.speed+skill.add_max_speed_buff < enemy.speed:
+			skill.buff_value += 50
 	if not enemy.be_damage_to_benefit_mul > 1:
-		#加速价值
-		#发动后若速度能够反超或持平则释放
-		if player.speed < enemy.speed and player.speed+skill.add_speed >= enemy.speed:
-			#反超价值更高
-			if player.speed+skill.add_speed > enemy.speed:
-				skill.buff_value += 600
-			if player.speed+skill.add_speed == enemy.speed:
-				skill.buff_value += 300
-			if player.speed+skill.add_speed < enemy.speed:
-				skill.buff_value += 80
 		#增益收益
 		total_value += skill.buff_value * skill.buff_duration * BUFF_VALUE
 		#减益收益
