@@ -248,12 +248,8 @@ func calculate_value(skill):
 	#伤害价值,乘以伤害段数
 	var damage_value = get_final_damage(skill) * skill.damage_times
 	damage_value += skill.let_lose_hp_count;
-	#若目标处于睡眠，则降低价值
-	if enemy.sleep_type == 1:
-		var the_skip_phase_value = 0
-		if enemy:#只是保证不为空值
-			the_skip_phase_value = skill.skip_phase_count * get_a_phase_value(enemy)
-		damage_value -= (enemy.sleep_probability/100.0)*the_skip_phase_value
+	#计算轮次增伤
+	damage_value*=player.round_damage_mul;
 	#若伤害足以致命，则伤害价值变为目标生命值并乘以击杀价值
 	if get_final_damage(skill) >= enemy.curr_hp:
 		damage_value = enemy.curr_hp * KILL_VALUE
@@ -262,6 +258,12 @@ func calculate_value(skill):
 		#若目标有致命伤害保留1点HP,则不计算击杀价值
 		if enemy.not_die_to_one_hp:
 			damage_value = enemy.curr_hp
+	#若目标处于睡眠，则降低价值
+	if enemy.sleep_type == 1:
+		var the_skip_phase_value = 0
+		if enemy:#只是保证不为空值
+			the_skip_phase_value = skill.skip_phase_count * get_a_phase_value(enemy)
+		damage_value -= (enemy.sleep_probability/100.0)*the_skip_phase_value
 	#若目标拥有卖血收益，则降低伤害价值
 	if enemy.be_damage_to_benefit_mul > 1:
 		#若伤害足以致命，且目标没有锁血，则无视卖血

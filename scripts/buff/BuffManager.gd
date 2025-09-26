@@ -3,6 +3,7 @@ extends Node
 func _ready() -> void:
 	#连接信号
 	Signals.round_start.connect(round_start)
+	Signals.phase_begin.connect(phase_begin)
 
 # 存储Buff
 var buff_list: Dictionary = {}
@@ -73,6 +74,35 @@ func enter_buff():
 	for buff_id in buff_list.keys():
 		var buff = buff_list[buff_id]
 		buff.enter_buff()
+		
+# 每回合开始时更新Buff
+func phase_begin():
+	#若不是站场角色，则停止更新
+	if not get_parent().is_curr:
+		return
+	var to_update = []
+	for buff_id in buff_list:
+		var buff = buff_list[buff_id]
+		if not buff.is_all_phase:
+			if get_parent().is_ai and get_tree().current_scene and get_tree().current_scene.curr_phase == "player":
+				return
+			if not get_parent().is_ai and get_tree().current_scene and get_tree().current_scene.curr_phase == "enemy":
+				return
+		print("buff初始时长：",buff.init_phase_duration)
+		print("buff剩余时长：",buff.phase_duration)
+		buff.phase_begin()
+		buff.phase_duration -= 1
+		if buff.phase_duration == 0:
+			if buff.current_stacks > 1:  # 多层处理
+				buff.current_stacks -= 1
+				buff._on_stack_removed(buff.current_stacks)
+				buff.phase_duration = buff.init_phase_duration
+			else:
+				to_update.append(buff_id)
+			
+	# 移除已结束的BUFF
+	for id in to_update:
+		remove_buff(id)
 
 # 检测是否存在某个buff
 func has_buff(buff_id: String) -> bool:
