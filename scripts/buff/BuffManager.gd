@@ -83,10 +83,10 @@ func phase_begin():
 	var to_update = []
 	for buff_id in buff_list:
 		var buff = buff_list[buff_id]
-		if not buff.is_all_phase:
-			if get_parent().is_ai and get_tree().current_scene and get_tree().current_scene.curr_phase == "player":
+		if not buff.is_all_phase and get_tree() and get_tree().current_scene:
+			if get_parent().is_ai and get_tree().current_scene.curr_phase == "player":
 				return
-			if not get_parent().is_ai and get_tree().current_scene and get_tree().current_scene.curr_phase == "enemy":
+			if not get_parent().is_ai and get_tree().current_scene.curr_phase == "enemy":
 				return
 		print("buff初始时长：",buff.init_phase_duration)
 		print("buff剩余时长：",buff.phase_duration)
