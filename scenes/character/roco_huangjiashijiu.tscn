@@ -9,6 +9,9 @@
 [node name="character" type="Node"]
 script = ExtResource("1_0mdxl")
 character_name = "皇家狮鹫"
+damage_phy_ratio = 1.0
+damage_mag_ratio = 79.0
+damage_real_ratio = 20.0
 max_hp = 7500
 max_energy = 120
 element = "water"
@@ -22,7 +25,6 @@ skillb_name = "三角之力"
 skillc_name = "飞跃打击"
 skilld_name = "风之力"
 skilla_energy = 10
-skillb_energy = 15
 skillc_energy = 15
 skilld_energy = 15
 skilla_element = "water"
