@@ -594,7 +594,7 @@ func sleep(is_deep:bool = false):
 			return
 		addlog(self.character_name+"陷入睡眠")
 		sleep_type = 1;
-		sleep_probability = 80;
+		sleep_probability = 90;
 	else:
 		if sleep_type>=2:
 			return
