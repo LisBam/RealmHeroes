@@ -2,7 +2,7 @@ extends character_base
 
 func _ready() -> void:
 	super._ready()
-	skilla_description = "狮鹫御风打击敌方，造成600威力的水属性法伤，然后提高40点法强（至多叠加4层）。"
+	skilla_description = "狮鹫御风打击敌方，造成600威力的水属性法伤，然后提高60点法强（至多叠加3层）。"
 	skillb_description = "强大的魔法攻击，附带随机效果。造成固定（400+法强*2）点水属性真伤，并有40%概率对目标施加一层冰冻、一回合晕眩或者三回合灼烧状态。"
 	skillc_description = "狮鹫跃起至高处，俯冲袭击敌方。本回合获得100%免伤，并于你的下回合开始时跳过回合并造成1600威力的水属性法伤。"
 	skilld_description = "飓风的力量，对流体效果显著。造成600威力的水属性法伤，若目标为水属性，则威力翻倍。"
@@ -15,8 +15,8 @@ func skilla(enemy,player,enemy_team,player_team):
 	super.skilla(enemy,player,enemy_team,player_team)
 	be_and_to_damage(damage(600,"mag",enemy,skilla_element),enemy,player,"mag",skilla_element)
 	var add_power = huobaolajiao_add_power.new()
-	add_power.add_count = 40;
-	add_power.max_stacks = 4;
+	add_power.add_count = 60;
+	add_power.max_stacks = 3;
 	add_power.round_duration = -1;
 	add_power.init_round_duration = -1;
 	player.get_node("buff").add_buff(add_power)
@@ -70,10 +70,10 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	
 	add_damage_element(1,skillc_element)
 	ai.skills[1].damage_count = 600
-	ai.skills[1].buff_value = 40 * 5.5
+	ai.skills[1].buff_value = 60 * 5.5
 	ai.skills[1].buff_duration = 5
 	var stacks = get_node("buff").get_buff_stacks("huobaolajiao_add_power")
-	if stacks >= 4:
+	if stacks >= 3:
 		ai.skills[1].buff_value = 0
 		ai.skills[1].buff_duration = 1
 		

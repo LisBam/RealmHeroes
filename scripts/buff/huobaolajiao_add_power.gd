@@ -2,7 +2,7 @@ extends Buff
 
 class_name huobaolajiao_add_power
 
-var add_count:int = 50
+var add_count:int = 30
 
 func _init() -> void:
 	super._init()
