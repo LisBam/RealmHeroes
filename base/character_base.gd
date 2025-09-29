@@ -166,13 +166,6 @@ var damage_type_info = {
 @export var max_hp : int = 10000
 @export var max_energy : int = 100
 
-#region 局内数值
-var curr_hp:int
-var curr_energy:int
-var damage_reduction:float = 0##免伤百分比
-var damage_improve:float = 0##增伤百分比
-#endregion
-
 @export var element : String = "metal" ##属性：metal,fire,wood,water,earth
 
 @export var speed : int = 100 ##速度
@@ -180,8 +173,30 @@ var damage_improve:float = 0##增伤百分比
 @export var magical_power : int = 100 ##法强
 @export var physical_defense : int = 100 ##物抗
 @export var magical_defense : int = 100 ##魔抗
+#region 局内数值变动
+var speed_add:int = 0;
+var speed_mul:float = 1.0;
 
+var physical_power_add:int = 0;
+var physical_power_mul:float = 1.0;
+
+var magical_power_add:int = 0;
+var magical_power_mul:float = 1.0;
+
+var physical_defense_add:int = 0;
+var physical_defense_mul:float = 1.0;
+
+var magical_defense_add:int = 0;
+var magical_defense_mul:float = 1.0;
+#endregion
+#region 局内数值
+var curr_hp:int
+var curr_energy:int
+var damage_reduction:float = 0##免伤百分比
+var damage_improve:float = 0##增伤百分比
 @export var shield : int = 0 ##护盾
+#endregion
+
 #endregion
 
 #region 技能相关
@@ -325,9 +340,9 @@ func damage(count:int,type:String,target,element:String,print:bool = true) -> in
 	#计算一阶伤害
 	var first_damage
 	if type == "phy":
-		first_damage = count*physical_power/target.physical_defense
+		first_damage = count*get_physical_power()/target.get_physical_defense()
 	elif type == "mag":
-		first_damage = count*magical_power/target.magical_defense
+		first_damage = count*get_magical_power()/target.get_magical_defense()
 	elif type == "real":
 		first_damage = count
 	else:
@@ -547,7 +562,7 @@ func phase_begin():
 			burning_source = null;
 		else:
 			addlog(character_name+" 受到了灼烧伤害");
-			be_and_to_damage(damage(int(burning_source.magical_power*1.5),"mag",self,"fire"),self,burning_source,"mag","fire");
+			be_and_to_damage(damage(int(burning_source.get_magical_power()*1.5),"mag",self,"fire"),self,burning_source,"mag","fire");
 			burning_phase -= 1;
 			if burning_phase <= 0:
 				addlog(character_name+" 从灼烧中恢复了");
@@ -578,7 +593,7 @@ func phase_begin():
 func parasitism(phase,source):
 	addlog(self.character_name+"被寄生了！")
 	parasitism_phase = phase;
-	parasitism_power =int(source.physical_power);
+	parasitism_power =int(source.get_physical_power());
 	parasitism_watered_times = 0;
 
 #灼烧函数
@@ -601,3 +616,40 @@ func sleep(is_deep:bool = false):
 		addlog(self.character_name+"陷入沉眠！")
 		sleep_type = 2;
 		sleep_probability = 100;
+
+#region 获取属性值
+func get_speed()->int:
+	var final:int;
+	final = speed+speed_add;
+	final = int(final*speed_mul);
+	final = max(1,final);
+	return final;
+	
+func get_physical_power()->int:
+	var final:int;
+	final = physical_power+physical_power_add;
+	final = int(final*physical_power_mul);
+	final = max(1,final);
+	return final;
+	
+func get_magical_power()->int:
+	var final:int;
+	final = magical_power+magical_power_add;
+	final = int(final*magical_power_mul);
+	final = max(1,final);
+	return final;
+	
+func get_physical_defense()->int:
+	var final:int;
+	final = physical_defense+physical_defense_add;
+	final = int(final*physical_defense_mul);
+	final = max(1,final);
+	return final;
+	
+func get_magical_defense()->int:
+	var final:int;
+	final = magical_defense+magical_defense_add;
+	final = int(final*magical_defense_mul);
+	final = max(1,final);
+	return final;
+#endregion

@@ -297,29 +297,29 @@ func calculate_value(skill):
 	#能量成本
 	total_value -= skill.energy_cost * new_ENERGY_VALUE
 	#灼烧收益
-	total_value += skill.burning_phase * player.damage(player.magical_power,"mag",enemy,"fire",false) * 0.85#灼烧延迟伤害收益打折
+	total_value += skill.burning_phase * player.damage(player.get_magical_power(),"mag",enemy,"fire",false) * 0.85#灼烧延迟伤害收益打折
 	#自己掉血成本
 	total_value -=  player.damage(skill.self_damage_count,"mag",player,"fire",false)
 	#寄生收益，简单地将回血并入伤害收益了
-	total_value += skill.parasitism_phase * player.damage(player.physical_power*1.6,"phy",enemy,"wood",false) * 0.85#延迟收益打折
+	total_value += skill.parasitism_phase * player.damage(player.get_physical_power()*1.6,"phy",enemy,"wood",false) * 0.85#延迟收益打折
 	total_value += skill.parasitism_phase * 4 * 0.85#能量收益，延迟收益打折
 	#buff收益
 	#加速价值
 	#发动后若速度能够反超或持平则释放
-	if player.speed <= enemy.speed and player.speed+skill.add_max_speed_buff >= enemy.speed and skill.add_speed_buff>0:
+	if player.get_speed() <= enemy.get_speed() and player.get_speed()+skill.add_max_speed_buff >= enemy.get_speed() and skill.add_speed_buff>0:
 		#一层反超价值更高
-		if player.speed+skill.add_speed_buff > enemy.speed:
+		if player.get_speed()+skill.add_speed_buff > enemy.get_speed():
 			skill.buff_value += 600
-		elif player.speed+skill.add_speed_buff == enemy.speed:
+		elif player.get_speed()+skill.add_speed_buff == enemy.get_speed():
 			skill.buff_value += 300
-		elif player.speed+skill.add_speed_buff < enemy.speed:
+		elif player.get_speed()+skill.add_speed_buff < enemy.get_speed():
 			skill.buff_value += 80
 		#多层反超减少价值
-		elif player.speed+skill.add_max_speed_buff > enemy.speed:
+		elif player.get_speed()+skill.add_max_speed_buff > enemy.get_speed():
 			skill.buff_value += 400
-		elif player.speed+skill.add_max_speed_buff == enemy.speed:
+		elif player.get_speed()+skill.add_max_speed_buff == enemy.get_speed():
 			skill.buff_value += 180
-		elif player.speed+skill.add_max_speed_buff < enemy.speed:
+		elif player.get_speed()+skill.add_max_speed_buff < enemy.get_speed():
 			skill.buff_value += 50
 	if not enemy.be_damage_to_benefit_mul > 1:
 		#增益收益
@@ -350,10 +350,10 @@ func calculate_value(skill):
 		enable_phase = skill.damage_reduction_round_duration
 		if enemy.skip_next_phase:
 			enable_phase -= 1
-		if (player.speed < enemy.speed) :
+		if (player.get_speed() < enemy.get_speed()) :
 			enable_phase -= 1
 		#如果当前为偶数回合，那么是后手，持续回合-1
-		if (player.speed == enemy.speed) and Global.curr_phase_count%2 == 0:
+		if (player.get_speed() == enemy.get_speed()) and Global.curr_phase_count%2 == 0:
 			enable_phase -= 1
 	else:
 		enable_phase = skill.damage_reduction_phase_duration;
