@@ -10,25 +10,23 @@ func _init() -> void:
 	max_stacks = 5
 	
 func _on_stack_increased(new_stacks: int):
-	target.speed -= count
-	target.speed = max(target.speed,0)
+	target.speed_add -= count
 	addlog(target.character_name+" 降低"+str(count)+"点速度",true)
 	if current_stacks == max_stacks:
 		addlog(target.character_name+" 已达该效果的最大减速",true)
 	
 func _on_stack_removed(new_stacks: int):
-	target.speed += count
+	target.speed_add += count
 	if not target.is_die:
 		addlog(target.character_name+" 恢复"+str(count)+"点速度",true)
 	
 # Buff施加时触发
 func _on_apply():
-	target.speed -= count
-	target.speed = max(target.speed,0)
+	target.speed_add -= count
 	addlog(target.character_name+" 降低"+str(count)+"点速度",true)
 	
 # Buff移除时触发
 func _on_remove():
-	target.speed += count
+	target.speed_add += count
 	if not target.is_die:
 		addlog(target.character_name+" 恢复"+str(count)+"点速度",true)

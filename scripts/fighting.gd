@@ -176,13 +176,13 @@ func _ready() -> void:
 	refresh_ai()
 	
 	#按速度加载入场动画（影响入场技能）
-	if player_character_curr.speed > enemy_character_curr.speed:
+	if player_character_curr.get_speed() > enemy_character_curr.get_speed():
 		active_enter_animation(player_character_curr)
 		active_enter_animation(enemy_character_curr)
-	elif player_character_curr.speed < enemy_character_curr.speed:
+	elif player_character_curr.get_speed() < enemy_character_curr.get_speed():
 		active_enter_animation(player_character_curr)
 		active_enter_animation(enemy_character_curr)
-	elif player_character_curr.speed == enemy_character_curr.speed:
+	elif player_character_curr.get_speed() == enemy_character_curr.get_speed():
 		var random = randi_range(0,1)
 		if random == 0:
 			active_enter_animation(player_character_curr)
@@ -673,11 +673,11 @@ func speed_to_judge_phase():
 			break
 		await get_tree().physics_frame
 		
-	if player_character_curr.speed > enemy_character_curr.speed:
+	if player_character_curr.get_speed() > enemy_character_curr.get_speed():
 		curr_phase = "player"
-	elif player_character_curr.speed < enemy_character_curr.speed:
+	elif player_character_curr.get_speed() < enemy_character_curr.get_speed():
 		curr_phase = "enemy"
-	elif player_character_curr.speed == enemy_character_curr.speed:
+	elif player_character_curr.get_speed() == enemy_character_curr.get_speed():
 		var random = randi_range(0,1)
 		if random == 0:
 			curr_phase = "player"

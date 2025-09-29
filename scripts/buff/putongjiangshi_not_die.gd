@@ -10,8 +10,10 @@ func _init() -> void:
 # Buff施加时触发
 func _on_apply():
 	target.not_die_to_one_hp += add_count
+	target.addlog("施加buff")
 	
 # Buff移除时触发
 func _on_remove():
 	target.not_die_to_one_hp -= add_count
 	target.not_die_to_one_hp = max(target.not_die_to_one_hp,0)
+	target.addlog("buff结束")
