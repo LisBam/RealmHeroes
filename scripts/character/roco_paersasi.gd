@@ -3,9 +3,9 @@ extends character_base
 func _ready() -> void:
 	super._ready()
 	skilla_description = "帕尔萨斯安定神思，造成600威力的土属性法伤，并有20%的概率提高20点物攻、法强、物抗、法抗以及速度（至多叠加6层）。"
-	skillb_description = "巨魔之眼凝视敌人，若你的法强低于对方，则有60%概率交换你与对方的法强。若你的血量低于对方，则有40%概率交换你与对方的血量。一次技能只能生效其中一项。"
-	skillc_description = "释放幽冥火灼烧敌方，造成固定的800点火属性真伤。每点法强与物攻均会使此伤害+1。"
-	skilld_description = "展开恶魔虹吸汲取生命，有40%概率使对方的血量减半。当你的物攻或法强高于100点时，每额外多出1点便会使此概率+1%。"
+	skillb_description = "巨魔之眼凝视敌人，若你的基础法强低于对方，则有60%概率交换你与对方的基础法强。若你的血量低于对方，则有40%概率交换你与对方的血量。一次技能只能生效其中一项。"
+	skillc_description = "释放幽冥火灼烧敌方，造成固定的800点火属性真伤。每点法强与物攻均会使此伤害+1.5。"
+	skilld_description = "展开恶魔虹吸汲取生命，有40%概率使对方的血量减半。当你的物攻或法强高于100点时，每额外多出1点便会使此概率+0.5%。"
 	skilla_short_desc = "法伤 强化五维"
 	skillb_short_desc = "交换血量或法强"
 	skillc_short_desc = "固定法伤"
@@ -52,7 +52,7 @@ func skillb(enemy,player,enemy_team,player_team):
 	
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team);
-	var real_damage = 800 + physical_power + magical_power;
+	var real_damage = 800 + get_physical_power()*1.5 + get_magical_power()*1.5;
 	be_and_to_damage(real_damage,enemy,player,"real",skillc_element);
 	attack_skill_animation();
 	Signals.to_next_phase.emit();
@@ -60,8 +60,8 @@ func skillc(enemy,player,enemy_team,player_team):
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
 	var probability = 40;
-	if physical_power>100:probability+=(physical_power-100);
-	if magical_power>100:probability+=(magical_power-100);
+	if get_physical_power()>100:probability+=0.5*(get_physical_power()-100);
+	if get_magical_power()>100:probability+=0.5*(get_magical_power()-100);
 	var random = randi_range(1,100);
 	if random <= probability:
 		enemy.curr_hp = int(enemy.curr_hp*0.5);
@@ -96,9 +96,9 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 		ai.skills[2].strategy_value_count = change_num;#对方失去的血量简化为等额战略价值
 		
 	add_damage_element(3,skillc_element)
-	ai.skills[3].let_lose_hp_count = 800+magical_power+physical_power
+	ai.skills[3].let_lose_hp_count = 800+1.5*get_magical_power()+1.5*get_physical_power()
 	
 	var probability = 40.0;
-	if physical_power>100:probability+=(physical_power-100);
-	if magical_power>100:probability+=(magical_power-100);
+	if get_physical_power()>100:probability+=0.5*(get_physical_power()-100);
+	if get_magical_power()>100:probability+=0.5*(get_magical_power()-100);
 	ai.skills[4].let_lose_hp_count = enemy.curr_hp*0.5*(probability/100)

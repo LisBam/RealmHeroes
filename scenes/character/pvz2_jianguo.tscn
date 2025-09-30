@@ -9,6 +9,7 @@
 [node name="character" type="Node"]
 script = ExtResource("1_1e4i5")
 character_name = "坚果"
+taunt_value = 1.1
 max_hp = 12000
 max_energy = 80
 element = "wood"
