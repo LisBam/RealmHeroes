@@ -4,6 +4,7 @@ func _ready() -> void:
 	#连接信号
 	Signals.round_start.connect(round_start)
 	Signals.phase_begin.connect(phase_begin)
+	Signals.to_damage.connect(to_damage)
 
 # 存储Buff
 var buff_list: Dictionary = {}
@@ -23,6 +24,7 @@ func add_buff(buff: Buff):
 				print("已重置buff时长")
 				existing.round_duration = buff.init_round_duration
 			Buff.StackPolicy.ADD_DURATION:
+				print("已延长buff时长")
 				existing.round_duration += buff.init_round_duration
 		#叠层
 		if existing.current_stacks < existing.max_stacks:
@@ -83,6 +85,7 @@ func phase_begin():
 	var to_update = []
 	for buff_id in buff_list:
 		var buff = buff_list[buff_id]
+		#判断自己或AI的回合
 		if not buff.is_all_phase and get_tree() and get_tree().current_scene:
 			if get_parent().is_ai and get_tree().current_scene.curr_phase == "player":
 				return
@@ -115,3 +118,9 @@ func get_buff_stacks(buff_id: String) -> int:
 		return buff_list[buff_id].current_stacks
 	# 不存在时返回0
 	return 0
+
+#造成伤害时触发
+func to_damage(damage,target,damage_type:String,damage_element:String,is_extra:bool = false,energy = 0,source = get_parent()):
+	for buff_id in buff_list:
+		var buff = buff_list[buff_id]
+		buff.to_damage(damage,target,damage_type,damage_element,is_extra,energy,source)

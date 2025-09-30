@@ -1,11 +1,11 @@
 extends Node
 
 @export var team_character_1_scene:PackedScene = load(AllCharacter.pvz2_huojvshuzhuang)
-@export var team_character_2_scene:PackedScene = load(AllCharacter.roco_huangjiashijiu)
+@export var team_character_2_scene:PackedScene = load(AllCharacter.pvz2_wandousheshou)
 @export var team_character_3_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
 @export var team_character_4_scene:PackedScene = load(AllCharacter.roco_shengshuishouhu)
 
-@export var enemy_character_1_scene:PackedScene = load(AllCharacter.pvz2_xiangrikui)
+@export var enemy_character_1_scene:PackedScene = load(AllCharacter.pvz2_huojvshuzhuang)
 @export var enemy_character_2_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
 @export var enemy_character_3_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
 @export var enemy_character_4_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)

@@ -494,7 +494,7 @@ func change_character_value():
 	if player_team:
 		if player_team.size() <= 1:
 			return -999
-	var value = -9999
+	var value = -100
 	#在被克制时才思考切换角色
 	if player.get_element_multiplier(player.element,enemy.element) < 1:
 		print("思考得出：AI被克制")

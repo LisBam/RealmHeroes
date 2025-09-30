@@ -83,6 +83,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	#若已拥有buff则降低收益（能延长时间）
 	if get_node("buff").has_buff("quanmingxingjiangshi_add_phy_def"):
 		ai.skills[3].buff_value = 60*2*(enemy.damage_phy_ratio/100.0)
+		
 	add_damage_element(4,skilld_element)
 	var damage = 200
 	damage += (max(curr_hp - enemy.curr_hp,0))/5
