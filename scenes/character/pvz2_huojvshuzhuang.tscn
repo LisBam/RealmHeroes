@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://d24is816qkr2f"]
+
+[ext_resource type="Script" uid="uid://bykcqo62rlqc0" path="res://scripts/character/pvz2_huojvshuzhuang.gd" id="1_ckg70"]
+[ext_resource type="Texture2D" uid="uid://calaltlswrrbf" path="res://res/character/火炬树桩.png" id="2_s1eo8"]
+[ext_resource type="AudioStream" uid="uid://cqpwnm3173i04" path="res://res/audio/发牌及翻牌声效02-声词-卡片_爱给网_aigei_com.mp3" id="3_6c73k"]
+[ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_nx5wv"]
+[ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_ft1ar"]
+
+[node name="character" type="Node"]
+script = ExtResource("1_ckg70")
+character_name = "火炬树桩"
+damage_phy_ratio = 10.0
+damage_mag_ratio = 90.0
+max_hp = 12000
+max_energy = 120
+element = "fire"
+speed = 80
+physical_power = 75
+magical_power = 80
+skilla_name = "引燃"
+skillb_name = "光合作用"
+skillc_name = "炽热"
+skilld_name = "前卫"
+skilla_energy = 60
+skillb_energy = 0
+skillc_energy = 5
+skilld_energy = 10
+skilla_element = "fire"
+skillb_element = "wood"
+skillc_element = "fire"
+skilld_element = "fire"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_s1eo8")
+
+[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6c73k")
+
+[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nx5wv")
+
+[node name="buff" type="Marker2D" parent="."]
+script = ExtResource("5_ft1ar")
