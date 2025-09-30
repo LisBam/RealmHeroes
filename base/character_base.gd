@@ -28,14 +28,14 @@ var have_appear:bool = false
 #受到致命伤害保留1点HP的剩余次数
 var not_die_to_one_hp:int = 0
 
-#是否有卖血状态，这是卖血倍率
-var be_damage_to_benefit_mul:float = 1
+##是否有卖血状态，这是卖血倍率
+@export var be_damage_to_benefit_mul:float = 1
 
 #跳过下一回合
 var skip_next_phase:bool = false
 
-#嘲讽值，嘲讽值越高，ai越会优先打伤害
-var taunt_value:float = 1.0
+##嘲讽值，嘲讽值越高，ai越会优先打伤害
+@export var taunt_value:float = 1.0
 
 #冰冻,首层有60%的概率跳过回合，之后每层增加10%概率（最多5层，已在函数限制）。若大于1层，则无论是否解冻层数都-1；若解冻，则层数归零。
 var ice_stacks:int = 0
@@ -545,6 +545,8 @@ func enter_skill(enemy,player,enemy_team,player_team):
 
 #回合开始触发
 func phase_begin():
+	if not (get_tree() and get_tree().current_scene):#防止报错
+		return
 	if not is_curr:
 		return;
 	if get_tree():
