@@ -56,5 +56,9 @@ func enter_buff():
 func phase_begin():
 	pass
 
+#造成伤害时触发
+func to_damage(func_damage,func_target,damage_type:String,damage_element:String,is_extra:bool = false,energy = 0,func_source = target):
+	pass
+
 func addlog(text,is_gray = false):
 	target.addlog(text,is_gray)

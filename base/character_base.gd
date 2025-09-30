@@ -51,6 +51,7 @@ var burning_source:character_base = null
 var parasitism_phase:int = 0;
 var parasitism_power:int = 0;
 var parasitism_watered_times:int = 0;
+var parasitism_source:Node = null;
 
 #睡眠/沉眠
 var sleep_type:int = 0; #0为正常，1为睡眠，2为沉眠
@@ -325,7 +326,8 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 		addlog(character_name+" HP达到0，溢出"+str(damage-origin_hp)+"点伤害")
 	
 #造成伤害
-func to_damage(damage,target,damage_type:String,damage_element:String,is_extra:bool = false,energy = 0):
+func to_damage(damage,target,damage_type:String,damage_element:String,is_extra:bool = false,energy = 0,source = self):
+	Signals.to_damage.emit(damage,target,damage_type,damage_element,is_extra,energy,source)
 	#计算轮次提高伤害
 	damage = int(damage * round_damage_mul)
 	#回复能量
@@ -564,7 +566,7 @@ func phase_begin():
 			burning_source = null;
 		else:
 			addlog(character_name+" 受到了灼烧伤害");
-			be_and_to_damage(damage(int(burning_source.get_magical_power()*1.5),"mag",self,"fire"),self,burning_source,"mag","fire");
+			burning_source.be_and_to_damage(damage(int(burning_source.get_magical_power()*1.5),"mag",self,"fire"),self,burning_source,"mag","fire");
 			burning_phase -= 1;
 			if burning_phase <= 0:
 				addlog(character_name+" 从灼烧中恢复了");
@@ -576,12 +578,12 @@ func phase_begin():
 		else:
 			addlog(character_name+" 被汲取了生机");
 			if is_ai and get_tree().current_scene:
-				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.player_character_curr,"phy","wood");
+				parasitism_source.be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.player_character_curr,"phy","wood");
 				get_tree().current_scene.player_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
 				self.remove_energy(2,get_tree().current_scene.player_character_curr)
 				get_tree().current_scene.player_character_curr.recover_energy(2);
 			elif not is_ai and get_tree().current_scene:
-				be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.enemy_character_curr,"phy","wood");
+				parasitism_source.be_and_to_damage(damage(parasitism_power,"phy",self,"wood"),self,get_tree().current_scene.enemy_character_curr,"phy","wood");
 				get_tree().current_scene.enemy_character_curr.recover(damage(parasitism_power,"phy",self,"wood"));
 				self.remove_energy(2,get_tree().current_scene.enemy_character_curr)
 				get_tree().current_scene.enemy_character_curr.recover_energy(2);
@@ -597,6 +599,7 @@ func parasitism(phase,source):
 	parasitism_phase = phase;
 	parasitism_power =int(source.get_physical_power());
 	parasitism_watered_times = 0;
+	parasitism_source = source;
 
 #灼烧函数
 func burn(phase,source):

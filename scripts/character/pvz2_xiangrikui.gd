@@ -50,11 +50,11 @@ func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
 	curr_hp = 0
 	for character in player_team:
-		var recover_energy = xiangrikui_recover_energy_buff.new()
-		recover_energy.recover_energy_count = 50
-		recover_energy.round_duration = -1
+		var mark = xiangrikui_recover_energy_buff.new()
+		mark.recover_energy_count = 50
+		mark.round_duration = -1
 		if character != self and character and not character.is_die:
-			character.get_node("buff").add_buff(recover_energy)
+			character.get_node("buff").add_buff(mark)
 	Signals.to_next_phase.emit()
 
 func refresh_ai(enemy,player,enemy_team,player_team):

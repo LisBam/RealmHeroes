@@ -51,7 +51,7 @@ func skilld(enemy,player,enemy_team,player_team):
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 
-func to_damage(damage,target,damage_type:String,damage_element:String,is_extra:bool = false,energy = 0):
+func to_damage(damage,target,damage_type:String,damage_element:String,is_extra:bool = false,energy = 0,source = null):
 	super.to_damage(damage,target,damage_type,damage_element,is_extra,energy)
 	if damage_type == "phy" and not is_extra and get_node("buff").has_buff("dubaojiangshi_extra_mag_damage"):
 		be_and_to_damage(damage(600,"mag",target,skillc_element),target,self,"mag",skillc_element,true)

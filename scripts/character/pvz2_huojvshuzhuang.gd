@@ -3,10 +3,10 @@ extends character_base
 func _ready() -> void:
 	super._ready()
 	tags.append("植物")
-	skilla_description = "点燃穿过的子弹，使其威力提升。选择一名友方角色，其下4次造成物理伤害都会附加火属性法伤，威力等同于你的五倍法强。释放此技能后不会结束回合。"
+	skilla_description = "点燃穿过的子弹，使其威力提升。选择一名友方角色，其下5次造成物理伤害都会附加火属性法伤，威力等同于你的五倍法强。释放此技能后不会结束回合。"
 	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
 	skillc_description = "火炬树桩以炽热的火焰灼伤靠近的敌人，对目标造成300威力的火属性物伤，并有40%概率令目标陷入灼烧持续4回合。"
-	skilld_description = "驻守前线，助攻友方。令一名场下的友方角色立即上阵，然后你与其提高20点物抗持续4回合。"
+	skilld_description = "驻守前线，助攻友方。令一名场下的友方角色立即上阵，然后你与其提高30点物抗持续4轮。"
 	skilla_short_desc = "附加伤害"
 	skillb_short_desc = "回能回血"
 	skillc_short_desc = "物伤 灼烧"
@@ -14,9 +14,21 @@ func _ready() -> void:
 
 func skilla(enemy,player,enemy_team,player_team):
 	super.skilla(enemy,player,enemy_team,player_team)
-	add_shield(800)
+	var choice = await get_parent().choose_team_character(self,true,true);
+	var mark = huojvshuzhuang_skilla_mark.new();
+	mark.count = 5;
+	mark.round_duration = -1;
+	mark.source = self;
+	if is_ai:
+		choice = self;
+	mark.target = choice;
+	choice.get_node("buff").add_buff(mark);
+	addlog("选择了"+choice.character_name)
 	tool_skill_animation()
-	Signals.to_next_phase.emit()
+	if is_ai:
+		await get_tree().create_timer(0.1).timeout
+		get_parent().ai_continue_action = true
+		Signals.to_next_phase.emit()
 
 func skillb(enemy,player,enemy_team,player_team):
 	super.skillb(enemy,player,enemy_team,player_team)
@@ -27,48 +39,51 @@ func skillb(enemy,player,enemy_team,player_team):
 	
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
-	var lose_shield = shield
-	remove_shield(lose_shield)
-	var add_damage = lose_shield * 1.5
-	be_and_to_damage(damage(200+add_damage,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
+	be_and_to_damage(damage(300,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
+	var burn_probability = 40;
+	var random = randi_range(1,100);
+	if random <= burn_probability:
+		enemy.burn(4,self)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 	
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
-	be_and_to_damage(damage(350,"phy",enemy,"fire"),enemy,player,"phy","fire")
-	be_and_to_damage(damage(350,"phy",enemy,"metal"),enemy,player,"phy","metal")
-	be_and_to_damage(damage(350,"phy",enemy,"water"),enemy,player,"phy","water")
-	attack_skill_animation()
+	var choice = await get_parent().choose_team_character(self,true,false);
+	get_parent().change_character_to(choice);
+	var add = quanmingxingjiangshi_add_phy_def.new()
+	add.count = 30
+	add.round_duration = 4
+	add.init_round_duration = 4
+	add.source = self;
+	add.target = player;
+	player.get_node("buff").add_buff(add)
+	add.target = choice;
+	choice.get_node("buff").add_buff(add)
+	tool_skill_animation()
 	Signals.to_next_phase.emit()
 
 func refresh_ai(enemy,player,enemy_team,player_team):
 	await super.refresh_ai(enemy,player,enemy_team,player_team)
 	
-	ai.skills[1].recover_shield = 800
-	#盾还能打伤害，提高收益
-	ai.skills[1].strategy_value_count = ai.skills[1].recover_shield*1.3
+	ai.skills[1].strategy_value_count = 5*(get_magical_power()*5)
+	ai.skills[1].can_continue = true
 	
 	ai.skills[2].recover_hp = 100
 	ai.skills[2].recover_energy = 10
 	
 	add_damage_element(3,skillc_element)
-	ai.skills[3].damage_count = 200 + shield*1.5
-	ai.skills[3].value -= shield
+	ai.skills[3].damage_count = 300
+	ai.skills[3].burning_phase = (4-enemy.burning_phase)*0.4;
 	
-	add_damage_element(4,"fire")
-	add_damage_element(4,"mental")
-	add_damage_element(4,"water")
-	ai.skills[4].damage_count = 350*3
-	
-	#当能量小于20时，优先使用二技能回复能量以解锁一技能
-	if curr_energy < 20:
-		ai.skills[2].strategy_value_count = ai.skills[1].recover_shield*0.8
-
-func add_shield(count,source:character_base = self):
-	super.add_shield(count,source)
-	taunt_value = 1+(shield/3200.0)
-	
-func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:bool = false,energy = int(round(damage/100.0))):
-	super.be_damage(damage,source,damage_type,damage_element,is_extra,energy)
-	taunt_value = 1+(shield/3200.0)
+	#根据对方物伤占比提供收益,2为两人
+	if not get_node("buff").has_buff("quanmingxingjiangshi_add_phy_def"):
+		ai.skills[3].buff_value = 30*8*4*(enemy.damage_phy_ratio/80.0)*2
+	else:
+		ai.skills[3].buff_value = 0
+	#先手多生效一回合
+	if Global.curr_phase_count % 2 != 0:
+		ai.skills[3].buff_duration = 3
+	else:
+		ai.skills[3].buff_duration = 3-1
+	ai.skills[4].strategy_value_count = ai.change_character_value()

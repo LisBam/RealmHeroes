@@ -41,6 +41,7 @@ func skillc(enemy,player,enemy_team,player_team,is_enter_skill:bool = false):
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
 	recover(800)
+	tool_skill_animation()
 	var choice = await get_parent().choose_team_character(self,true,false);
 	get_parent().change_character_to(choice);
 	Signals.to_next_phase.emit()
