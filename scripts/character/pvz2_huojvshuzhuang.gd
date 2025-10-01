@@ -14,13 +14,14 @@ func _ready() -> void:
 
 func skilla(enemy,player,enemy_team,player_team):
 	super.skilla(enemy,player,enemy_team,player_team)
-	var choice = await get_parent().choose_team_character(self,true,true);
+	var choice = await get_parent().choose_team_character(self,true,true,false,"highest_physical_ratio");
+	#防止重复给一名角色上buff
+	if is_ai and choice.get_node("buff").has_buff("huojvshuzhuang_skilla_mark"):
+		choice = self;
 	var mark = huojvshuzhuang_skilla_mark.new();
 	mark.count = 5;
 	mark.round_duration = -1;
 	mark.source = self;
-	if is_ai:
-		choice = self;
 	mark.target = choice;
 	choice.get_node("buff").add_buff(mark);
 	addlog("选择了"+choice.character_name)
@@ -49,7 +50,7 @@ func skillc(enemy,player,enemy_team,player_team):
 	
 func skilld(enemy,player,enemy_team,player_team):
 	super.skilld(enemy,player,enemy_team,player_team)
-	var choice = await get_parent().choose_team_character(self,true,false);
+	var choice = await get_parent().choose_team_character(self,true,true,false,"highest_physical_ratio");
 	get_parent().change_character_to(choice);
 	var add = quanmingxingjiangshi_add_phy_def.new()
 	add.count = 30

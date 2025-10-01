@@ -1199,10 +1199,10 @@ func addlog(text,is_gray = false):
 #先定义一个变量储存选择角色
 var choice_player_character
 #选择角色，默认玩家方，若为ai则跳转另一方法
-func choose_team_character(who,is_skill:bool = false,can_self:bool = true,can_die:bool = false):
+func choose_team_character(who,is_skill:bool = false,can_self:bool = true,can_die:bool = false,choose_rule:String = "change_character"):
 	if who.is_ai:
 		print("技能触发的选择敌方角色")
-		return ai_choose_team_character(can_self,can_die)
+		return ai_choose_team_character(can_self,can_die,choose_rule)
 	if is_skill:
 		print("技能触发的选择玩家方角色")
 		disable_all_extend_and_skill_buttons()
@@ -1281,7 +1281,15 @@ func choose_player_team_character_none():
 	choice_player_character = "none"
 
 #技能触发的选择角色，AI默认选择适合上场的角色
-func ai_choose_team_character(can_self:bool = true,can_die:bool = false):
+func ai_choose_team_character(can_self:bool = true,can_die:bool = false,choose_rule:String = "change_character"):
+	match choose_rule:
+		"change_character":
+			return ai_choose_team_character_to_change_character(can_self,can_die);
+		"highest_physical_ratio":
+			return ai_choose_team_character_to_highest_physical_ratio(can_self,can_die);
+	
+#AI选择切换上场角色
+func ai_choose_team_character_to_change_character(can_self:bool = true,can_die:bool = false):
 	#敌方角色列表
 	var character_list = [
 		enemy_character_1,
@@ -1325,7 +1333,39 @@ func ai_choose_team_character(can_self:bool = true,can_die:bool = false):
 		if change_value > best_change_value:
 			best_change_value = change_value
 			best_change_character = character
-		return best_change_character
+	return best_change_character
+#AI选择物攻占比最高的角色
+func ai_choose_team_character_to_highest_physical_ratio(can_self:bool = true,can_die:bool = false):
+	#敌方角色列表
+	var character_list = [
+		enemy_character_1,
+		enemy_character_2,
+		enemy_character_3,
+		enemy_character_4
+	]
+	# 筛选符合条件的角色
+	var can_be_target = []
+	for character in character_list:
+		# 跳过空引用
+		if not character:
+			continue
+		# 检查是否允许选择已死亡角色
+		if not can_die and character.is_die:
+			continue
+		# 检查是否允许选择自己（如果有self角色的判断需求）
+		if not can_self and character == enemy_character_curr:
+			continue
+		# 符合条件的加入候选列表
+		can_be_target.append(character)
+		
+	#选取物攻占比最高的角色
+	var highest_physical_ratio = -INF
+	var best_choose_character = null
+	for character in enemy_team:
+		if character.damage_phy_ratio>highest_physical_ratio:
+			highest_physical_ratio = character.damage_phy_ratio;
+			best_choose_character = character;
+	return best_choose_character
 	
 func refresh_ai():
 	player_character_curr.refresh_ai(enemy_character_curr,player_character_curr,enemy_team,player_team)
