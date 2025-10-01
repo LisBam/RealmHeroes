@@ -288,7 +288,7 @@ func be_damage(damage,source,damage_type:String,damage_element:String,is_extra:b
 		burning_phase = 0
 		print("受到水伤害解除灼烧")
 		addlog(character_name+" 的灼烧被蒸发了")
-		be_and_to_damage(damage(int(burning_source.magical_power*1.5)*log_burning_phase,"mag",self,"fire"),self,burning_source,"mag","fire")
+		burning_source.be_and_to_damage(damage(int(burning_source.magical_power*1.5)*log_burning_phase,"mag",self,"fire"),self,burning_source,"mag","fire")
 	#触发点燃效果，将寄生转化为灼烧
 	if damage_element == "fire" and parasitism_phase>0:
 		addlog(character_name+" 的寄生被点燃了")
