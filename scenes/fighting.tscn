@@ -603,6 +603,28 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色四"
 
+[node name="character5" type="Button" parent="UI/Control/button/change_character"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 516.0
+offset_right = 1000.0
+offset_bottom = 616.0
+
+[node name="name" type="Label" parent="UI/Control/button/change_character/character5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色五"
+
 [node name="log" type="Control" parent="UI/Control/button"]
 anchors_preset = 0
 offset_right = 40.0
@@ -725,6 +747,28 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色四"
 
+[node name="character5" type="Button" parent="UI/Control/button/choose_player_character"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 516.0
+offset_right = 1000.0
+offset_bottom = 616.0
+
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.5
+offset_right = 32.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "角色五"
+
 [node name="player1_stat" type="Control" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = 0
@@ -816,26 +860,32 @@ offset_right = 511.0
 offset_bottom = 114.0
 text = "名字"
 
-[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat5" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
 position = Vector2(475, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
 position = Vector2(443, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
 position = Vector2(411, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
 position = Vector2(379, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
+
+[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+position = Vector2(347, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
@@ -931,6 +981,12 @@ offset_right = 1208.0
 offset_bottom = 114.0
 text = "名字"
 horizontal_alignment = 2
+
+[node name="team_stat5" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+position = Vector2(933, 98)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_5y24y")
+frame = 2
 
 [node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
 position = Vector2(901, 98)
@@ -1236,9 +1292,11 @@ stream = ExtResource("19_6aghv")
 [connection signal="pressed" from="UI/Control/button/change_character/character2" to="." method="_change_character_2"]
 [connection signal="pressed" from="UI/Control/button/change_character/character3" to="." method="_change_character_3"]
 [connection signal="pressed" from="UI/Control/button/change_character/character4" to="." method="_change_character_4"]
+[connection signal="pressed" from="UI/Control/button/change_character/character5" to="." method="_change_character_5"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character1" to="." method="choose_player_team_character_1"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character2" to="." method="choose_player_team_character_2"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character3" to="." method="choose_player_team_character_3"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character4" to="." method="choose_player_team_character_4"]
+[connection signal="pressed" from="UI/Control/button/choose_player_character/character5" to="." method="choose_player_team_character_5"]
 [connection signal="pressed" from="UI/Control/player_fail/button" to="." method="_run"]
 [connection signal="pressed" from="UI/Control/player_win/button" to="." method="_run"]

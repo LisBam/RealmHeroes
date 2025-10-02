@@ -4,11 +4,13 @@ extends Node
 @export var team_character_2_scene:PackedScene = load(AllCharacter.pvz2_dubaojiangshi)
 @export var team_character_3_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
 @export var team_character_4_scene:PackedScene = load(AllCharacter.roco_shengshuishouhu)
+@export var team_character_5_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
 
 @export var enemy_character_1_scene:PackedScene = load(AllCharacter.pvz2_huojvshuzhuang)
 @export var enemy_character_2_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
 @export var enemy_character_3_scene:PackedScene = load(AllCharacter.roco_shengshuishouhu)
 @export var enemy_character_4_scene:PackedScene = load(AllCharacter.roco_liehuozhanshen)
+@export var enemy_character_5_scene:PackedScene = load(AllCharacter.roco_wudoukumao)
 
 #播放动画时长
 var playing_animation_time:float = 0.0
@@ -33,6 +35,7 @@ func set_random_enemy():
 	enemy_character_2_scene = load(AllCharacter.get_random_character())
 	enemy_character_3_scene = load(AllCharacter.get_random_character())
 	enemy_character_4_scene = load(AllCharacter.get_random_character())
+	enemy_character_5_scene = load(AllCharacter.get_random_character())
 
 #随机配置己方阵容
 func set_random_team():
@@ -40,3 +43,4 @@ func set_random_team():
 	team_character_2_scene = load(AllCharacter.get_random_character())
 	team_character_3_scene = load(AllCharacter.get_random_character())
 	team_character_4_scene = load(AllCharacter.get_random_character())
+	team_character_5_scene = load(AllCharacter.get_random_character())

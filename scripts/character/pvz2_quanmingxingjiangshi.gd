@@ -37,7 +37,7 @@ func skillb(enemy,player,enemy_team,player_team):
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
 	var add = quanmingxingjiangshi_add_phy_def.new()
-	add.add_count = 60
+	add.count = 60
 	add.round_duration = 3
 	add.init_round_duration = 3
 	player.get_node("buff").add_buff(add)
