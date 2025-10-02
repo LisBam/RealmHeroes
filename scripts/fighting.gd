@@ -10,21 +10,25 @@ var player_character_1_scene:PackedScene
 var player_character_2_scene:PackedScene
 var player_character_3_scene:PackedScene
 var player_character_4_scene:PackedScene
+var player_character_5_scene:PackedScene
 
 var enemy_character_1_scene:PackedScene
 var enemy_character_2_scene:PackedScene
 var enemy_character_3_scene:PackedScene
 var enemy_character_4_scene:PackedScene
+var enemy_character_5_scene:PackedScene
 
 var player_character_1
 var player_character_2
 var player_character_3
 var player_character_4
+var player_character_5
 var player_character_curr
 var enemy_character_1
 var enemy_character_2
 var enemy_character_3
 var enemy_character_4
+var enemy_character_5
 var enemy_character_curr
 
 #队伍存活角色数
@@ -68,11 +72,13 @@ func _ready() -> void:
 	player_character_2_scene = Global.team_character_2_scene
 	player_character_3_scene = Global.team_character_3_scene
 	player_character_4_scene = Global.team_character_4_scene
+	player_character_5_scene = Global.team_character_5_scene
 	#战斗的预备敌人scene
 	enemy_character_1_scene = Global.enemy_character_1_scene
 	enemy_character_2_scene = Global.enemy_character_2_scene
 	enemy_character_3_scene = Global.enemy_character_3_scene
 	enemy_character_4_scene = Global.enemy_character_4_scene
+	enemy_character_5_scene = Global.enemy_character_5_scene
 	#初始化角色与敌人，并为敌人添加ai标签
 	if player_character_1_scene:
 		player_character_1 = player_character_1_scene.instantiate()
@@ -82,6 +88,8 @@ func _ready() -> void:
 		player_character_3 = player_character_3_scene.instantiate()
 	if player_character_4_scene:
 		player_character_4 = player_character_4_scene.instantiate()
+	if player_character_5_scene:
+		player_character_5 = player_character_5_scene.instantiate()
 	if enemy_character_1_scene:
 		enemy_character_1 = enemy_character_1_scene.instantiate()
 		enemy_character_1.is_ai = true
@@ -98,18 +106,24 @@ func _ready() -> void:
 		enemy_character_4 = enemy_character_4_scene.instantiate()
 		enemy_character_4.is_ai = true
 		print(enemy_character_4.character_name,"已被标记为ai")
+	if enemy_character_5_scene:
+		enemy_character_5 = enemy_character_5_scene.instantiate()
+		enemy_character_5.is_ai = true
+		print(enemy_character_5.character_name,"已被标记为ai")
 	#加载所有角色与敌人
 	add_child(player_character_1)
 	add_child(player_character_2)
 	add_child(player_character_3)
 	add_child(player_character_4)
+	add_child(player_character_5)
 	add_child(enemy_character_1)
 	add_child(enemy_character_2)
 	add_child(enemy_character_3)
 	add_child(enemy_character_4)
+	add_child(enemy_character_5)
 	# 初始化角色列表
-	player_team = [player_character_1, player_character_2, player_character_3, player_character_4]
-	enemy_team = [enemy_character_1, enemy_character_2, enemy_character_3, enemy_character_4]
+	player_team = [player_character_1, player_character_2, player_character_3, player_character_4,player_character_5]
+	enemy_team = [enemy_character_1, enemy_character_2, enemy_character_3, enemy_character_4,enemy_character_5]
 	for i in player_team:
 		if i == null:
 			player_team.erase(i);
@@ -145,6 +159,9 @@ func _ready() -> void:
 	if player_character_4:
 		$UI/Control/button/change_character/character4/name.text = player_character_4.character_name
 		$UI/Control/button/choose_player_character/character4/name.text = player_character_4.character_name
+	if player_character_5:
+		$UI/Control/button/change_character/character5/name.text = player_character_5.character_name
+		$UI/Control/button/choose_player_character/character5/name.text = player_character_5.character_name
 	else:
 		$UI/Control/button/change_character/character4/name.text = "（空置）"
 		$UI/Control/button/choose_player_character/character4/name.text = "（空置）"
@@ -274,6 +291,12 @@ func refresh_team_stat():
 			$UI/Control/player1_stat/team_stat4.frame = 1
 	else:
 		$UI/Control/player1_stat/team_stat4.frame = 2
+	if player_character_5:
+		$UI/Control/player1_stat/team_stat5.frame = 0
+		if player_character_5.is_die:
+			$UI/Control/player1_stat/team_stat5.frame = 1
+	else:
+		$UI/Control/player1_stat/team_stat5.frame = 2
 	if enemy_character_1:
 		$UI/Control/player2_stat/team_stat1.frame = 0
 		if enemy_character_1.is_die:
@@ -296,8 +319,12 @@ func refresh_team_stat():
 		$UI/Control/player2_stat/team_stat4.frame = 0
 		if enemy_character_4.is_die:
 			$UI/Control/player2_stat/team_stat4.frame = 1
+	if enemy_character_5:
+		$UI/Control/player2_stat/team_stat5.frame = 0
+		if enemy_character_5.is_die:
+			$UI/Control/player2_stat/team_stat5.frame = 1
 	else:
-		$UI/Control/player2_stat/team_stat4.frame = 2
+		$UI/Control/player2_stat/team_stat5.frame = 2
 
 #刷新站场角色贴图
 func refresh_curr_character():
@@ -449,6 +476,22 @@ func _change_character_4(audio:bool = true) -> void:
 	refresh_stat_ui()
 	refresh_skill_button()
 	someone_is_die -= 1
+	
+func _change_character_5(audio:bool = true) -> void:
+	if audio:
+		$audio/button.play()
+	if player_character_curr != player_character_5:
+		if not player_character_curr.dying:
+			active_exit_animation(player_character_curr)
+		player_character_curr = player_character_5
+		disable_all_change_character_button()
+		disable_all_extend_and_skill_buttons()
+	addlog("玩家切换角色至 "+player_character_curr.character_name)
+	active_enter_animation(player_character_curr)
+	_to_fight(false)
+	refresh_stat_ui()
+	refresh_skill_button()
+	someone_is_die -= 1
 #endregion
 
 #ai切换角色
@@ -544,6 +587,8 @@ func ai_to_change_character():
 		ai_change_character_3()
 	if best_change_character == enemy_character_4:
 		ai_change_character_4()
+	if best_change_character == enemy_character_5:
+		ai_change_character_5()
 	refresh_stat_ui()
 	if not no_skip:
 		Signals.to_next_phase.emit()
@@ -584,6 +629,16 @@ func ai_change_character_4() -> void:
 		if not enemy_character_curr.dying:
 			active_exit_animation(enemy_character_curr)
 		enemy_character_curr = enemy_character_4
+		enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
+	addlog("敌方切换角色至 "+enemy_character_curr.character_name)
+	active_enter_animation(enemy_character_curr)
+	refresh_stat_ui()
+	someone_is_die -= 1
+func ai_change_character_5() -> void:
+	if enemy_character_curr != enemy_character_5:
+		if not enemy_character_curr.dying:
+			active_exit_animation(enemy_character_curr)
+		enemy_character_curr = enemy_character_5
 		enemy_character_curr.refresh_ai(player_character_curr,enemy_character_curr,player_team,enemy_team)
 	addlog("敌方切换角色至 "+enemy_character_curr.character_name)
 	active_enter_animation(enemy_character_curr)
@@ -1002,6 +1057,7 @@ func disable_all_change_character_button():
 	$UI/Control/button/change_character/character2.disabled = true
 	$UI/Control/button/change_character/character3.disabled = true
 	$UI/Control/button/change_character/character4.disabled = true
+	$UI/Control/button/change_character/character5.disabled = true
 
 #刷新名字属性的信息ui
 func refresh_stat_ui():
@@ -1154,6 +1210,7 @@ func refresh_change_character_button():
 	$UI/Control/button/change_character/character2.disabled = false
 	$UI/Control/button/change_character/character3.disabled = false
 	$UI/Control/button/change_character/character4.disabled = false
+	$UI/Control/button/change_character/character5.disabled = false
 	#切换为不可切换为当前的站场角色
 	if player_character_curr == player_character_1:
 		$UI/Control/button/change_character/character1.disabled = true
@@ -1163,6 +1220,8 @@ func refresh_change_character_button():
 		$UI/Control/button/change_character/character3.disabled = true
 	if player_character_curr == player_character_4:
 		$UI/Control/button/change_character/character4.disabled = true
+	if player_character_curr == player_character_5:
+		$UI/Control/button/change_character/character5.disabled = true
 	#不可切换为空角色
 	if player_character_1 == null:
 		$UI/Control/button/change_character/character1.disabled = true
@@ -1172,6 +1231,8 @@ func refresh_change_character_button():
 		$UI/Control/button/change_character/character3.disabled = true
 	if player_character_4 == null:
 		$UI/Control/button/change_character/character4.disabled = true
+	if player_character_5 == null:
+		$UI/Control/button/change_character/character5.disabled = true
 	#不可切换为阵亡角色
 	if player_character_1 != null and player_character_1.is_die:
 		$UI/Control/button/change_character/character1.disabled = true
@@ -1181,6 +1242,8 @@ func refresh_change_character_button():
 		$UI/Control/button/change_character/character3.disabled = true
 	if player_character_4 != null and player_character_4.is_die:
 		$UI/Control/button/change_character/character4.disabled = true
+	if player_character_5 != null and player_character_5.is_die:
+		$UI/Control/button/change_character/character5.disabled = true
 
 #刷新技能描述
 func refresh_skill_description():
@@ -1220,6 +1283,7 @@ func choose_team_character(who,is_skill:bool = false,can_self:bool = true,can_di
 	$UI/Control/button/choose_player_character/character2.disabled = false
 	$UI/Control/button/choose_player_character/character3.disabled = false
 	$UI/Control/button/choose_player_character/character4.disabled = false
+	$UI/Control/button/choose_player_character/character5.disabled = false
 	#不可选择空置
 	if not player_character_1:
 		$UI/Control/button/choose_player_character/character1.disabled = true
@@ -1229,6 +1293,8 @@ func choose_team_character(who,is_skill:bool = false,can_self:bool = true,can_di
 		$UI/Control/button/choose_player_character/character3.disabled = true
 	if not player_character_4:
 		$UI/Control/button/choose_player_character/character4.disabled = true
+	if not player_character_5:
+		$UI/Control/button/choose_player_character/character5.disabled = true
 	#不可选择死亡
 	if not can_die:
 		if player_character_1 and player_character_1.is_die:
@@ -1239,6 +1305,8 @@ func choose_team_character(who,is_skill:bool = false,can_self:bool = true,can_di
 			$UI/Control/button/choose_player_character/character3.disabled = true
 		if player_character_4 and player_character_4.is_die:
 			$UI/Control/button/choose_player_character/character4.disabled = true
+		if player_character_5 and player_character_5.is_die:
+			$UI/Control/button/choose_player_character/character5.disabled = true
 	#不可选择自己（当前站场角色）
 	if not can_self:
 		if player_character_curr == player_character_1:
@@ -1249,6 +1317,8 @@ func choose_team_character(who,is_skill:bool = false,can_self:bool = true,can_di
 			$UI/Control/button/choose_player_character/character3.disabled = true
 		if player_character_curr == player_character_4:
 			$UI/Control/button/choose_player_character/character4.disabled = true
+		if player_character_curr == player_character_5:
+			$UI/Control/button/choose_player_character/character5.disabled = true
 	#如果没有可选目标
 	if $UI/Control/button/choose_player_character/character1.disabled and $UI/Control/button/choose_player_character/character2.disabled and $UI/Control/button/choose_player_character/character3.disabled and $UI/Control/button/choose_player_character/character4.disabled:
 		print("没有可选目标！")
@@ -1275,6 +1345,9 @@ func choose_player_team_character_3():
 	
 func choose_player_team_character_4():
 	choice_player_character = player_character_4
+
+func choose_player_team_character_5():
+	choice_player_character = player_character_5
 	
 func choose_player_team_character_none():
 	print("没有选择角色！")
@@ -1295,7 +1368,8 @@ func ai_choose_team_character_to_change_character(can_self:bool = true,can_die:b
 		enemy_character_1,
 		enemy_character_2,
 		enemy_character_3,
-		enemy_character_4
+		enemy_character_4,
+		enemy_character_5,
 	]
 	# 筛选符合条件的角色
 	var can_be_target = []
@@ -1341,7 +1415,8 @@ func ai_choose_team_character_to_highest_physical_ratio(can_self:bool = true,can
 		enemy_character_1,
 		enemy_character_2,
 		enemy_character_3,
-		enemy_character_4
+		enemy_character_4,
+		enemy_character_5,
 	]
 	# 筛选符合条件的角色
 	var can_be_target = []
@@ -1381,6 +1456,8 @@ func change_character_to(who):
 		_change_character_3()
 	if who == player_character_4:
 		_change_character_4()
+	if who == player_character_5:
+		_change_character_5()
 	if who == enemy_character_1:
 		ai_change_character_1()
 	if who == enemy_character_2:
@@ -1389,6 +1466,8 @@ func change_character_to(who):
 		ai_change_character_3()
 	if who == enemy_character_4:
 		ai_change_character_4()
+	if who == enemy_character_5:
+		ai_change_character_5()
 
 func player_win():
 	var ui = $UI/Control/player_win
