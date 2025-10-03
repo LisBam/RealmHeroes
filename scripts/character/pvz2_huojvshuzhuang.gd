@@ -79,12 +79,12 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	
 	#根据对方物伤占比提供收益,2为两人
 	if not get_node("buff").has_buff("quanmingxingjiangshi_add_phy_def"):
-		ai.skills[3].buff_value = 30*8*4*(enemy.damage_phy_ratio/80.0)*2
+		ai.skills[4].buff_value = 30*8*4*(enemy.damage_phy_ratio/80.0)*2
 	else:
-		ai.skills[3].buff_value = 0
+		ai.skills[4].buff_value = 0
 	#先手多生效一回合
 	if Global.curr_phase_count % 2 != 0:
-		ai.skills[3].buff_duration = 3
+		ai.skills[4].buff_duration = 3
 	else:
-		ai.skills[3].buff_duration = 3-1
+		ai.skills[4].buff_duration = 3-1
 	ai.skills[4].strategy_value_count = ai.change_character_value()
