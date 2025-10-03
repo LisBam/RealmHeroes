@@ -5,7 +5,7 @@ func _ready() -> void:
 	tags.append("植物")
 	skilla_description = "点燃穿过的子弹，使其威力提升。选择一名友方角色，其下5次造成物理伤害都会附加火属性法伤，威力等同于你的五倍法强。释放此技能后不会结束回合。"
 	skillb_description = "进行光合作用，立即恢复20点能量，并回复100点HP。"
-	skillc_description = "火炬树桩以炽热的火焰灼伤靠近的敌人，对目标造成300威力的火属性物伤，并有40%概率令目标陷入灼烧持续4回合。"
+	skillc_description = "火炬树桩以炽热的火焰灼伤靠近的敌人，对目标造成800威力的火属性物伤，并有40%概率令目标陷入灼烧持续2回合。"
 	skilld_description = "驻守前线，助攻友方。令一名场下的友方角色立即上阵，然后你与其提高30点物抗持续4轮。"
 	skilla_short_desc = "附加伤害"
 	skillb_short_desc = "回能回血"
@@ -40,11 +40,11 @@ func skillb(enemy,player,enemy_team,player_team):
 	
 func skillc(enemy,player,enemy_team,player_team):
 	super.skillc(enemy,player,enemy_team,player_team)
-	be_and_to_damage(damage(300,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
+	be_and_to_damage(damage(800,"phy",enemy,skillc_element),enemy,player,"phy",skillc_element)
 	var burn_probability = 40;
 	var random = randi_range(1,100);
 	if random <= burn_probability:
-		enemy.burn(4,self)
+		enemy.burn(2,self)
 	attack_skill_animation()
 	Signals.to_next_phase.emit()
 	
@@ -71,11 +71,11 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[1].can_continue = true
 	
 	ai.skills[2].recover_hp = 100
-	ai.skills[2].recover_energy = 10
+	ai.skills[2].recover_energy = 20
 	
 	add_damage_element(3,skillc_element)
-	ai.skills[3].damage_count = 300
-	ai.skills[3].burning_phase = (4-enemy.burning_phase)*0.4;
+	ai.skills[3].damage_count = 800
+	ai.skills[3].burning_phase = (2-enemy.burning_phase)*0.4;
 	
 	#根据对方物伤占比提供收益,2为两人
 	if not get_node("buff").has_buff("quanmingxingjiangshi_add_phy_def"):

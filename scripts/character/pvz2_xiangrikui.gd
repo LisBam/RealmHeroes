@@ -64,7 +64,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	ai.skills[1].recover_energy = 10
 	
 	ai.skills[2].recover_hp = 100
-	ai.skills[2].recover_energy = 10
+	ai.skills[2].recover_energy = 20
 	
 	add_damage_element(3,skillc_element)
 	#ai.skills[3].damage_count = 200

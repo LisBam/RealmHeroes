@@ -508,7 +508,7 @@ func refresh_ai(enemy,player,enemy_team,player_team):
 	add_damage_element(0,element)
 	ai.skills[0].energy_cost = 0
 	ai.skills[0].damage_count = 100
-	ai.skills[0].recover_energy = 5
+	ai.skills[0].recover_energy = 10
 	
 	if get_tree():
 		await get_tree().physics_frame
