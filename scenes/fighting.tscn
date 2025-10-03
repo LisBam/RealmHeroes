@@ -663,7 +663,7 @@ offset_bottom = 40.0
 [node name="character1" type="Button" parent="UI/Control/button/choose_player_character"]
 layout_mode = 0
 offset_top = 620.0
-offset_right = 250.0
+offset_right = 200.0
 offset_bottom = 720.0
 
 [node name="name" type="Label" parent="UI/Control/button/choose_player_character/character1"]
@@ -683,9 +683,9 @@ text = "角色一"
 
 [node name="character2" type="Button" parent="UI/Control/button/choose_player_character"]
 layout_mode = 0
-offset_left = 250.0
+offset_left = 200.0
 offset_top = 620.0
-offset_right = 500.0
+offset_right = 400.0
 offset_bottom = 720.0
 
 [node name="name" type="Label" parent="UI/Control/button/choose_player_character/character2"]
@@ -705,9 +705,9 @@ text = "角色二"
 
 [node name="character3" type="Button" parent="UI/Control/button/choose_player_character"]
 layout_mode = 0
-offset_left = 500.0
+offset_left = 400.0
 offset_top = 620.0
-offset_right = 750.0
+offset_right = 600.0
 offset_bottom = 720.0
 
 [node name="name" type="Label" parent="UI/Control/button/choose_player_character/character3"]
@@ -727,9 +727,9 @@ text = "角色三"
 
 [node name="character4" type="Button" parent="UI/Control/button/choose_player_character"]
 layout_mode = 0
-offset_left = 750.0
+offset_left = 600.0
 offset_top = 620.0
-offset_right = 1000.0
+offset_right = 800.0
 offset_bottom = 720.0
 
 [node name="name" type="Label" parent="UI/Control/button/choose_player_character/character4"]
@@ -749,10 +749,10 @@ text = "角色四"
 
 [node name="character5" type="Button" parent="UI/Control/button/choose_player_character"]
 layout_mode = 0
-offset_left = 750.0
-offset_top = 516.0
+offset_left = 800.0
+offset_top = 620.0
 offset_right = 1000.0
-offset_bottom = 616.0
+offset_bottom = 720.0
 
 [node name="name" type="Label" parent="UI/Control/button/choose_player_character/character5"]
 layout_mode = 1
