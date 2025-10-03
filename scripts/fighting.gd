@@ -1200,8 +1200,8 @@ func begin_animation():
 		await get_tree().physics_frame
 	judge_skill_enable()
 	refresh_change_character_button()
-	if not player_character_curr.dying:
-		_to_fight(false)
+	#if not player_character_curr.dying:
+		#_to_fight(false)
 
 #刷新角色按钮
 func refresh_change_character_button():
