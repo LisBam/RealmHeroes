@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://jm1p2mu74v8j"]
+[gd_scene format=3 uid="uid://jm1p2mu74v8j"]
 
 [ext_resource type="Script" uid="uid://brwd6dosjntbi" path="res://scripts/character/pvz2_caiwen.gd" id="1_qtkej"]
 [ext_resource type="Texture2D" uid="uid://blvimi8wfnop7" path="res://res/character/菜问.png" id="2_0e1sf"]
@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://c75gt5j22uqvt" path="res://res/audio/附魔_音频编辑_爱给网_aigei_com.mp3" id="4_jxiu5"]
 [ext_resource type="Script" uid="uid://nhkjf4pv07du" path="res://scripts/buff/BuffManager.gd" id="5_bqbs2"]
 
-[node name="character" type="Node"]
+[node name="character" type="Node" unique_id=1674228692]
 script = ExtResource("1_qtkej")
 character_name = "菜问"
 max_energy = 80
@@ -27,14 +27,14 @@ skilla_damage_type = "phy"
 skillc_damage_type = "phy"
 skilld_damage_type = "phy"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1736688568]
 texture = ExtResource("2_0e1sf")
 
-[node name="attack_audio" type="AudioStreamPlayer" parent="."]
+[node name="attack_audio" type="AudioStreamPlayer" parent="." unique_id=1889616975]
 stream = ExtResource("3_g3qli")
 
-[node name="tool_audio" type="AudioStreamPlayer" parent="."]
+[node name="tool_audio" type="AudioStreamPlayer" parent="." unique_id=1597104261]
 stream = ExtResource("4_jxiu5")
 
-[node name="buff" type="Marker2D" parent="."]
+[node name="buff" type="Marker2D" parent="." unique_id=1899752534]
 script = ExtResource("5_bqbs2")

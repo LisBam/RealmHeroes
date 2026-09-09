@@ -58,6 +58,9 @@ var skip_enemy_next_phase:bool = false
 @onready var player_shield := $UI/Control/player1_stat/HpBar/Shield_Label
 @onready var enemy_shield := $UI/Control/player2_stat/HpBar/Shield_Label
 
+#手机端布局组件，负责设备识别、竖屏重排与战斗记录视图切换，不参与战斗数值计算
+@onready var mobile_battle_layout: MobileBattleLayout = $MobileBattleLayout
+
 # 角色列表（用于索引管理）
 var player_team: Array = []
 var enemy_team: Array = []
@@ -188,6 +191,9 @@ func _ready() -> void:
 	refresh_team_stat()
 	refresh_stat_ui()
 	refresh_skill_button()
+	#移动端组件完成布局后，同步刷新实际角色 Sprite 的位置与缩放
+	mobile_battle_layout.battle_layout_changed.connect(_on_mobile_battle_layout_changed)
+	mobile_battle_layout.apply_layout()
 	init_position_and_scale()
 	refresh_skill_description()
 	refresh_ai()
@@ -218,6 +224,9 @@ func _ready() -> void:
 
 @warning_ignore("unused_parameter")
 func _physics_process(delta: float) -> void:
+	#战斗记录打开时持续隐藏实际角色 Sprite，避免回合动画重新显示到记录视图上
+	if mobile_battle_layout.mobile_ui_active and mobile_battle_layout.battle_log_visible:
+		_set_mobile_character_sprite_visibility(false)
 	#刷新ui
 	refresh_phase_round_ui()
 	#动画期间禁用按键
@@ -668,6 +677,26 @@ func judge_skill_enable():
 
 func _run() -> void:
 	get_tree().change_scene_to_file("uid://b54hfqxogsgfm")
+
+#切换战斗记录：手机端以记录替换上方战斗区，桌面端沿用原有的记录面板显示方式
+func _toggle_battle_log() -> void:
+	if mobile_battle_layout.mobile_ui_active:
+		mobile_battle_layout.toggle_battle_log()
+		_set_mobile_character_sprite_visibility(not mobile_battle_layout.battle_log_visible)
+		return
+	$UI/Control/log.visible = !$UI/Control/log.visible
+
+#统一切换实际站场角色 Sprite 的可见性，保证记录视图不会被角色动画覆盖
+func _set_mobile_character_sprite_visibility(should_show: bool) -> void:
+	if should_show:
+		refresh_curr_character()
+		return
+	for character in player_team:
+		if character:
+			character.get_node("Sprite2D").visible = false
+	for character in enemy_team:
+		if character:
+			character.get_node("Sprite2D").visible = false
 
 #普攻
 func _attack(audio:bool = true) -> void:
@@ -1186,6 +1215,14 @@ func init_position_and_scale():
 			#水平镜像翻转
 			sprite.flip_h = true
 
+#移动端窗口尺寸变化后，将组件计算出的占位 Sprite 数据同步给全部实际角色 Sprite
+func _on_mobile_battle_layout_changed() -> void:
+	player_scale = $UI/Control/player_sprite.scale
+	player_position = $UI/Control/player_sprite.position
+	enemy_scale = $UI/Control/enemy_sprite.scale
+	enemy_position = $UI/Control/enemy_sprite.position
+	init_position_and_scale()
+
 #动画开始时禁用按钮，动画结束后解禁
 func begin_animation():
 	disable_all_extend_and_skill_buttons()
@@ -1491,6 +1528,8 @@ func player_fail():
 
 #用于胜利后将log移至左侧
 func move_log_position():
+	if mobile_battle_layout.mobile_ui_active:
+		return
 	@warning_ignore("shadowed_global_identifier")
 	var log = $UI/Control/log
 	var tween = create_tween()

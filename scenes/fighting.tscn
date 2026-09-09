@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://j1a0qbv7it4k"]
+[gd_scene format=3 uid="uid://j1a0qbv7it4k"]
 
 [ext_resource type="Script" uid="uid://upbga4q8gbnl" path="res://scripts/fighting.gd" id="1_gmgy1"]
 [ext_resource type="Texture2D" uid="uid://dck1vd86uqsoj" path="res://res/background/接近纯黑的背景.png" id="2_a4sqi"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://bql2jlesxk6uo" path="res://res/audio/洛克王国pveBGM.mp3" id="17_lxgy8"]
 [ext_resource type="AudioStream" uid="uid://bkkncrnrodv23" path="res://res/audio/洛克王国胜利.mp3" id="18_8yfr4"]
 [ext_resource type="AudioStream" uid="uid://msr8w2tygb6c" path="res://res/audio/洛克王国失败.mp3" id="19_6aghv"]
+[ext_resource type="Script" uid="uid://cd0dr01jv78j5" path="res://scripts/ui/mobile_battle_layout.gd" id="20_mobile_layout"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1prc"]
 bg_color = Color(0.160784, 0.160784, 0.160784, 0.921569)
@@ -45,7 +46,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_u4fbu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -71,18 +72,23 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="fighting" type="Node" node_paths=PackedStringArray("log")]
+[node name="fighting" type="Node" unique_id=1354511736 node_paths=PackedStringArray("log")]
 script = ExtResource("1_gmgy1")
 log = NodePath("UI/Control/log/VBoxContainer/PanelContainer/MarginContainer/RichTextLabel")
 
-[node name="background" type="Sprite2D" parent="."]
+[node name="background" type="Sprite2D" parent="." unique_id=854855441]
 position = Vector2(637, 360)
 scale = Vector2(0.852619, 0.852619)
 texture = ExtResource("2_a4sqi")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="MobileBattleLayout" type="Node" parent="." unique_id=833983357]
+script = ExtResource("20_mobile_layout")
+ui_root_path = NodePath("../UI/Control")
+background_path = NodePath("../background")
 
-[node name="Control" type="Control" parent="UI"]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1635138450]
+
+[node name="Control" type="Control" parent="UI" unique_id=1567814461]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -91,7 +97,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_gmgy1")
 
-[node name="button" type="Control" parent="UI/Control"]
+[node name="mobile_operation_background" type="ColorRect" parent="UI/Control" unique_id=415250762]
+visible = false
+z_index = -1
+layout_mode = 0
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.065, 0.94)
+
+[node name="mobile_battle_separator" type="ColorRect" parent="UI/Control" unique_id=168968707]
+visible = false
+z_index = -1
+layout_mode = 0
+mouse_filter = 2
+color = Color(0.42, 0.58, 0.82, 0.82)
+
+[node name="button" type="Control" parent="UI/Control" unique_id=1453895219]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,18 +119,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="skill" type="Control" parent="UI/Control/button"]
+[node name="skill" type="Control" parent="UI/Control/button" unique_id=522541014]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="skilla" type="Button" parent="UI/Control/button/skill"]
+[node name="skilla" type="Button" parent="UI/Control/button/skill" unique_id=991336862]
 layout_mode = 0
 offset_top = 620.0
 offset_right = 250.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/skill/skilla"]
+[node name="name" type="Label" parent="UI/Control/button/skill/skilla" unique_id=1542601999]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -126,7 +146,7 @@ grow_vertical = 2
 text = "技能之一"
 horizontal_alignment = 1
 
-[node name="other" type="Label" parent="UI/Control/button/skill/skilla"]
+[node name="other" type="Label" parent="UI/Control/button/skill/skilla" unique_id=1591898428]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -143,7 +163,7 @@ theme_override_font_sizes/font_size = 24
 text = "金 耗能5"
 horizontal_alignment = 1
 
-[node name="tips" type="Control" parent="UI/Control/button/skill/skilla"]
+[node name="tips" type="Control" parent="UI/Control/button/skill/skilla" unique_id=1401185498]
 z_index = 3
 anchors_preset = 0
 offset_top = -80.0
@@ -151,7 +171,7 @@ offset_bottom = -80.0
 mouse_filter = 2
 script = ExtResource("4_u4fbu")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilla/tips"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilla/tips" unique_id=928544881]
 visible = false
 layout_mode = 0
 offset_top = -525.0
@@ -160,12 +180,12 @@ offset_bottom = 67.0
 mouse_filter = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skilla/tips/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skilla/tips/VBoxContainer" unique_id=1226429232]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skilla/tips/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skilla/tips/VBoxContainer/PanelContainer" unique_id=618376191]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -173,21 +193,21 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skilla/tips/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skilla/tips/VBoxContainer/PanelContainer/MarginContainer" unique_id=60308607]
 layout_mode = 2
 bbcode_enabled = true
 text = "111111111111"
 fit_content = true
 scroll_active = false
 
-[node name="skillb" type="Button" parent="UI/Control/button/skill"]
+[node name="skillb" type="Button" parent="UI/Control/button/skill" unique_id=297668434]
 layout_mode = 0
 offset_left = 250.0
 offset_top = 620.0
 offset_right = 500.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/skill/skillb"]
+[node name="name" type="Label" parent="UI/Control/button/skill/skillb" unique_id=660373238]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -203,7 +223,7 @@ grow_vertical = 2
 text = "技能之二"
 horizontal_alignment = 1
 
-[node name="other" type="Label" parent="UI/Control/button/skill/skillb"]
+[node name="other" type="Label" parent="UI/Control/button/skill/skillb" unique_id=355616754]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -220,7 +240,7 @@ theme_override_font_sizes/font_size = 24
 text = "金 耗能10"
 horizontal_alignment = 1
 
-[node name="tips" type="Control" parent="UI/Control/button/skill/skillb"]
+[node name="tips" type="Control" parent="UI/Control/button/skill/skillb" unique_id=1192522435]
 z_index = 3
 anchors_preset = 0
 offset_left = -200.0
@@ -230,7 +250,7 @@ offset_bottom = -80.0
 mouse_filter = 2
 script = ExtResource("5_4q00t")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skillb/tips"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skillb/tips" unique_id=644745639]
 visible = false
 layout_mode = 0
 offset_top = -525.0
@@ -239,12 +259,12 @@ offset_bottom = 67.0
 mouse_filter = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skillb/tips/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skillb/tips/VBoxContainer" unique_id=1861291053]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skillb/tips/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skillb/tips/VBoxContainer/PanelContainer" unique_id=560600217]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -252,21 +272,21 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skillb/tips/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skillb/tips/VBoxContainer/PanelContainer/MarginContainer" unique_id=1189813651]
 layout_mode = 2
 bbcode_enabled = true
 text = "111111111111"
 fit_content = true
 scroll_active = false
 
-[node name="skillc" type="Button" parent="UI/Control/button/skill"]
+[node name="skillc" type="Button" parent="UI/Control/button/skill" unique_id=1746793721]
 layout_mode = 0
 offset_left = 500.0
 offset_top = 620.0
 offset_right = 750.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/skill/skillc"]
+[node name="name" type="Label" parent="UI/Control/button/skill/skillc" unique_id=933722531]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -282,7 +302,7 @@ grow_vertical = 2
 text = "技能之三"
 horizontal_alignment = 1
 
-[node name="other" type="Label" parent="UI/Control/button/skill/skillc"]
+[node name="other" type="Label" parent="UI/Control/button/skill/skillc" unique_id=246274582]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -299,7 +319,7 @@ theme_override_font_sizes/font_size = 24
 text = "金 耗能20"
 horizontal_alignment = 1
 
-[node name="tips" type="Control" parent="UI/Control/button/skill/skillc"]
+[node name="tips" type="Control" parent="UI/Control/button/skill/skillc" unique_id=1338938282]
 z_index = 3
 anchors_preset = 0
 offset_left = -224.0
@@ -309,7 +329,7 @@ offset_bottom = -80.0
 mouse_filter = 2
 script = ExtResource("6_b4nck")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skillc/tips"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skillc/tips" unique_id=936048531]
 visible = false
 layout_mode = 0
 offset_top = -525.0
@@ -318,12 +338,12 @@ offset_bottom = 67.0
 mouse_filter = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skillc/tips/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skillc/tips/VBoxContainer" unique_id=1700963597]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skillc/tips/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skillc/tips/VBoxContainer/PanelContainer" unique_id=851613799]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -331,21 +351,21 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skillc/tips/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skillc/tips/VBoxContainer/PanelContainer/MarginContainer" unique_id=347479485]
 layout_mode = 2
 bbcode_enabled = true
 text = "111111111111"
 fit_content = true
 scroll_active = false
 
-[node name="skilld" type="Button" parent="UI/Control/button/skill"]
+[node name="skilld" type="Button" parent="UI/Control/button/skill" unique_id=384446686]
 layout_mode = 0
 offset_left = 750.0
 offset_top = 620.0
 offset_right = 1000.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/skill/skilld"]
+[node name="name" type="Label" parent="UI/Control/button/skill/skilld" unique_id=244674064]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -361,7 +381,7 @@ grow_vertical = 2
 text = "技能之四"
 horizontal_alignment = 1
 
-[node name="other" type="Label" parent="UI/Control/button/skill/skilld"]
+[node name="other" type="Label" parent="UI/Control/button/skill/skilld" unique_id=1482343284]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -378,7 +398,7 @@ theme_override_font_sizes/font_size = 24
 text = "金 耗能40"
 horizontal_alignment = 1
 
-[node name="tips" type="Control" parent="UI/Control/button/skill/skilld"]
+[node name="tips" type="Control" parent="UI/Control/button/skill/skilld" unique_id=583406476]
 z_index = 3
 anchors_preset = 0
 offset_left = -384.0
@@ -388,7 +408,7 @@ offset_bottom = -80.0
 mouse_filter = 2
 script = ExtResource("7_lxgy8")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilld/tips"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/button/skill/skilld/tips" unique_id=1133896644]
 visible = false
 layout_mode = 0
 offset_top = -525.0
@@ -397,12 +417,12 @@ offset_bottom = 67.0
 mouse_filter = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skilld/tips/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/button/skill/skilld/tips/VBoxContainer" unique_id=552687548]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skilld/tips/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/button/skill/skilld/tips/VBoxContainer/PanelContainer" unique_id=1570184769]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -410,26 +430,26 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skilld/tips/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/button/skill/skilld/tips/VBoxContainer/PanelContainer/MarginContainer" unique_id=368418623]
 layout_mode = 2
 bbcode_enabled = true
 text = "111111111111"
 fit_content = true
 scroll_active = false
 
-[node name="extend" type="Control" parent="UI/Control/button"]
+[node name="extend" type="Control" parent="UI/Control/button" unique_id=1926578209]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="attack" type="Button" parent="UI/Control/button/extend"]
+[node name="attack" type="Button" parent="UI/Control/button/extend" unique_id=964538845]
 layout_mode = 0
 offset_left = 1000.0
 offset_top = 660.0
 offset_right = 1140.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/extend/attack"]
+[node name="name" type="Label" parent="UI/Control/button/extend/attack" unique_id=962879385]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -444,14 +464,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "普攻"
 
-[node name="run" type="Button" parent="UI/Control/button/extend"]
+[node name="run" type="Button" parent="UI/Control/button/extend" unique_id=1192845566]
 layout_mode = 0
 offset_left = 1140.0
 offset_top = 660.0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/extend/run"]
+[node name="name" type="Label" parent="UI/Control/button/extend/run" unique_id=1500374080]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -466,14 +486,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "逃跑"
 
-[node name="character" type="Button" parent="UI/Control/button/extend"]
+[node name="character" type="Button" parent="UI/Control/button/extend" unique_id=570883636]
 layout_mode = 0
 offset_left = 1000.0
 offset_top = 600.0
 offset_right = 1140.0
 offset_bottom = 660.0
 
-[node name="name" type="Label" parent="UI/Control/button/extend/character"]
+[node name="name" type="Label" parent="UI/Control/button/extend/character" unique_id=444731309]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -488,14 +508,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色"
 
-[node name="fight" type="Button" parent="UI/Control/button/extend"]
+[node name="fight" type="Button" parent="UI/Control/button/extend" unique_id=860193297]
 layout_mode = 0
 offset_left = 1140.0
 offset_top = 600.0
 offset_right = 1280.0
 offset_bottom = 660.0
 
-[node name="name" type="Label" parent="UI/Control/button/extend/fight"]
+[node name="name" type="Label" parent="UI/Control/button/extend/fight" unique_id=633432007]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -510,19 +530,19 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "战斗"
 
-[node name="change_character" type="Control" parent="UI/Control/button"]
+[node name="change_character" type="Control" parent="UI/Control/button" unique_id=810656906]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="character1" type="Button" parent="UI/Control/button/change_character"]
+[node name="character1" type="Button" parent="UI/Control/button/change_character" unique_id=1206064223]
 layout_mode = 0
 offset_top = 620.0
 offset_right = 200.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/change_character/character1"]
+[node name="name" type="Label" parent="UI/Control/button/change_character/character1" unique_id=363191519]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -537,14 +557,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色一"
 
-[node name="character2" type="Button" parent="UI/Control/button/change_character"]
+[node name="character2" type="Button" parent="UI/Control/button/change_character" unique_id=1268230509]
 layout_mode = 0
 offset_left = 200.0
 offset_top = 620.0
 offset_right = 400.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/change_character/character2"]
+[node name="name" type="Label" parent="UI/Control/button/change_character/character2" unique_id=1607285268]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -559,14 +579,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色二"
 
-[node name="character3" type="Button" parent="UI/Control/button/change_character"]
+[node name="character3" type="Button" parent="UI/Control/button/change_character" unique_id=1226835024]
 layout_mode = 0
 offset_left = 400.0
 offset_top = 620.0
 offset_right = 600.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/change_character/character3"]
+[node name="name" type="Label" parent="UI/Control/button/change_character/character3" unique_id=98408444]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -581,14 +601,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色三"
 
-[node name="character4" type="Button" parent="UI/Control/button/change_character"]
+[node name="character4" type="Button" parent="UI/Control/button/change_character" unique_id=2000754514]
 layout_mode = 0
 offset_left = 600.0
 offset_top = 620.0
 offset_right = 800.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/change_character/character4"]
+[node name="name" type="Label" parent="UI/Control/button/change_character/character4" unique_id=1047718456]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -603,14 +623,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色四"
 
-[node name="character5" type="Button" parent="UI/Control/button/change_character"]
+[node name="character5" type="Button" parent="UI/Control/button/change_character" unique_id=1971573060]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 620.0
 offset_right = 1000.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/change_character/character5"]
+[node name="name" type="Label" parent="UI/Control/button/change_character/character5" unique_id=1409332302]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -625,12 +645,12 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色五"
 
-[node name="log" type="Control" parent="UI/Control/button"]
+[node name="log" type="Control" parent="UI/Control/button" unique_id=55860545]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="log" type="Button" parent="UI/Control/button/log"]
+[node name="log" type="Button" parent="UI/Control/button/log" unique_id=1495208118]
 layout_mode = 0
 offset_top = 572.0
 offset_right = 85.0
@@ -638,7 +658,7 @@ offset_bottom = 632.0
 scale = Vector2(0.8, 0.8)
 script = ExtResource("8_b4nck")
 
-[node name="name" type="Label" parent="UI/Control/button/log/log"]
+[node name="name" type="Label" parent="UI/Control/button/log/log" unique_id=1753773012]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -654,19 +674,19 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.784314)
 text = "记录"
 
-[node name="choose_player_character" type="Control" parent="UI/Control/button"]
+[node name="choose_player_character" type="Control" parent="UI/Control/button" unique_id=76956820]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="character1" type="Button" parent="UI/Control/button/choose_player_character"]
+[node name="character1" type="Button" parent="UI/Control/button/choose_player_character" unique_id=1024421636]
 layout_mode = 0
 offset_top = 620.0
 offset_right = 200.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character1"]
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character1" unique_id=814560274]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -681,14 +701,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色一"
 
-[node name="character2" type="Button" parent="UI/Control/button/choose_player_character"]
+[node name="character2" type="Button" parent="UI/Control/button/choose_player_character" unique_id=927338356]
 layout_mode = 0
 offset_left = 200.0
 offset_top = 620.0
 offset_right = 400.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character2"]
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character2" unique_id=1060234330]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -703,14 +723,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色二"
 
-[node name="character3" type="Button" parent="UI/Control/button/choose_player_character"]
+[node name="character3" type="Button" parent="UI/Control/button/choose_player_character" unique_id=28707807]
 layout_mode = 0
 offset_left = 400.0
 offset_top = 620.0
 offset_right = 600.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character3"]
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character3" unique_id=940390407]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -725,14 +745,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色三"
 
-[node name="character4" type="Button" parent="UI/Control/button/choose_player_character"]
+[node name="character4" type="Button" parent="UI/Control/button/choose_player_character" unique_id=772628001]
 layout_mode = 0
 offset_left = 600.0
 offset_top = 620.0
 offset_right = 800.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character4"]
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character4" unique_id=139590129]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -747,14 +767,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色四"
 
-[node name="character5" type="Button" parent="UI/Control/button/choose_player_character"]
+[node name="character5" type="Button" parent="UI/Control/button/choose_player_character" unique_id=1598486634]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 620.0
 offset_right = 1000.0
 offset_bottom = 720.0
 
-[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character5"]
+[node name="name" type="Label" parent="UI/Control/button/choose_player_character/character5" unique_id=188043898]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -769,13 +789,13 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "角色五"
 
-[node name="player1_stat" type="Control" parent="UI/Control"]
+[node name="player1_stat" type="Control" parent="UI/Control" unique_id=1215281647]
 layout_mode = 1
 anchors_preset = 0
 offset_top = 3.0
 offset_bottom = 3.0
 
-[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player1_stat"]
+[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player1_stat" unique_id=1306369603]
 layout_mode = 0
 offset_right = 2560.0
 offset_bottom = 160.0
@@ -784,7 +804,7 @@ value = 20.0
 texture_under = ExtResource("4_cvymb")
 texture_progress = ExtResource("5_qgwn1")
 
-[node name="Label" type="Label" parent="UI/Control/player1_stat/HpBar"]
+[node name="Label" type="Label" parent="UI/Control/player1_stat/HpBar" unique_id=1977906384]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -800,7 +820,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "100/100"
 
-[node name="Shield_Label" type="Label" parent="UI/Control/player1_stat/HpBar"]
+[node name="Shield_Label" type="Label" parent="UI/Control/player1_stat/HpBar" unique_id=175406115]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -818,7 +838,7 @@ theme_override_font_sizes/font_size = 100
 text = "100"
 horizontal_alignment = 2
 
-[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player1_stat"]
+[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player1_stat" unique_id=2083761575]
 layout_mode = 0
 offset_top = 33.0
 offset_right = 2560.0
@@ -828,7 +848,7 @@ value = 20.0
 texture_under = ExtResource("4_cvymb")
 texture_progress = ExtResource("6_qgwn1")
 
-[node name="Label" type="Label" parent="UI/Control/player1_stat/EnergyBar"]
+[node name="Label" type="Label" parent="UI/Control/player1_stat/EnergyBar" unique_id=1899736320]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -844,7 +864,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "100/100"
 
-[node name="element" type="Label" parent="UI/Control/player1_stat"]
+[node name="element" type="Label" parent="UI/Control/player1_stat" unique_id=1503773671]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 81.0
@@ -852,7 +872,7 @@ offset_right = 56.0
 offset_bottom = 114.0
 text = "属 "
 
-[node name="name" type="Label" parent="UI/Control/player1_stat"]
+[node name="name" type="Label" parent="UI/Control/player1_stat" unique_id=1706069379]
 layout_mode = 0
 offset_left = 72.0
 offset_top = 81.0
@@ -860,43 +880,43 @@ offset_right = 511.0
 offset_bottom = 114.0
 text = "名字"
 
-[node name="team_stat5" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat5" type="AnimatedSprite2D" parent="UI/Control/player1_stat" unique_id=1325247859]
 position = Vector2(475, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player1_stat" unique_id=973084305]
 position = Vector2(443, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player1_stat" unique_id=1950024387]
 position = Vector2(411, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player1_stat" unique_id=2067938147]
 position = Vector2(379, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player1_stat"]
+[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player1_stat" unique_id=696911449]
 position = Vector2(347, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="player2_stat" type="Control" parent="UI/Control"]
+[node name="player2_stat" type="Control" parent="UI/Control" unique_id=738135714]
 layout_mode = 1
 anchors_preset = 0
 offset_top = 3.0
 offset_bottom = 3.0
 
-[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player2_stat"]
+[node name="HpBar" type="TextureProgressBar" parent="UI/Control/player2_stat" unique_id=1647750408]
 layout_mode = 0
 offset_left = 768.0
 offset_right = 3328.0
@@ -907,7 +927,7 @@ fill_mode = 1
 texture_under = ExtResource("4_cvymb")
 texture_progress = ExtResource("5_qgwn1")
 
-[node name="Label" type="Label" parent="UI/Control/player2_stat/HpBar"]
+[node name="Label" type="Label" parent="UI/Control/player2_stat/HpBar" unique_id=891557285]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -923,7 +943,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "100/100"
 
-[node name="Shield_Label" type="Label" parent="UI/Control/player2_stat/HpBar"]
+[node name="Shield_Label" type="Label" parent="UI/Control/player2_stat/HpBar" unique_id=628867391]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -937,7 +957,7 @@ theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
 theme_override_font_sizes/font_size = 100
 text = "100"
 
-[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player2_stat"]
+[node name="EnergyBar" type="TextureProgressBar" parent="UI/Control/player2_stat" unique_id=1409678871]
 layout_mode = 0
 offset_left = 768.0
 offset_top = 33.0
@@ -949,7 +969,7 @@ fill_mode = 1
 texture_under = ExtResource("4_cvymb")
 texture_progress = ExtResource("6_qgwn1")
 
-[node name="Label" type="Label" parent="UI/Control/player2_stat/EnergyBar"]
+[node name="Label" type="Label" parent="UI/Control/player2_stat/EnergyBar" unique_id=1534363510]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -965,7 +985,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "100/100"
 
-[node name="element" type="Label" parent="UI/Control/player2_stat"]
+[node name="element" type="Label" parent="UI/Control/player2_stat" unique_id=1177911294]
 layout_mode = 0
 offset_left = 1224.0
 offset_top = 81.0
@@ -973,7 +993,7 @@ offset_right = 1264.0
 offset_bottom = 114.0
 text = " 属"
 
-[node name="name" type="Label" parent="UI/Control/player2_stat"]
+[node name="name" type="Label" parent="UI/Control/player2_stat" unique_id=251629013]
 layout_mode = 0
 offset_left = 769.0
 offset_top = 81.0
@@ -982,49 +1002,49 @@ offset_bottom = 114.0
 text = "名字"
 horizontal_alignment = 2
 
-[node name="team_stat5" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+[node name="team_stat5" type="AnimatedSprite2D" parent="UI/Control/player2_stat" unique_id=1669699599]
 position = Vector2(933, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+[node name="team_stat4" type="AnimatedSprite2D" parent="UI/Control/player2_stat" unique_id=1126030476]
 position = Vector2(901, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+[node name="team_stat3" type="AnimatedSprite2D" parent="UI/Control/player2_stat" unique_id=317432847]
 position = Vector2(869, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+[node name="team_stat2" type="AnimatedSprite2D" parent="UI/Control/player2_stat" unique_id=1591746808]
 position = Vector2(837, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player2_stat"]
+[node name="team_stat1" type="AnimatedSprite2D" parent="UI/Control/player2_stat" unique_id=2059200666]
 position = Vector2(805, 98)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_5y24y")
 frame = 2
 
-[node name="player_sprite" type="Sprite2D" parent="UI/Control"]
+[node name="player_sprite" type="Sprite2D" parent="UI/Control" unique_id=632860582]
 visible = false
 position = Vector2(249, 341)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("7_6fqxs")
 
-[node name="enemy_sprite" type="Sprite2D" parent="UI/Control"]
+[node name="enemy_sprite" type="Sprite2D" parent="UI/Control" unique_id=1291152525]
 visible = false
 position = Vector2(1031, 341)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("7_6fqxs")
 
-[node name="player_fail" type="Panel" parent="UI/Control"]
+[node name="player_fail" type="Panel" parent="UI/Control" unique_id=98079336]
 visible = false
 z_index = 4
 layout_mode = 1
@@ -1042,7 +1062,7 @@ grow_vertical = 2
 pivot_offset = Vector2(200, 125)
 theme_override_styles/panel = SubResource("StyleBoxFlat_8yfr4")
 
-[node name="Panel" type="Panel" parent="UI/Control/player_fail"]
+[node name="Panel" type="Panel" parent="UI/Control/player_fail" unique_id=1068906889]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1057,7 +1077,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6aghv")
 
-[node name="Label" type="Label" parent="UI/Control/player_fail/Panel"]
+[node name="Label" type="Label" parent="UI/Control/player_fail/Panel" unique_id=1912729283]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1072,7 +1092,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "战斗失败..."
 
-[node name="button" type="Button" parent="UI/Control/player_fail"]
+[node name="button" type="Button" parent="UI/Control/player_fail" unique_id=114963434]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1086,7 +1106,7 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="name" type="Label" parent="UI/Control/player_fail/button"]
+[node name="name" type="Label" parent="UI/Control/player_fail/button" unique_id=875284404]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1102,7 +1122,7 @@ grow_vertical = 2
 text = "确定"
 horizontal_alignment = 1
 
-[node name="player_win" type="Panel" parent="UI/Control"]
+[node name="player_win" type="Panel" parent="UI/Control" unique_id=1376968946]
 visible = false
 z_index = 4
 layout_mode = 1
@@ -1120,7 +1140,7 @@ grow_vertical = 2
 pivot_offset = Vector2(200, 125)
 theme_override_styles/panel = SubResource("StyleBoxFlat_8yfr4")
 
-[node name="Panel" type="Panel" parent="UI/Control/player_win"]
+[node name="Panel" type="Panel" parent="UI/Control/player_win" unique_id=1240198086]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1135,7 +1155,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6aghv")
 
-[node name="Label" type="Label" parent="UI/Control/player_win/Panel"]
+[node name="Label" type="Label" parent="UI/Control/player_win/Panel" unique_id=2098250010]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1150,7 +1170,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "战斗胜利！"
 
-[node name="button" type="Button" parent="UI/Control/player_win"]
+[node name="button" type="Button" parent="UI/Control/player_win" unique_id=1942713751]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1164,7 +1184,7 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="name" type="Label" parent="UI/Control/player_win/button"]
+[node name="name" type="Label" parent="UI/Control/player_win/button" unique_id=767543894]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1180,7 +1200,7 @@ grow_vertical = 2
 text = "确定"
 horizontal_alignment = 1
 
-[node name="curr_phase" type="Label" parent="UI/Control"]
+[node name="curr_phase" type="Label" parent="UI/Control" unique_id=309887486]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -1194,7 +1214,7 @@ theme_override_colors/font_shadow_color = Color(0.301961, 0.301961, 0.301961, 1)
 theme_override_font_sizes/font_size = 40
 text = "谁的回合"
 
-[node name="curr_round_count" type="Label" parent="UI/Control"]
+[node name="curr_round_count" type="Label" parent="UI/Control" unique_id=1817903413]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -1209,7 +1229,7 @@ theme_override_font_sizes/font_size = 30
 text = "第几轮"
 horizontal_alignment = 1
 
-[node name="log" type="Control" parent="UI/Control"]
+[node name="log" type="Control" parent="UI/Control" unique_id=1001956075]
 z_index = 1
 anchors_preset = 0
 offset_left = -70.2
@@ -1218,7 +1238,7 @@ offset_right = -70.2
 offset_bottom = 484.0
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/log"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/log" unique_id=1309834068]
 layout_mode = 0
 offset_left = 475.0
 offset_top = -357.0
@@ -1227,12 +1247,12 @@ offset_bottom = 133.0
 mouse_filter = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/Control/log/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/log/VBoxContainer" unique_id=1599874275]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a1prc")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Control/log/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/log/VBoxContainer/PanelContainer" unique_id=254014861]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -1240,7 +1260,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/log/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/log/VBoxContainer/PanelContainer/MarginContainer" unique_id=191382964]
 custom_minimum_size = Vector2(0, 460)
 layout_mode = 2
 theme_override_constants/line_separation = 10
@@ -1249,20 +1269,20 @@ text = "———————战斗记录———————"
 scroll_following = true
 autowrap_mode = 1
 
-[node name="audio" type="Marker2D" parent="."]
+[node name="audio" type="Marker2D" parent="." unique_id=183681375]
 
-[node name="button" type="AudioStreamPlayer" parent="audio"]
+[node name="button" type="AudioStreamPlayer" parent="audio" unique_id=1904806508]
 stream = ExtResource("8_a4sqi")
 
-[node name="BGM" type="AudioStreamPlayer" parent="audio"]
+[node name="BGM" type="AudioStreamPlayer" parent="audio" unique_id=993219966]
 stream = ExtResource("17_lxgy8")
 volume_db = -10.0
 autoplay = true
 
-[node name="Win" type="AudioStreamPlayer" parent="audio"]
+[node name="Win" type="AudioStreamPlayer" parent="audio" unique_id=721252362]
 stream = ExtResource("18_8yfr4")
 
-[node name="Fail" type="AudioStreamPlayer" parent="audio"]
+[node name="Fail" type="AudioStreamPlayer" parent="audio" unique_id=76572905]
 stream = ExtResource("19_6aghv")
 
 [connection signal="mouse_entered" from="UI/Control/button/skill/skilla" to="UI/Control/button/skill/skilla/tips" method="_mouse_entered"]
@@ -1293,6 +1313,7 @@ stream = ExtResource("19_6aghv")
 [connection signal="pressed" from="UI/Control/button/change_character/character3" to="." method="_change_character_3"]
 [connection signal="pressed" from="UI/Control/button/change_character/character4" to="." method="_change_character_4"]
 [connection signal="pressed" from="UI/Control/button/change_character/character5" to="." method="_change_character_5"]
+[connection signal="pressed" from="UI/Control/button/log/log" to="." method="_toggle_battle_log"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character1" to="." method="choose_player_team_character_1"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character2" to="." method="choose_player_team_character_2"]
 [connection signal="pressed" from="UI/Control/button/choose_player_character/character3" to="." method="choose_player_team_character_3"]

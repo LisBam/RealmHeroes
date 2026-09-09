@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b54hfqxogsgfm"]
+[gd_scene load_steps=5 format=3 uid="uid://b54hfqxogsgfm"]
 
 [ext_resource type="Script" uid="uid://dv4i3n1wxpysy" path="res://scripts/main_scene.gd" id="1_7ykc4"]
 [ext_resource type="Texture2D" uid="uid://c626xos8ito5f" path="res://res/background/white.png" id="2_pu3yx"]
 [ext_resource type="Theme" uid="uid://cst7ag3vtq6ff" path="res://res/theme/fighting_theme.tres" id="3_gubc5"]
+[ext_resource type="Script" path="res://scripts/ui/mobile_main_menu_layout.gd" id="4_mobile_menu"]
 
 [node name="main_scene" type="Node"]
 script = ExtResource("1_7ykc4")
@@ -10,6 +11,11 @@ script = ExtResource("1_7ykc4")
 [node name="background" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
 texture = ExtResource("2_pu3yx")
+
+[node name="MobileMainMenuLayout" type="Node" parent="."]
+script = ExtResource("4_mobile_menu")
+ui_root_path = NodePath("../UI/Control")
+background_path = NodePath("../background")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
